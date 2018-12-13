@@ -1,2 +1,2 @@
 # FreechatTest
-Freechat test via C++&amp;Qt
+Freechat via C++&amp;Qt
