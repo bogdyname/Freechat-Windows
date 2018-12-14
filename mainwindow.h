@@ -35,7 +35,7 @@ private:
     double scaleFactor;
 
 #ifndef QT_NO_PRINTER
-    QPrinter printer;
+   // QPrinter printer;
 #endif
 
     QAction *openAct;
