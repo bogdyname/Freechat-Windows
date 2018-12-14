@@ -1,7 +1,8 @@
-#ifndef IMAGEVIEWER_H
 #define IMAGEVIEWER_H
 
 #include <QWidget>
+#include <QScrollArea>
+#include <QLabel>
 #include <QApplication>
 
 class ImageViewer : public QMainWindow
