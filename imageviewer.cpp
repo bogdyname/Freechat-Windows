@@ -2,6 +2,8 @@
 
 ImageViewer::ImageViewer()
  {
+    QWidget wgt;
+
      imageLabel = new QLabel;
      imageLabel->setBackgroundRole(QPalette::Base);
      imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -15,6 +17,6 @@ ImageViewer::ImageViewer()
      createActions();
      createMenus();
 
-     setWindowTitle(tr("/freechat.jpg"));
-     resize(500, 400);
+     wgt.setWindowTitle(tr("/freechat.jpg"));
+     wgt.resize(500, 400);
  }
