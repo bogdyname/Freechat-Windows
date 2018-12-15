@@ -53,7 +53,8 @@ private:
     QMenu *helpMenu;
 };
 
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 
