@@ -8,12 +8,12 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QWidget wgt;
-    QPixmap pix("/unnamed.jpg");
+    QPixmap pix("/freechat.jpg");
     QCursor cur(pix);
 
-        wgt.setCursor(cur);
-        wgt.resize(25, 25);
-        wgt.show();
+    wgt.setCursor(cur);
+    wgt.resize(25, 25);
+    wgt.show();
 
     return app.exec();
 }
