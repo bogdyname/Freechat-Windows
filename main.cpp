@@ -15,14 +15,19 @@ int main(int argc, char *argv[])
     QCursor cur(pix);
 
     QPushButton quit("Quit", &Freechat);
-    quit.setFont(QFont("Segoe Print", 14, QFont::Bold));
+    quit.setFont(QFont("Segoe Print", 12, QFont::Bold));
     quit.setGeometry(700, 525, 50, 25);
     QObject::connect(&quit, SIGNAL(clicked()), &app, SLOT(quit()));
 
     QPushButton call("Call request", &Freechat);
-    call.setFont(QFont("Segoe Print", 14, QFont::Bold));
-    call.setGeometry(620, 0, 130, 35);
+    call.setFont(QFont("Segoe Print", 12, QFont::Bold));
+    call.setGeometry(640, 0, 110, 30);
     QObject::connect(&call, SIGNAL(clicked()), &app, SLOT(call));
+
+    QPushButton friendList("Show friend list", &Freechat);
+    friendList.setFont(QFont("Segoe Print", 12, QFont::Bold));
+    friendList.setGeometry(0, 0, 140, 35);
+    QObject::connect(&friendList, SIGNAL(clicked()), &app, SLOT(call));
 
     //ImageViewer imageViewer;
     //imageViewer.show();
@@ -33,4 +38,3 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
-
