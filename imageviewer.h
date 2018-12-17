@@ -5,7 +5,7 @@
 #include <QScrollBar>
 #include <QLabel>
 #include <QScrollArea>
-//#include <QPrinter>
+#include <QPrinter>
 
 class ImageViewer : public QMainWindow
  {
@@ -35,7 +35,7 @@ class ImageViewer : public QMainWindow
      double scaleFactor;
 
  #ifndef QT_NO_PRINTER
-    // QPrinter printer;
+    QPrinter printer;
  #endif
 
      QAction *openAct;
