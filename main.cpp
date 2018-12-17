@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
     QCursor cur(pix);
 
     QPushButton quit("Quit", &Freechat);
-    quit.setFont(QFont("Terminal", 18, QFont::Bold));
-    quit.setGeometry(10, 40, 180, 40);
+    quit.setFont(QFont("Segoe Print", 14, QFont::Bold));
+    quit.setGeometry(660, 510, 90, 40);
     QObject::connect(&quit, SIGNAL(clicked()), &app, SLOT(quit()));
 
     Freechat.setCursor(cur);
