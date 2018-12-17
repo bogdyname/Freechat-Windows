@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     QPushButton call("Call request", &Freechat);
     call.setFont(QFont("Segoe Print", 14, QFont::Bold));
-    call.setGeometry(620, 0, 130, 25);
+    call.setGeometry(620, 0, 130, 35);
     QObject::connect(&call, SIGNAL(clicked()), &app, SLOT(call));
 
     //ImageViewer imageViewer;
@@ -33,3 +33,4 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+
