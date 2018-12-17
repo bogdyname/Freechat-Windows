@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QFont>
 #include <QPushButton>
+#include "imageviewer.h"
 
 using namespace Qt;
 
