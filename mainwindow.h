@@ -2,11 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "imageviewer.h"
 
 namespace Ui {
 class MainWindow;
 }
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -20,3 +20,4 @@ private:
 };
 
 #endif // MAINWINDOW_H
+
