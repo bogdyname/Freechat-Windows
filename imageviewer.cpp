@@ -1,3 +1,4 @@
+#include <QtGui>
 #include "imageviewer.h"
 
 ImageViewer::ImageViewer()
@@ -15,6 +16,6 @@ ImageViewer::ImageViewer()
          createActions();
          createMenus();
 
-         setWindowTitle(tr("Image Viewer"));
+         setWindowTitle(tr("Freechat"));
          resize(500, 400);
 }
