@@ -16,8 +16,13 @@ int main(int argc, char *argv[])
 
     QPushButton quit("Quit", &Freechat);
     quit.setFont(QFont("Segoe Print", 14, QFont::Bold));
-    quit.setGeometry(660, 510, 90, 40);
+    quit.setGeometry(700, 525, 50, 25);
     QObject::connect(&quit, SIGNAL(clicked()), &app, SLOT(quit()));
+
+    QPushButton call("Call request", &Freechat);
+    call.setFont(QFont("Segoe Print", 14, QFont::Bold));
+    call.setGeometry(620, 0, 130, 25);
+    QObject::connect(&call, SIGNAL(clicked()), &app, SLOT(call));
 
     //ImageViewer imageViewer;
     //imageViewer.show();
