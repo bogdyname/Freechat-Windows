@@ -19,6 +19,9 @@ int main(int argc, char *argv[])
     quit.setGeometry(660, 510, 90, 40);
     QObject::connect(&quit, SIGNAL(clicked()), &app, SLOT(quit()));
 
+    //ImageViewer imageViewer;
+    //imageViewer.show();
+
     Freechat.setCursor(cur);
     Freechat.resize(750, 550);
     Freechat.show();
