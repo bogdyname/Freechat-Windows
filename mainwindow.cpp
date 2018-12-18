@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "imageviewer.h"
 #include <QMessageBox>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,5 +19,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonFL_clicked()
 {
-    QMessageBox::critical(this, "Friend list", "TEST FRIEND LIST");
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Friend list", "TEST FRIEND LIST",
+                                                              QMessageBox:: Yes | QMessageBox::No);
+
+    if(reply == QMessageBox::Yes)
+    {
+        QApplication::quit();
+    }
+    else
+    {
+        qDebug() << "Friend list is empty";
+    }
 }
