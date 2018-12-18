@@ -10,13 +10,20 @@ using namespace Qt;
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QWidget Freechat;
-    MainWindow w;
-    w.show();
+
+    //QWidget Freechat;
 
     QPixmap pix("D:/Freechat/Freechat/Freechat/unnamed.png");
     QCursor cur(pix);
 
+
+    MainWindow TTS;
+    TTS.setCursor(cur);
+    TTS.resize(750, 550);
+    TTS.show();
+
+
+    /*
     QPushButton quit("Quit", &w);
     quit.setFont(QFont("Segoe Print", 12, QFont::Bold));
     quit.setGeometry(700, 525, 50, 25);
@@ -34,9 +41,8 @@ int main(int argc, char *argv[])
 
     //ImageViewer imageViewer;
     //imageViewer.show();
+    */
 
-    w.setCursor(cur);
-    w.resize(750, 550);
     //Freechat.show();
 
     return app.exec();
