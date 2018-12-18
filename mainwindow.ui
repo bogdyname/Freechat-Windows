@@ -6,20 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>372</height>
+    <width>857</width>
+    <height>693</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="pushButtonFL">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Friend list</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>390</width>
+     <width>857</width>
      <height>21</height>
     </rect>
    </property>
