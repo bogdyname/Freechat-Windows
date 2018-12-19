@@ -31,3 +31,16 @@ void MainWindow::on_pushButtonFL_clicked()
         qDebug() << "Friend list is empty";
     }
 }
+
+void MainWindow::on_pushButtonInfo_clicked()
+{
+    ui->label->setText("Freechat via C++ & Qt \
+                           Imageviewer -- (Critical) \
+                           Mouse cursor ++ \
+                           Media -- (Non) \
+                           Ui designer -+ \
+                           Friend list -+ (Critical) \
+                           Call button -- (Non) \
+                           TEST TEXT -- (Non) \
+                           Field to write messages -- (Non)");
+}
