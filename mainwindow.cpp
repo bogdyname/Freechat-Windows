@@ -34,13 +34,13 @@ void MainWindow::on_pushButtonFL_clicked()
 
 void MainWindow::on_pushButtonInfo_clicked()
 {
-    ui->label->setText("Freechat via C++ & Qt \
-                           Imageviewer -- (Critical) \
-                           Mouse cursor ++ \
-                           Media -- (Non) \
-                           Ui designer -+ \
-                           Friend list -+ (Critical) \
-                           Call button -- (Non) \
-                           TEST TEXT -- (Non) \
-                           Field to write messages -- (Non)");
+    QMessageBox::information(this, "Info", "Freechat via C++ & Qt \
+                             Imageviewer -- (Critical) \
+                             Mouse cursor ++ \
+                             Media -- (Non) \
+                             Ui designer -+ \
+                             Friend list -+ (Critical) \
+                             Call button -- (Non) \
+                             TEST TEXT -- (Non) \
+                             Field to write messages -- (Non)");
 }
