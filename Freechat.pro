@@ -29,11 +29,17 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    imageviewer.cpp
+    imageviewer.cpp \
+    networkcode.cpp \
+    videoviewer.cpp \
+    encryptioncode.cpp
 
 HEADERS += \
         mainwindow.h \
-    imageviewer.h
+    imageviewer.h \
+    networkcode.h \
+    videoviewer.h \
+    encryptioncode.h
 
 FORMS += \
         mainwindow.ui
