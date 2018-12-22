@@ -1,6 +1,6 @@
 # FreechatTest
 Freechat via C++ & Qt
- 1) Networkcode (Non)
+ 1) Networkcode (Critical)
  2) Encryptioncode -- (Non)
  3) Ui designer -+ (Critical)
   1) Friend list -+ (Critical)
