@@ -1,5 +1,5 @@
 #include "myserver.h"
-#include <myclient.h>
+#include "myclient.h"
 
 void MyServer::incomingConnection(int handle)
 {
