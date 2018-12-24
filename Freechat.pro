@@ -6,7 +6,6 @@
 
 QT       += core gui
 QT       += printsupport
-QT       += tcpsocket    
 QTPLUGIN += windowsprintersupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -31,16 +30,19 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     imageviewer.cpp \
-    networkcode.cpp \
     videoviewer.cpp \
-    encryptioncode.cpp
+    encryptioncode.cpp \
+    myserver.cpp \
+    dialog.cpp
 
 HEADERS += \
         mainwindow.h \
     imageviewer.h \
-    networkcode.h \
     videoviewer.h \
-    encryptioncode.h
+    encryptioncode.h \
+    dialog.h \
+    myserver.h \
+    myclient.h
 
 FORMS += \
         mainwindow.ui
