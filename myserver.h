@@ -1,6 +1,7 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
+#include <QTcpServer>
 
 class myserver
 {
@@ -24,7 +25,7 @@ public:
 protected:
     void incomingConnection(int handle);
 private:
-    QList<MyClient *> _clients; /
+    QList<MyClient *> _clients; 
     QWidget *_widget;
 };
 
