@@ -5,6 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network widgets
+requires(qtConfig(udpsocket))
+requires(qtConfig(listwidget))
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,10 +29,20 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    server.cpp \
+    peermanager.cpp \
+    connection.cpp \
+    client.cpp \
+    chatdialog.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    server.h \
+    peermanager.h \
+    connection.h \
+    client.h \
+    chatdialog.h
 
 FORMS += \
         mainwindow.ui
