@@ -7,6 +7,10 @@
 QT       += core gui
 QT       += printsupport
 QTPLUGIN += windowsprintersupport
+QT       += network widgets
+QT       += multimedia
+requires(qtConfig(udpsocket))
+requires(qtConfig(listwidget))
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
