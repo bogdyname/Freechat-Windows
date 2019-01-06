@@ -2,6 +2,7 @@
 #define VIDEOVIEWER_H
 
 #include <QMediaPlayer>
+#imclude <QWidget>
 
 class videoviewer
 {
