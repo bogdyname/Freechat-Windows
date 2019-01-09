@@ -1,6 +1,6 @@
 # FreechatTest
 Freechat via C++ & Qt
-Start coding == 1.10.19
+1)Start coding == 1.10.19
 
 FreechatTTS !Done!
 1) Networkcode ++ (Done)
