@@ -9,4 +9,4 @@
 
 ###Debuger(Qt 5.12.0 for UWP 64bit (MSVC 2015)2)
 
-https://travis-ci.org/bogdyname/Freechat.svg?branch=master
+##[![Build Status](https://travis-ci.org/bogdyname/Freechat.svg?branch=master)
