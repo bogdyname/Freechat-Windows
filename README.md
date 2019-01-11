@@ -6,5 +6,3 @@ FreechatTTS !Done!
 2) Ui designer ++ (Done)
  1) Field of write messages ++ (Done)
 Debuger(Qt 5.12.0 for UWP 64bit (MSVC 2015)2)
-
-![Build Status](https://travis-ci.org/bogdyname/Freechat.svg?branch=master)
