@@ -29,12 +29,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     client.cpp \
-    server.cpp
+    server.cpp \
+    connection.cpp
 
 HEADERS += \
         mainwindow.h \
     client.h \
-    server.h
+    server.h \
+    connection.h
 
 FORMS += \
         mainwindow.ui

@@ -3,18 +3,20 @@
 
 #include <QTcpServer>
 
-class Connection : public QTcpServer
-{
-    Q_OBJECT
-
-
-};
+class Connection;
 
 class server : public QTcpServer
 {
     Q_OBJECT
+
 public:
     server(QObject *parent = nullptr);
+
+signals:
+    void newConnection(Connection *connection);
+
+protected:
+    void incomingConnection(qintptr socketDescriptor) override;
 };
 
 #endif // SERVER_H

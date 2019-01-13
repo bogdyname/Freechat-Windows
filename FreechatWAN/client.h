@@ -1,12 +1,10 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <QDialog>
+#include <QTcpSocket>
 
-class client : public QDialog
+class client : public QTcpSocket
 {
-public:
-    client();
 };
 
 #endif // CLIENT_H

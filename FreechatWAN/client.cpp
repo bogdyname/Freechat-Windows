@@ -1,6 +1,7 @@
 #include "client.h"
 
-client::client()
+client::client(QObject *parent)
+    :QTcpSocket(parent)
 {
 
 }
