@@ -1,0 +1,11 @@
+#ifndef CLIENT_H
+#define CLIENT_H
+
+#include <QDialog>
+
+class client : public QDialog
+{
+private slots:
+};
+
+#endif // CLIENT_H
