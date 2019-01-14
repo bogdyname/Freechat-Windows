@@ -1,7 +1,18 @@
 #include "server.h"
 
 server::server(QObject *parent)
-    :QTcpServer(parent)
+    : QTcpServer(parent)
 {
+    listen(QHostAddress::Any);
+    /*
+     * * DOCS QHostAddress class
+     * The dual stack any-address.
+     * A socket bound with this address will listen on both IPv4 and IPv6 interfaces.
+    */
+}
 
+void server::incomingConnection(qintptr socketDescriptor)
+{
+    Connection *connection = new Connection(socketDescriptor, this);
+    emit newConnection(connection);
 }
