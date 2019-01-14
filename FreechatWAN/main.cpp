@@ -1,3 +1,8 @@
+/*
+***Copyright (C) 2019 Freechat Company
+***Contact: bogdyname@gmail.com
+*/
+
 #include "mainwindow.h"
 #include <QApplication>
 #include <QMessageBox>

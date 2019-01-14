@@ -1,3 +1,8 @@
+/*
+***Copyright (C) 2019 Freechat Company
+***Contact: bogdyname@gmail.com
+*/
+
 #ifndef SERVER_H
 #define SERVER_H
 

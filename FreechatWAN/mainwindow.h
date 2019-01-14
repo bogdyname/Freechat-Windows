@@ -1,3 +1,8 @@
+/*
+***Copyright (C) 2019 Freechat Company
+***Contact: bogdyname@gmail.com
+*/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
