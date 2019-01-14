@@ -4,6 +4,7 @@
 #include <QTcpSocket>
 
 class client : public QTcpSocket
+
 {
 };
 
