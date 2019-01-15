@@ -4,6 +4,7 @@
 */
 
 #include "server.h"
+#include "connection.h"
 
 server::server(QObject *parent)
     : QTcpServer(parent)

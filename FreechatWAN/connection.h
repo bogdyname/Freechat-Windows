@@ -6,11 +6,33 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
+#include <QCborStreamReader>
+#include <QCborStreamWriter>
+#include <QElapsedTimer>
+#include <QHostAddress>
+#include <QString>
+#include <QTcpSocket>
+#include <QTimer>
 
-class connection
+class Connection : public QTcpSocket
 {
+    Q_OBJECT
+
 public:
-    connection();
+    enum ConnectionState
+    {
+        WaitingForGreeting,
+        ReadingGreeting,
+        ReadyForUse
+    };
+    enum DataType
+    {
+        PlainText,
+        Ping,
+        Pong,
+        Greeting,
+        Undefined
+    };
 };
 
 #endif // CONNECTION_H

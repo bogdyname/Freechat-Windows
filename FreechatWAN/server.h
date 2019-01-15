@@ -8,6 +8,7 @@
 
 #include <QTcpServer>
 #include <QHostAddress>
+#include <QtNetwork>
 
 class Connection;
 
