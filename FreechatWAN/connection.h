@@ -14,6 +14,8 @@
 #include <QTcpSocket>
 #include <QTimer>
 
+static const int maxBufferSize = 102400;
+
 class Connection : public QTcpSocket
 {
     Q_OBJECT
@@ -33,6 +35,24 @@ public:
         Greeting,
         Undefined
     };
+
+    Connection(QObject *parent = nullptr);
+    Connection(qintptr socketDecriptor, QObject *parent = nullptr);
+    ~Connection();
+
+    QString name() const;
+    void setGreetingMessage(const QString &message);
+    bool sendMessage(const QString &message);
+
+signals:
+    void readyForUse();
+    void newMessage(const QString &from, const QString &message);
+
+protected:
+    /*
+     * Something code for p2p connecting
+     *
+    */
 };
 
 #endif // CONNECTION_H
