@@ -7,10 +7,21 @@
 #define CLIENT_H
 
 #include <QTcpSocket>
+#include <QAbstractSocket>
+#include <QHash>
+#include <QHostAddress>
 
 class client : public QTcpSocket
 
 {
+    Q_OBJECT
+
+    public:
+        Client();
+
+        void sendMessage(const QString &message);
+        QString nickName() const;
+        bool hasConnection(const QHostAddress &senderIp, int senderPort = -1) const;
 };
 
 #endif // CLIENT_H
