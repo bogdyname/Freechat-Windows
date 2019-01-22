@@ -16,6 +16,8 @@ class client : public QTcpSocket
 {
     Q_OBJECT
 
+    /*
+
     public:
         Client();
 
@@ -27,6 +29,14 @@ signals:
     void newMessage(const QString &from, const QString &message);
     void newParticipant(const QString &nick);
     void participantLeft(const QString &nick);
+
+private slots:
+    void newConnection(Connection *connection);
+    void connectionError(QAbstractSocket::SocketError socketError);
+    void disconnected();
+    void readyForUse();
+
+    */
 };
 
 #endif // CLIENT_H
