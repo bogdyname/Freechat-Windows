@@ -19,6 +19,6 @@ server::server(QObject *parent)
 
 void server::incomingConnection(qintptr socketDescriptor)
 {
-    Connection *connection = new Connection(socketDescriptor, this); //ERROR
-    emit newConnection(connection);
+    Connection *Connection = new Connection(socketDescriptor, this);
+    emit newConnection(Connection);
 }
