@@ -4,7 +4,6 @@
 */
 
 #include "connection.h"
-#include <QtNetwork>
 
 Connection::Connection(QObject *parent)
 
