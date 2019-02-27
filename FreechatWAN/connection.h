@@ -30,6 +30,8 @@ public:
         NameOfUser,
     };
 
+
+    QSctpSocket(QObject *parent = nullptr);
     QSctpSocket *socket = new QSctpSocket(this);
 
     socket->setMaxChannelCount(1);
