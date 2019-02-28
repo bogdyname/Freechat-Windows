@@ -7,9 +7,14 @@
 #define CONNECTION_H
 
 #include <QtNetwork>
+#include <QCborStreamReader>
+#include <QCborStreamWriter>
+#include <QElapsedTimer>
 #include <QHostAddress>
-#include <QTcpSocket>
 #include <QSctpSocket>
+#include <QByteArray>
+#include <QString>
+#include <QTimer>
 
 class Connection : public QSctpSocket
 {
@@ -30,19 +35,21 @@ public:
         NameOfUser,
     };
 
+    Connection(QObject *parent = nullptr);
+    Connection(qintptr socketDescriptor, QObject *parent = nullptr);
+    ~Connection();
 
-    QSctpSocket(QObject *parent = nullptr);
-    QSctpSocket *socket = new QSctpSocket(this);
+    QString name() const;
+    void testMessage(const QString &message);
+    bool sendMessage(const QString &message);
 
-    socket->setMaxChannelCount(1);
-    socket->connectionToHost(QHostAddress::LocalHost, 4433);
+signals:
+    void readyForUse();
+    void newMessage(const QString &from, const QString &message);
 
-    if(socket->waitForConnection(1000))
-    {
-        int inputChannels = socket->readChannelCout();
-        int outputChannels = socket->writeChannelCout();
-    }
-}
+protected:
+    void timerEvent(QTimerEvent *timerEvent) override;//CHECK THIS OUT!!!!!!!!!!!!!!!!
+};
 
 
 #endif // CONNECTION_H
