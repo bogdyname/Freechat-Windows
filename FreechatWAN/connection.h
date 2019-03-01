@@ -12,11 +12,11 @@
 #include <QElapsedTimer>
 #include <QHostAddress>
 #include <QSctpSocket>
-#include <QByteArray>
+#include <QTcpSocket>
 #include <QString>
 #include <QTimer>
 
-class Connection : public QSctpSocket
+class Connection : public QTcpSocket
 {
     Q_OBJECT
 
@@ -48,7 +48,29 @@ signals:
     void newMessage(const QString &from, const QString &message);
 
 protected:
-    void timerEvent(QTimerEvent *timerEvent) override;//CHECK THIS OUT!!!!!!!!!!!!!!!!
+    void timerEvent(QTimerEvent *timerEvent);
+
+private slots:
+    void readyToRead();
+    void pingStatus();
+    void checkConnection();
+
+private:
+    bool hasEnoughData();
+    void proccessCheckConnection();
+    void processData();
+
+     QCborStreamReader reader;
+     QCborStreamWriter writer;
+     QString username;
+     QTimer pingTimer;
+     QElapsedTimer pongTime;
+     QString buffer;
+     ConnectionData state;
+     MetaData currentDataType;
+     int transferTimerId;
+     bool isCheckConnection;
+
 };
 
 
