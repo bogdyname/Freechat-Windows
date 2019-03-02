@@ -16,6 +16,9 @@
 #include <QString>
 #include <QTimer>
 
+static const int PingInterval = 5 * 1000;
+static const int MaxBufferSize = 1024000;
+
 class Connection : public QTcpSocket
 {
     Q_OBJECT
@@ -30,9 +33,11 @@ public:
 
     enum MetaData
     {
-        Ping,
         AlreadyConnection,
-        NameOfUser,
+        Username,
+        Undefined,
+        PlainText,
+        Ping
     };
 
     Connection(QObject *parent = nullptr);
@@ -57,7 +62,7 @@ private slots:
 
 private:
     bool hasEnoughData();
-    void proccessCheckConnection();
+    void processCheckConnection();
     void processData();
 
      QCborStreamReader reader;
