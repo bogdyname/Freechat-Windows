@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,19 +28,19 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         freechat.cpp \
-    connection.cpp \
-    userserver.cpp \
-    userclient.cpp \
-    datasave.cpp \
-    username.cpp
+        connection.cpp \
+        userserver.cpp \
+        userclient.cpp \
+        datasave.cpp \
+        username.cpp
 
 HEADERS += \
         freechat.h \
-    connection.h \
-    userserver.h \
-    userclient.h \
-    datasave.h \
-    username.h
+        connection.h \
+        userserver.h \
+        userclient.h \
+        datasave.h \
+        username.h
 
 FORMS += \
         freechat.ui
