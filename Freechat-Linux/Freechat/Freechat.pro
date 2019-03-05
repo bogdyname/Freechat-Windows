@@ -28,11 +28,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         freechat.cpp \
-    connection.cpp
+    connection.cpp \
+    userserver.cpp
 
 HEADERS += \
         freechat.h \
-    connection.h
+    connection.h \
+    userserver.h
 
 FORMS += \
         freechat.ui
