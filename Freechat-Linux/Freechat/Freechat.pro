@@ -21,14 +21,18 @@ SOURCES += \
         connection.cpp \
         userserver.cpp \
         userclient.cpp \
-        datasave.cpp
+        datasave.cpp \
+    multimedia.cpp \
+    usernametable.cpp
 
 HEADERS += \
         freechat.h \
         connection.h \
         userserver.h \
         userclient.h \
-        datasave.h
+        datasave.h \
+    multimedia.h \
+    usernametable.h
 
 FORMS += \
         freechat.ui
