@@ -3,9 +3,9 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "userserver.h"
+#include "datasave.h"
 
-userserver::userserver()
+datasave::datasave()
 {
 
 }

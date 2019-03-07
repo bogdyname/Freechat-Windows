@@ -3,9 +3,9 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "userserver.h"
+#include "userclient.h"
 
-userserver::userserver()
+userclient::userclient()
 {
 
 }
