@@ -7,5 +7,7 @@
 
 usernametable::usernametable()
 {
-
+    cout << getMacAddress().toAscii().constData() << endl; // CHECK THIS OUT
+    exit(1); // CHECK THIS OUT
 }
+

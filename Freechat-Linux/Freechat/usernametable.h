@@ -6,10 +6,24 @@
 #ifndef USERNAMETABLE_H
 #define USERNAMETABLE_H
 
+#include <QtCore/QCoreApplication>
+#include <QtNetwork/QNetworkInterface>
+#include <QString>
 
 class usernametable
 {
-public:
+protected:
+    QString getMacAddress()
+    {
+        QString text;
+        foreach(QNetworkInterface interface, QNetworkInterface::allInterfaces())
+        {
+            text += interface.hardwareAddress(); //CHECK THIS OUT
+        }
+        return text;
+    }
+
+protected:
     usernametable();
 };
 

@@ -16,9 +16,6 @@
 #include <QString>
 #include <QTimer>
 
-static const int PingInterval = 5 * 1000;
-static const int MaxBufferSize = 1024000;
-
 class Connection : public QTcpSocket
 {
     Q_OBJECT
