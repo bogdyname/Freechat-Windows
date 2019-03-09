@@ -14,6 +14,9 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
+CONFIG += console
+CONFIG += app_bundle
+CONFIG += qt
 
 SOURCES += \
         main.cpp \
@@ -23,8 +26,7 @@ SOURCES += \
         userclient.cpp \
         datasave.cpp \
         multimedia.cpp \
-        usernametable.cpp \
-    sshsocket.cpp
+        usernametable.cpp
 
 HEADERS += \
         freechat.h \
@@ -33,18 +35,11 @@ HEADERS += \
         userclient.h \
         datasave.h \
         multimedia.h \
-        usernametable.h \
-    sshsocket.h
+        usernametable.h
 
 FORMS += \
         freechat.ui
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libssh2/bin/ -llibssh2
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libssh2/bin/ -llibssh2d
-else:unix: LIBS += -L$$PWD/libssh2/bin/ -lllibssh2
-
-INCLUDEPATH += $$PWD/libssh2/include
-DEPENDPATH += $$PWD/libsssh2/include
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
