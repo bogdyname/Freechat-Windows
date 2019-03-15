@@ -6,6 +6,7 @@
 #ifndef MULTIMEDIA_H
 #define MULTIMEDIA_H
 
+#include <QSettings>
 
 class multimedia
 {

@@ -6,6 +6,7 @@
 #ifndef USERNAME_H
 #define USERNAME_H
 
+#include <QSettings>
 
 class username
 {

@@ -10,6 +10,8 @@
 #include <QtCore/QCoreApplication>
 #include <QAbstractSocket>
 #include <QHostAddress>
+#include <QSettings>
+#include <QHostInfo>
 #include <QString>
 #include <QList>
 
