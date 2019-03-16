@@ -3,7 +3,9 @@
 ***Contact: bogdyname@gmail.com
 */
 
+#include "usernametable.h"
 #include "connection.h"
+#include "username.h"
 
 Connection::Connection(QObject *parent)
     : QTcpSocket(parent), writer(this)
@@ -16,10 +18,10 @@ Connection::Connection(QObject *parent)
     pingTimer.setInterval(PingInterval);
 
 
-    QObject::connect(this, SIGNAL(readyRead()), this, SLOT(processReadyRead()));
+    QObject::connect(this, SIGNAL(readyRead()), this, SLOT(readyToRead()));
     QObject::connect(this, SIGNAL(disconnected()), &pingTimer, SLOT(stop()));
-    QObject::connect(&pingTimer, SIGNAL(timeout()), this, SLOT(sendPing()));
-    QObject::connect(this, SIGNAL(connected()),this, SLOT(sendGreetingMessage()));
+    QObject::connect(&pingTimer, SIGNAL(timeout()), this, SLOT(pingStatus()));
+    QObject::connect(this, SIGNAL(connected()),this, SLOT(checkConnection()));
 }
 
 Connection::Connection(qintptr socketDescriptor, QObject *parent)
@@ -40,8 +42,40 @@ bool Connection::sendMessage(const QString &message)
         return false;
 
     writer.startMap(1);
-    writer.append(PlainText);
+    writer.append(AlreadyConnection);
     writer.append(message);
     writer.endMap();
     return true;
+}
+
+void Connection::timerEvent(QTimerEvent *timerEvent)
+{
+    if(timerEvent->timerId() == transferTimerId)
+    {
+        abort();
+        killTimer(transferTimerId);
+        transferTimerId = -1;
+    }
+    else
+    {
+        /*CLEAR CODE*/
+    }
+}
+
+void Connection::readyToRead()
+{
+
+}
+
+void Connection::pingStatus()
+{
+    if(pongTime.elapsed() > PongTimeout)
+    {
+        abort();
+        return;
+    }
+    else
+    {
+        /*CLEAR CODE*/
+    }
 }

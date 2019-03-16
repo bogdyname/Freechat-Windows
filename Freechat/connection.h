@@ -18,6 +18,7 @@
 
 static const int PingInterval = 5 * 1000;
 static const int MaxBufferSize = 1024000;
+static const int PongTimeout = 60 * 1000;
 
 class Connection : public QTcpSocket
 {
