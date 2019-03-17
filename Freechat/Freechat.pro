@@ -27,7 +27,8 @@ SOURCES += \
         datasave.cpp \
         username.cpp \
         usernametable.cpp \
-        multimedia.cpp
+        multimedia.cpp \
+        peermanager.cpp
 
 HEADERS += \
         freechat.h \
@@ -37,7 +38,8 @@ HEADERS += \
         datasave.h \
         username.h \
         usernametable.h \
-        multimedia.h
+        multimedia.h \
+        peermanager.h
 
 FORMS += \
         freechat.ui

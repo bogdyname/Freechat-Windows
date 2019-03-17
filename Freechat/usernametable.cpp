@@ -31,3 +31,8 @@ usernametable::usernametable()
 
           }
 }
+
+tabletranslation::tabletranslation()
+{
+
+}

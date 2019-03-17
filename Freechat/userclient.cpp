@@ -5,9 +5,9 @@
 
 #include <QtNetwork>
 #include "userclient.h"
-#inclide "connection.h"
+#include "connection.h"
 
-Userclient::Userclient()
+Client::Client()
 {
     peerManager = new PeerManager(this);
     peerManager->setServerPort(server.serverPort());
