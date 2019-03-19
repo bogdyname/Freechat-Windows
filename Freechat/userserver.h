@@ -6,8 +6,8 @@
 #ifndef USERSERVER_H
 #define USERSERVER_H
 
-
 #include <QtNetwork>
+#include <QTcpServer>
 #include <QSctpServer>
 #include <QHostAddress>
 

@@ -4,10 +4,12 @@
 */
 
 #include <QtNetwork>
+#include <QHostAddress>
 #include "userserver.h"
 #include "connection.h"
 
-Server::Userserver(QObject *parent):QSctpServer(parent)
+Server::Userserver(QObject *parent)
+    : QTcpServer(parent)
 {
     listen(QHostAddress::Any);
 }
