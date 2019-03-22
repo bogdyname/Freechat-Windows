@@ -12,7 +12,7 @@
 #include <QByteArray>
 #include <QUdpSocket>
 
-class Client;
+class UserClient;
 class Connection;
 
 class PeerManager : public QObject
@@ -20,12 +20,12 @@ class PeerManager : public QObject
     Q_OBJECT
 
 public:
-    PeerManager(Client *client);
+    PeerManager(UserClient *userclient);
 
     QString userName() const;
     void startBroadcasting();
     void setServerPort(int port);
-    //bool isLocalHostAddress(const QHostAddress &address); Need to connection via WLAN (not only LAN)
+    bool isWLANHostAddress(const QHostAddress &address);
 
 signals:
     void newConnection(Connection *connection);
@@ -37,13 +37,14 @@ private slots:
 private:
     void updateAddresses();
 
-    Client *client;
-    QList<QHostAddress> broadcastAddresses;
-    QList<QHostAddress> ipAddresses;
-    QUdpSocket broadcastSocket;
-    QTimer broadcastTimer;
-    QString username;
+    UserClient *userclient;
+
     int serverPort;
+    QString username;
+    QTimer broadcastTimer;
+    QUdpSocket broadcastSocket;
+    QList<QHostAddress> ipAddresses;
+    QList<QHostAddress> broadcastAddresses;
 };
 
 #endif // PEERMANAGER_H
