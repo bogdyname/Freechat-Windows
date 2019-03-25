@@ -3,11 +3,11 @@
 #Contact: bogdyname@gmail.com
 #---------------------------------
 
-QT       += core gui
-QT       += network
 QT       += gui
-QT       += multimedia
 QT       += svg
+QT       += network
+QT       += core gui
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
