@@ -7,23 +7,16 @@
 #define DATASAVE_H
 
 #include <QTextStream>
+#include <QDataStream>
 #include <QIODevice>
 #include <QFile>
 
-class datasave : public QFile
+class Datasave : public QFile
 {
     Q_OBJECT
 
 public:
-    datasave()
-    {
-        /*
-         CODE
-         WILL
-         BE
-         HERE
-        */
-    }
+    Datasave();
 };
 
 #endif // DATASAVE_H
