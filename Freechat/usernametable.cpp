@@ -41,7 +41,7 @@ QString Usernametable::getIpV4Protocol()
 
 QString Usernametable::getIpAddress()
 {
-    for(nInter < list.count(); nInter++)
+    for(nInter < list.count();; nInter++)
     {
         if(!list[nInter].isLoopback())
         {
@@ -65,6 +65,6 @@ QString Usernametable::getMacAddress()
 
 QString Usernametable::outputOnDisplay()
 {
-    qDebug() << getMacAddress().toAscii().constData() << endl;
+    qDebug() << getMacAddress().constData() << endl;
     exit(1);
 }
