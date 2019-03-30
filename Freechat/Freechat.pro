@@ -1,6 +1,7 @@
 #---------------------------------
-#Copyright (C) 2019 Softwater Inc
-#Contact: bogdyname@gmail.com
+#Freechat (decentralized chat)
+#Freechat via C++ & Qt, Debugger(Qt 5.12.1 GCC 64bit)
+#Copyleft (C) 2019 Softwater, Inc.
 #---------------------------------
 
 QT       += gui
@@ -28,7 +29,8 @@ SOURCES += \
         username.cpp \
         usernametable.cpp \
         multimedia.cpp \
-        peermanager.cpp
+        peermanager.cpp \
+        duinterface.cpp
 
 HEADERS += \
         freechat.h \
@@ -39,10 +41,12 @@ HEADERS += \
         username.h \
         usernametable.h \
         multimedia.h \
-        peermanager.h
+        peermanager.h \
+        duinterface.h
 
 FORMS += \
-        freechat.ui
+        freechat.ui \
+        duinterface.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

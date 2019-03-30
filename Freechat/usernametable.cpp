@@ -1,13 +1,13 @@
 /*
-***Copyright (C) 2019 Softwater Inc
+***Copyleft (C) 2019 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
-#include "usernametable.h"
 #include "username.h"
-#include <iostream>
-
-using namespace std;
+#include "datasave.h"
+#include "freechat.h"
+#include "connection.h"
+#include "usernametable.h"
 
 Usernametable::Usernametable(QObject *parent)
     : QObject(parent)
@@ -27,7 +27,7 @@ Usernametable::Usernametable(QObject *parent)
           }
 }
 
-QString Usernametable::getIpV4Protocol()
+QString Usernametable::GetIpV4Protocol()
     {
         if(list[nIter].protocol() == QAbstractSocket::IPv4Protocol)
         {
@@ -39,13 +39,13 @@ QString Usernametable::getIpV4Protocol()
         }
 }
 
-QString Usernametable::getIpAddress()
+QString Usernametable::GetIpAddress()
 {
     for(nInter < list.count();; nInter++)
     {
         if(!list[nInter].isLoopback())
         {
-            getIpV4Protocol();
+            GetIpV4Protocol();
         }
         else
         {
@@ -54,7 +54,7 @@ QString Usernametable::getIpAddress()
     }
 }
 
-QString Usernametable::getMacAddress()
+QString Usernametable::GetMacAddress()
 {
             foreach(QNetworkInterface interface, QNetworkInterface::allInterfaces())
             {
@@ -63,8 +63,8 @@ QString Usernametable::getMacAddress()
     return textWithMacAddresOfUser;
 }
 
-QString Usernametable::outputOnDisplay()
+QString Usernametable::OutputOnDisplay()
 {
-    qDebug() << getMacAddress().constData() << endl;
+    qDebug() << GetMacAddress().constData() << endl;
     exit(1);
 }

@@ -1,5 +1,5 @@
 /*
-***Copyright (C) 2019 Softwater Inc
+***Copyleft (C) 2019 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
@@ -7,16 +7,28 @@
 #define DATASAVE_H
 
 #include <QTextStream>
-#include <QDataStream>
+#include <QSaveFile>
 #include <QIODevice>
 #include <QFile>
 
-class Datasave : public QFile
+class Freechat;
+class Duinterface;
+
+class Datasave : public QSaveFile
 {
     Q_OBJECT
 
 public:
-    Datasave();
+    QFile fileWithData;
+    bool saveFileVariable = false;
+    bool deleteFileVariable = false;
+
+public:
+    Datasave(QObject *parent = nullptr);
+
+    bool SaveFile();
+    bool DeleteFile();
+    QFile DataWriterInFile();
 };
 
 #endif // DATASAVE_H
