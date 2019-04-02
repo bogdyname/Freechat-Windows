@@ -6,12 +6,16 @@
 #ifndef MULTIMEDIA_H
 #define MULTIMEDIA_H
 
-#include <QSettings>
+#include "ui_multimedia.h"
+#include "videoviewer.h"
+#include <QWidget>
 
-class multimedia
+class Multimedia : public QWidget , private Ui::Multimedia
 {
+    Q_OBJECT
+
 public:
-    multimedia();
+    Multimedia();
 };
 
 #endif // MULTIMEDIA_H

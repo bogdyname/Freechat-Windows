@@ -7,15 +7,26 @@
 #define DUINTERFACE_H
 
 #include <QWidget>
-#include <QFile>
+#include <QTextList>
+#include "datasave.h"
+#include "username.h"
+#include "usernametable.h"
 
-class Duinterface : public QFile, private Ui::Duinterface
+class Username;
+class Usernametable;
+
+class Duinterface : public QWidget, private Ui::Duinterface
 {
+    Q_OBJECT
+
 public:
-    Duinterface();
+    Duinterface(QWidget *parent = nullptr);
 
 public slots:
     bool UserSelect();
+
+private slots:
+
 };
 
 #endif // DUINTERFACE_H
