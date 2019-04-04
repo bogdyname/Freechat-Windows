@@ -11,16 +11,16 @@
 UserClient::UserClient()
 {
     peerManager = new PeerManager(this);
-    peerManager->setServerPort(userserver.serverPort());
-    peerManager->startBroadcasting();
+    peerManager->SetServerPort(userserver.serverPort());
+    peerManager->StartBroadcasting();
 
-    QObject::connect(peerManager, SIGNAL(newConnection(Connection*)),
-                     this, SLOT(newConnection(Connection*)));
-    QObject::connect(&userserver, SIGNAL(newConnection(Connection*)),
-                     this, SLOT(newConnection(Connection*)));
+    QObject::connect(peerManager, SIGNAL(NewConnection(Connection*)),
+                     this, SLOT(NewConnection(Connection*)));
+    QObject::connect(&userserver, SIGNAL(NewConnection(Connection*)),
+                     this, SLOT(NewConnection(Connection*)));
 }
 
-void UserClient::sendMessage(const QString &message)
+void UserClient::SendMessage(const QString &message)
 {
     if (message.isEmpty())
     {
@@ -33,11 +33,11 @@ void UserClient::sendMessage(const QString &message)
 
     QList<Connection *> connections = peers.values();
     foreach (Connection *connection, connections)
-        connection->sendMessage(message);
+        connection->SendMessage(message);
 }
 
-QString UserClient::nickName() const
+QString UserClient::NickName() const
 {
-    return peerManager->userName() + '@' + QHostInfo::localHostName()
+    return peerManager->UserName() + '@' + QHostInfo::localHostName()
            + ':' + QString::number(userserver.serverPort());
 }

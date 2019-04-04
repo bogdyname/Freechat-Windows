@@ -28,6 +28,10 @@ public:
     bool SaveFile();
     bool DeleteFile();
     QFile DataWriterInFile(QFile &fileWithData);
+
+signals:
+    void CheckYourMemorySize();
+    void AborProgWheneverMemorySizeFull();
 };
 
 #endif // DATASAVE_H

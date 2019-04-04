@@ -5,12 +5,8 @@
 
 #include "multimedia.h"
 
-multimedia::multimedia()
+Multimedia::Multimedia(QWidget *parent)
+    : QWidget(parent)
 {
-    /*
-     CODE
-     WILL
-     BE
-     HERE
-    */
+
 }
