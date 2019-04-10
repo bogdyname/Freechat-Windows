@@ -33,7 +33,8 @@ SOURCES += \
         peermanager.cpp \
         duinterface.cpp \
         videoviewer.cpp \
-    filecompression.cpp
+        filecompression.cpp \
+        texteditor.cpp
 
 HEADERS += \
         freechat.h \
@@ -47,13 +48,16 @@ HEADERS += \
         peermanager.h \
         duinterface.h \
         videoviewer.h \
-    filecompression.h
+        filecompression.h \
+        texteditor.h
 
 FORMS += \
         freechat.ui \
         duinterface.ui \
         multimedia.ui \
-        compression.ui
+        compression.ui \
+        texteditor.ui \
+        video.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
