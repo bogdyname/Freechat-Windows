@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QDialog>
 #include <QTextList>
+#include <QFileDialog>
 #include "datasave.h"
 #include "username.h"
 #include "usernametable.h"
