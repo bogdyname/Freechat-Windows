@@ -8,8 +8,6 @@ QT       += gui
 QT       += svg
 QT       += network
 QT       += core gui
-QT       += multimedia
-QT       += multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,12 +27,7 @@ SOURCES += \
         datasave.cpp \
         username.cpp \
         usernametable.cpp \
-        multimedia.cpp \
-        peermanager.cpp \
-        duinterface.cpp \
-        videoviewer.cpp \
-        filecompression.cpp \
-        texteditor.cpp
+        peermanager.cpp
 
 HEADERS += \
         freechat.h \
@@ -44,20 +37,10 @@ HEADERS += \
         datasave.h \
         username.h \
         usernametable.h \
-        multimedia.h \
-        peermanager.h \
-        duinterface.h \
-        videoviewer.h \
-        filecompression.h \
-        texteditor.h
+        peermanager.h
 
 FORMS += \
-        freechat.ui \
-        duinterface.ui \
-        multimedia.ui \
-        compression.ui \
-        texteditor.ui \
-        video.ui
+        freechat.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
