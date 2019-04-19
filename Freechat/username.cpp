@@ -7,87 +7,95 @@
 #include "datasave.h"
 #include "usernametable.h"
 
+
 Username::Username(QObject *parent)
     : QFile(parent)
 {
-    connect(QMessageBox::   , SIGNAL(AskUserForReadContactName()),
+    connect(   , SIGNAL(AskUserForReadContactName()),
             this, SLOT(FileForWritingIpAddress(const QString &name)));
-    connect(QMessageBox::   , SIGNAL(AskUserForReadContactName()),
+    connect(   , SIGNAL(AskUserForReadContactName()),
             this, SLOT(FileForWritingMACAddress(const QString &name)));
-    connect(QMessageBox::   , SIGNAL(AskUserForWriteContactName()),
-            this, SLOT(FileForReadingIpAddress(const QString &fileName, const QString &newName)));
-    connect(QMessageBox::   , SIGNAL(AskUserForWriteContactName()),
-            this, SLOT(FileForReadingMACAddress(const QString &fileName, const QString &newName)));
+    connect(   , SIGNAL(AskUserForWriteContactName()),
+            this, SLOT(FileForReadingIpAddress(const QString &fileName, const QString &newName);));
+    connect(   , SIGNAL(AskUserForWriteContactName()),
+            this, SLOT(FileForReadingMACAddress(const QString &fileName, const QString &newName);));
 
-    connect(QMessageBox::   , SIGNAL(MessegBoxWithCheckingCorrectReadContactName()),
+    connect(   , SIGNAL(MessegBoxWithCheckingCorrectReadContactName()),
             this, SLOT(CheckingCorrectReadIpddress()));
-    connect(QMessageBox::   , SIGNAL(MessegBoxWithCheckingCorrectReadContactName()),
+    connect(   , SIGNAL(MessegBoxWithCheckingCorrectReadContactName()),
             this, SLOT(CheckingCorrectReadMACddress()));
-    connect(QMessageBox::   , SIGNAL(MessegBoxWithCheckingCorrectWriteContactName),
+    connect(   , SIGNAL(MessegBoxWithCheckingCorrectWriteContactName),
             this, SLOT(CheckingCorrectWriteIpddress()));
-    connect(QMessageBox::   , SIGNAL(MessegBoxWithCheckingCorrectWriteContactName),
+    connect(   , SIGNAL(MessegBoxWithCheckingCorrectWriteContactName),
             this, SLOT(CheckingCorrectWriteMACddress()));
 }
 
 
-bool Username::AskUserForReadContactName()
+
+void Username::AskUserForReadContactName()
 {
     QMessageBox::ask(this, tr("Read contact"),
     tr("Do you want to read this contact?"));
 }
 
-bool Username::AskUserForWriteContactName()
+void Username::AskUserForWriteContactName()
 {
     QMessageBox::ask(this, tr("Write contact"),
     tr("Do you want to write this contact?"));
 }
 
-bool Username::MessegBoxWithCheckingCorrectReadContactName()
+void Username::MessegBoxWithCheckingCorrectReadContactName()
+{
+
+
+}
+
+void Username::MessegBoxWithCheckingCorrectWriteContactName()
+{
+
+
+}
+
+void Username::FileForWritingIpAddress(const QString &name)
 {
 
 }
 
-bool Username::MessegBoxWithCheckingCorrectWriteContactName()
+void Username::CheckingCorrectWriteIpddress()
+{
+
+
+}
+
+void Username::FileForWritingMACAddress(const QString &name)
 {
 
 }
 
-QFile Username::FileForWritingIpAddress(const QString &name)
+void Username::CheckingCorrectWriteMACddress()
+{
+
+
+}
+
+void Username::FileForReadingIpAddress(const QString &fileName, const QString &newName)
 {
 
 }
 
-QFile Username::FileForWritingMACAddress(const QString &name)
+void Username::CheckingCorrectReadIpddress()
+{
+
+
+}
+
+void Username::FileForReadingMACAddress(const QString &fileName, const QString &newName)
 {
 
 }
 
-QFile Username::FileForReadingIpAddress(const QString &fileName, const QString &newName)
+void Username::CheckingCorrectReadMACddress()
 {
 
-}
-
-QFile Username::FileForReadingMACAddress(const QString &fileName, const QString &newName)
-{
-
-}
-
-bool Username::CheckingCorrectReadIpddress()
-{
-
-}
-
-bool Username::CheckingCorrectReadMACddress()
-{
-
-}
-
-bool Username::CheckingCorrectWriteIpddress()
-{
-
-}
-
-bool Username::CheckingCorrectWriteMACddress()
-{
 
 }

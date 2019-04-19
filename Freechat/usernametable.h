@@ -18,9 +18,7 @@
 #include <QFile>
 #include <QList>
 
-class Freechat;
 class Username;
-class Connection;
 
 class Usernametable : public QSaveFile
 {
@@ -28,13 +26,13 @@ class Usernametable : public QSaveFile
 
 public:
     Usernametable(QSaveFile *parent = nullptr);
-    Usernametable();
+    ~Usernametable();
 
     QString GetIpV4Protocol();
     QString GetIpAddress();
     QString GetMacAddress();
     QString TranslationName();
-    void SaveUsersMACAddress(const QString &nameOfUserMAC);
+    QString SaveUsersMACAddress(const QString &nameOfUserMAC);
 
 
     int nIter = 0;
