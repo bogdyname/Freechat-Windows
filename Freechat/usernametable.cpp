@@ -35,7 +35,7 @@ QString Usernametable::GetIpV4Protocol()
         }
         else
         {
-            /*CLEAR CODE*/
+            /*clear code*/
         }
 }
 
@@ -49,7 +49,7 @@ QString Usernametable::GetIpAddress()
         }
         else
         {
-            /*CLEAR CODE*/
+            /*clear code*/
         }
     }
 }
@@ -63,7 +63,8 @@ QString Usernametable::GetMacAddress()
     return textWithMacAddresOfUser;
 }
 
-void Usernametable::SaveUsersMACAddress(const QString &nameOfUserMAC)
+QString Usernametable::SaveUsersMACAddress(const QString &nameOfUserMAC)
 {
-
+    qDebug() << GetMacAddress().constData() << endl;
+    exit(1);
 }

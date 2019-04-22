@@ -11,30 +11,49 @@
 Datasave::Datasave(QObject *parent)
     : QSaveFile(parent)
 {
-    connect( , SIGNAL(CheckYourMemorySize()),
+   connect( , SIGNAL(CheckYourMemorySize()),
             this, SLOT(AbortProgWheneverMemorySizeFull()));
-    connect(    , SIGNAL(CheckUsernameFOrSaveFile()),
+   connect(    , SIGNAL(CheckUsernameFOrSaveFile()),
             this, SLOT(SveFileForUsername()));
+   connect(    , SIGNAL(RunTimeIsOver()),
+            this, SLOT(RunBackupFiles()));
 }
 
 bool Datasave::SaveFile()
 {
-    saveFileVariable = (UserSelect() == "YES");
-
-    return 0;
+    if((DataWriterInFile().exists())&&(DataWriterInFile().open(ReadOnly)))
+    {
+        QString str = "";
+        while(!DataWriterInFile().atEnd())
+        {
+            str += DataWriterInFile().readLine();
+        }
+        ui->textBrowser->setText(str);
+        DataWriterInFile().close();
+    }
+    else
+    {
+        /*clear code*/
+    }
 }
 
 bool Datasave::DeleteFile()
 {
-    deleteFileVariable = (UserSelect() == "YES");
 
-    return 0;
 }
 
 QFile Datasave::DataWriterInFile(QFile &fileWithData)
 {
-    fileWithData = ;
-
+    if(fileWithData.open(WriteOnly))
+    {
+        fileWithData.write("NAME OF USER");
+        fileWithData.write("WRITE FROM FIELD WIDGET!!");
+        fileWithData.close();
+    }
+    else
+    {
+        /*clear code*/
+    }
 }
 
 void Datasave::CheckUsernameForSaveFile()
@@ -49,13 +68,25 @@ void Datasave::SaveFileForUsername()
 
 void Datasave::CheckYourMemorySize()
 {
-    if (listWithDataSave->count() == 1)
+
+    if (listWithDataSave->count()-> == 1)
     {
         QMessageBox::information(this, tr("WARNING!"),
                         tr("Check your memory size!"));
     }
     else
     {
-        /*CLEAR CODE*/
+        /*clear code*/
     }
+
+}
+
+void Datasave::RunTimeIsOver()
+{
+
+}
+
+void Datasave::RunBackupFiles()
+{
+
 }
