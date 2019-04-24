@@ -1,6 +1,7 @@
 #---------------------------------
 #Freechat (decentralized chat)
-#Freechat via C++ & Qt, Debugger(Qt 5.12.1 GCC 64bit)
+#Freechat via C++ & Qt
+#Debugger(Qt 5.12.0 for UWP 64bit (MSVC 2015)2)
 #Copyleft (C) 2019 Softwater, Inc.
 #---------------------------------
 
