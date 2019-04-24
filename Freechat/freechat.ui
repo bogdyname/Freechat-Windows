@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>483</height>
+    <width>600</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,6 +16,14 @@
   <property name="windowIcon">
    <iconset>
     <normaloff>../freechat.jpg</normaloff>../freechat.jpg</iconset>
+  </property>
+  <property name="toolTipDuration">
+   <number>-12</number>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 9pt &quot;Letter Gothic Std&quot;;
+border-color: rgb(0, 0, 0);
+selection-background-color: rgb(158, 158, 158);</string>
   </property>
   <layout class="QVBoxLayout">
    <property name="spacing">
@@ -65,7 +73,7 @@
        <property name="maximumSize">
         <size>
          <width>180</width>
-         <height>16777215</height>
+         <height>402</height>
         </size>
        </property>
        <property name="focusPolicy">

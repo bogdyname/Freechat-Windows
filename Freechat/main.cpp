@@ -514,10 +514,13 @@ Contact: bogdyname@gmail.com
 */
 
 #include "freechat.h"
+#include <QtGui>
 #include <QApplication>
 #include <QtCore/QSettings>
 #include <QtNetwork/QNetworkSession>
 #include <QtNetwork/QNetworkConfigurationManager>
+
+using namespace Qt;
 
 int main(int argc, char *argv[])
 {
@@ -541,7 +544,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            /*CLEAR CODE*/
+            /*clear code*/
         }
 
         QNetworkSession *networkSession = new QNetworkSession(config, &app);
@@ -570,12 +573,12 @@ int main(int argc, char *argv[])
         }
         else
         {
-            /*CLEAR CODE*/
+            /*clear code*/
         }
     }
     else
     {
-        /*CLEAR CODE*/
+        /*clear code*/
     }
 
     Freechat freechat;
