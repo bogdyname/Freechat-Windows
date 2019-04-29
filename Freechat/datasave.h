@@ -16,32 +16,35 @@
 class Freechat;
 class Username;
 
-class Datasave : public QSaveFile
+class Datasave : public QFile
 {
     Q_OBJECT
 
 public:
-    bool saveFileVariable = false;
-    bool deleteFileVariable = false;
+    QFile fileWithData;
+    QFile fileWithDataForBackup;
+
+    QTimer runTimer;
+    QByteArray block;
 
 public:
     Datasave(QObject *parent = nullptr);
 
-    bool SaveFile();
-    bool DeleteFile();
-    QFile DataWriterInFile(QFile &fileWithData);
+    bool CheckForFileExists();
 
 signals:
     void CheckYourMemorySize();
     void CheckUsernameForSaveFile();
+    void UpToBeginOfFile();
+    void DropToEndOfFile();
     void RunTimeIsOver();
 
 public slots:
     void AbortProgWheneverMemorySizeFull();
     void SaveFileForUsername();
     void RunBackupFiles();
-
-    QTimer runTimer;
+    void ToBeginOfFile();
+    void ToEndOfFile();
 };
 
 #endif // DATASAVE_H
