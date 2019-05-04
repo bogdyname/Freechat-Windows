@@ -11,42 +11,64 @@
 Datasave::Datasave(QObject *parent)
     : QFile(parent)
 {
-   connect( , SIGNAL(CheckYourMemorySize()),
-            this, SLOT(AbortProgWheneverMemorySizeFull()));
-   connect(    , SIGNAL(CheckUsernameFOrSaveFile()),
-            this, SLOT(SveFileForUsername()));
-   connect(    , SIGNAL(RunTimeIsOver()),
+   connect( , SIGNAL(RunTimeIsOver()),
             this, SLOT(RunBackupFiles()));
-   connect(    , SIGNAL(UpToBeginOfFile()),
+   connect( , SIGNAL(SaveDataFileAs()),
+            this, SLOT(Datasave()));
+   connect( , SIGNAL(UpToBeginOfFile()),
             this, SLOT(ToBeginOfFile()));
-   connect(    , SIGNAL(DropToEndOfFile()),
+   connect( , SIGNAL(DropToEndOfFile()),
             this, SLOT(ToEndOfFile()));
+   connect( , SIGNAL(CheckYourMemorySize()),
+            this, SLOT(DeleteAllDataForFreeMemory()));
+   connect( , SIGNAL(CheckUsernameForSaveFile()),
+            this, SLOT(Datasave()));
+
 
    fileWithData.setFileName("data.txt");
    fileWithDataForBackup.setFileName("backupdata.txt");
 
-   if(fileWithData.open(WriteOnly))
+   if((CheckForFileExists() == true) && (CheckForFileIsOpen() == true))
    {
-       fileWithData.write("NAME OF USER");
-       fileWithData.write("WRITE FROM FIELD WIDGET!!");
-       fileWithData.flush();
-   }
-   else
-   {
-       /*clear code*/
+        if(fileWithData.open(WriteOnly))
+        {
+            fileWithData.write("NAME OF USER");
+            fileWithData.write("WRITE FROM FIELD WIDGET!!");
+            fileWithData.flush();
+        }
+        else
+        {
+            /*clear code*/
+        }
    }
 }
 
 bool Datasave::CheckForFileExists()
 {
-    if(QFile::exists("data.txt"))
+    if(exists("data.txt"))
     {
-        return 0;
+        return true;
     }
     else
     {
          /*clear code*/
     }
+
+    return true;
+}
+
+bool Datasave::CheckForFileIsOpen()
+{
+    if(fileWithData.isOpen())
+    {
+        return true;
+    }
+    else
+    {
+         /*clear code*/
+    }
+
+    return true;
 }
 
 void Datasave::CheckUsernameForSaveFile()
@@ -54,7 +76,7 @@ void Datasave::CheckUsernameForSaveFile()
 
 }
 
-void Datasave::SaveFileForUsername()
+void Datasave::SaveDataFileAs()
 {
 
 }
@@ -71,6 +93,11 @@ void Datasave::CheckYourMemorySize()
     {
         /*clear code*/
     }
+
+}
+
+void Datasave::DeleteAllDataForFreeMemory()
+{
 
 }
 

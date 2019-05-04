@@ -12,25 +12,39 @@ Username::Username(QObject *parent)
     : QFile(parent)
 {
     connect(   , SIGNAL(AskUserForReadContactName()),
-            this, SLOT(FileForWritingIpAddress(const QString &name)));
+            this, SLOT(FileForWritingIpAddress()));
     connect(   , SIGNAL(AskUserForReadContactName()),
-            this, SLOT(FileForWritingMACAddress(const QString &name)));
+            this, SLOT(FileForWritingMACAddress()));
     connect(   , SIGNAL(AskUserForWriteContactName()),
-            this, SLOT(FileForReadingIpAddress(const QString &fileName, const QString &newName);));
+            this, SLOT(FileForReadingIpAddress();));
     connect(   , SIGNAL(AskUserForWriteContactName()),
-            this, SLOT(FileForReadingMACAddress(const QString &fileName, const QString &newName);));
+            this, SLOT(FileForReadingMACAddress();));
 
-    connect(   , SIGNAL(MessegBoxWithCheckingCorrectReadContactName()),
-            this, SLOT(CheckingCorrectReadIpddress()));
-    connect(   , SIGNAL(MessegBoxWithCheckingCorrectReadContactName()),
-            this, SLOT(CheckingCorrectReadMACddress()));
-    connect(   , SIGNAL(MessegBoxWithCheckingCorrectWriteContactName),
-            this, SLOT(CheckingCorrectWriteIpddress()));
-    connect(   , SIGNAL(MessegBoxWithCheckingCorrectWriteContactName),
-            this, SLOT(CheckingCorrectWriteMACddress()));
+    userMACAddress.setFileName("userMAC.txt");
+    writeUserMACAddressToUserIpAddress.setFileName("swapmtoi.txt");
+    userIpAddress.setFileName("userIP.txt");
+    checkWriterFileMACToIp.setFileName("swapmtoipo.txt");
 }
 
+bool Username::CheckingForExistsIpddress()
+{
 
+}
+
+bool Username::CheckingForExistsMACddress()
+{
+
+}
+
+bool Username::CheckForIpFileIsOpen()
+{
+
+}
+
+bool Username::CheckForMACFileIsOpen()
+{
+
+}
 
 void Username::AskUserForReadContactName()
 {
@@ -44,58 +58,22 @@ void Username::AskUserForWriteContactName()
     tr("Do you want to write this contact?"));
 }
 
-void Username::MessegBoxWithCheckingCorrectReadContactName()
-{
-
-
-}
-
-void Username::MessegBoxWithCheckingCorrectWriteContactName()
-{
-
-
-}
-
-void Username::FileForWritingIpAddress(const QString &name)
+void Username::FileForWritingIpAddress()
 {
 
 }
 
-void Username::CheckingCorrectWriteIpddress()
-{
-
-
-}
-
-void Username::FileForWritingMACAddress(const QString &name)
+void Username::FileForWritingMACAddress()
 {
 
 }
 
-void Username::CheckingCorrectWriteMACddress()
-{
-
-
-}
-
-void Username::FileForReadingIpAddress(const QString &fileName, const QString &newName)
+void Username::FileForReadingIpAddress()
 {
 
 }
 
-void Username::CheckingCorrectReadIpddress()
+void Username::FileForReadingMACAddress()
 {
-
-
-}
-
-void Username::FileForReadingMACAddress(const QString &fileName, const QString &newName)
-{
-
-}
-
-void Username::CheckingCorrectReadMACddress()
-{
-
 
 }

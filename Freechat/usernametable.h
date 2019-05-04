@@ -11,24 +11,20 @@
 #include <QAbstractSocket>
 #include <QHostAddress>
 #include <QByteArray>
-#include <QSettings>
 #include <QHostInfo>
 #include <QSaveFile>
 #include <QString>
-#include <QFile>
-#include <QList>
 
 class Username;
 
-class Usernametable : public QSaveFile
+class Usernametable : public QObject
 {
     Q_OBJECT
 
 public:
-    Usernametable(QSaveFile *parent = nullptr);
-    ~Usernametable();
+    Usernametable(QObject *parent = nullptr);
 
-    QString GetIpV4Protocol();
+    QString GetIpV4AndV6Protocol();
     QString GetIpAddress();
     QString GetMacAddress();
     QString TranslationName();
