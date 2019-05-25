@@ -7,7 +7,6 @@
 #define FREECHAT_H
 
 #include "ui_freechat.h"
-#include "userclient.h"
 #include <QTextTableFormat>
 #include <QDialog>
 
@@ -32,7 +31,6 @@ signals:
     void SignalFAQ();
 
 private:
-    UserClient userclient;
     QString whoami;
     QTextTableFormat tableFormat;
 };

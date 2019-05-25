@@ -9,8 +9,8 @@
 #include "connection.h"
 #include "usernametable.h"
 
-Usernametable::Usernametable(QSaveFile *parent)
-    : QSaveFile(parent)
+Usernametable::Usernametable(QObject *parent)
+    : QObject(parent)
 {
           foreach (const QHostAddress & a, addresses)
           {
