@@ -20,16 +20,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        connectionf2f.cpp \
         main.cpp \
         freechat.cpp \
-        connection.cpp \
         datasave.cpp \
         username.cpp \
         usernametable.cpp
 
 HEADERS += \
+        connectionf2f.h \
         freechat.h \
-        connection.h \
         datasave.h \
         username.h \
         usernametable.h

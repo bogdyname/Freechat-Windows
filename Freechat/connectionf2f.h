@@ -16,7 +16,7 @@
 #include <QString>
 #include <QTimer>
 
-class Connection : public QTcpSocket
+class ConnectionF2F : public
 {
     
 

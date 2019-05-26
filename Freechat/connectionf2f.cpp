@@ -4,5 +4,5 @@
 */
 
 #include "usernametable.h"
-#include "connection.h"
+#include "connectionf2f.h"
 #include "username.h"
