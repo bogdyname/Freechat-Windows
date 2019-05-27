@@ -6,19 +6,22 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include <QCborStreamReader>
-#include <QCborStreamWriter>
-#include <QElapsedTimer>
 #include <QHostAddress>
-#include <QSctpSocket>
+#include <QTimerEvent>
 #include <QTcpSocket>
 #include <QtNetwork>
-#include <QString>
-#include <QTimer>
 
-class ConnectionF2F : public
+class ConnectionF2F : public QTcpSocket
 {
-    
+    Q_OBJECT
+
+public:
+    void DigitalSignature();
+    void ConnectingToPeer();
+    void MakeSocket();
+
+private:
+    QTimerEvent TimerForWaitingConnection();
 
 };
 
