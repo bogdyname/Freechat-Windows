@@ -3,10 +3,11 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef CONNECTIONF2F_H
+#define CONNECTIONF2F_H
 
 #include <QNetworkInterface>
+#include <QAbstractSocket>
 #include <QNetworkSession>
 #include <QHostAddress>
 #include <QHostAddress>
@@ -24,11 +25,20 @@ class ConnectionF2F : public QTcpSocket
 public:
     void DigitalSignature();
     void ConnectingToPeer();
+    void WaitForConnected();
+    void WaitForDisconnected();
+
+public:
+    void SockedErroe();
     void MakeSocket();
+
+protected:
+    quint16 GetPeerPort();
+    QHostAddress GetPeerAddress();
 
 private:
     QTimerEvent TimerForWaitingConnection();
 
 };
 
-#endif // CONNECTION_H
+#endif // CONNECTIONF2F_H
