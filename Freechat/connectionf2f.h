@@ -3,8 +3,8 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#ifndef CONNECTIONF2F_H
-#define CONNECTIONF2F_H
+#ifndef CONNECTION_H
+#define CONNECTION_H
 
 #include <QNetworkInterface>
 #include <QAbstractSocket>
@@ -15,6 +15,10 @@
 #include <QTcpSocket>
 #include <QHostInfo>
 #include <QtNetwork>
+#include <QSsl>
+
+using namespace QSsl;
+using namespace QPasswordDigestor;
 
 class ConnectionF2F : public QTcpSocket
 {
@@ -22,11 +26,12 @@ class ConnectionF2F : public QTcpSocket
 
     ConnectionF2F(QObject *parent = nullptr);
 
-public:
+private slots:
     void DigitalSignature();
     void ConnectingToPeer();
-    void WaitForConnected();
-    void WaitForDisconnected();
+    void SocketConnected();
+    void SocketDisconnected();
+    void ReadyForReadOfData();
 
 public:
     void SockedErroe();
@@ -41,4 +46,4 @@ private:
 
 };
 
-#endif // CONNECTIONF2F_H
+#endif // CONNECTION_H
