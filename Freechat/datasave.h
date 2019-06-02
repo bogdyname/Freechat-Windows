@@ -39,13 +39,14 @@ signals:
     void CheckUsernameForSaveFile();
 
 public slots:
-    void DeleteAllDataForFreeMemory();
-    void RunBackupFiles();
-    void ReadFile();
+    void DeleteAllDataForFreeMemory(QFile &fileWithData, QFile &fileWithDataForBackup);
+    void RunBackupFiles(QFile &fileWithData, QFile &fileWithDataForBackup);
+    void ReadFile(QFile &fileWithData);
+    void MakeFileWithData(QFile &fileWithDataOfAnyUser);
 
 protected:
-    bool CheckForFileExists();
-    bool CheckForFileIsOpen();
+    inline bool CheckForFileExists(QFile &fileWithData);
+    inline bool CheckForFileIsOpen(QFile &fileWithData);
 };
 
 #endif // DATASAVE_H

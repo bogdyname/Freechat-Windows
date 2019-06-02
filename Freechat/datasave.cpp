@@ -30,18 +30,19 @@ Datasave::Datasave(QObject *parent)
    {
         if(fileWithData.open(WriteOnly))
         {
-            fileWithData.write("NAME OF USER");
-            fileWithData.write("WRITE FROM TEXT FIELD WIDGET!!");
+            QTextStream writeStream(&fileWithData);
+            writeStream << "NAME OF USER";
+            writeStream << "WRITE DATA IN FILE";
             fileWithData.flush();
         }
         else
         {
-            /*clear code*/
+            fileWithData.close();
         }
    }
 }
 
-bool Datasave::CheckForFileExists()
+bool Datasave::CheckForFileExists(QFile &fileWithData)
 {
     if(exists("data.txt"))
     {
@@ -51,9 +52,11 @@ bool Datasave::CheckForFileExists()
     {
          /*clear code*/
     }
+
+    return true;
 }
 
-bool Datasave::CheckForFileIsOpen()
+bool Datasave::CheckForFileIsOpen(QFile &fileWithData)
 {
     if(fileWithData.isOpen())
     {
@@ -63,6 +66,8 @@ bool Datasave::CheckForFileIsOpen()
     {
          /*clear code*/
     }
+
+    return true;
 }
 
 void Datasave::CheckUsernameForSaveFile()
@@ -108,7 +113,7 @@ void Datasave::CheckYourMemorySize()
     return;
 }
 
-void Datasave::DeleteAllDataForFreeMemory()
+void Datasave::DeleteAllDataForFreeMemory(QFile &fileWithData, QFile &fileWithDataForBackup)
 {
     QFile("data.txt").remove();
     QFile("backupdata.txt").remove();
@@ -123,7 +128,7 @@ void Datasave::RunTimeIsOver()
     return;
 }
 
-void Datasave::RunBackupFiles()
+void Datasave::RunBackupFiles(QFile &fileWithData, QFile &fileWithDataForBackup)
 {
     if((fileWithData.open(ReadOnly)) && (fileWithDataForBackup.open(WriteOnly)))
     {
@@ -147,11 +152,11 @@ void Datasave::ReadFileForViewMessages()
     return;
 }
 
-void Datasave::ReadFile()
+void Datasave::ReadFile(QFile &fileWithData)
 {
     if ((fileWithData.exists()) && (fileWithData.open(ReadOnly)))
     {
-        (fileWithData.readAll());
+        ui->textBrowser->setText(fileWithData.readAll());
         fileWithData.close();
     }
     else
@@ -160,4 +165,11 @@ void Datasave::ReadFile()
     }
 
     return;
+}
+
+void Datasave::MakeFileWithData(QFile& fileWithDataOfAnyUser)
+{
+    fileWithDataOfAnyUser.setFileName("data.txt");
+
+
 }
