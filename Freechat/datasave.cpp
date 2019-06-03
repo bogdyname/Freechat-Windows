@@ -22,29 +22,31 @@ Datasave::Datasave(QObject *parent)
    connect( , SIGNAL(CheckUsernameForSaveFile()),
             this, SLOT(Datasave()));
 
+   QString fname = "filewd" +
+           QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+   QFile file(fname);
 
-   fileWithData.setFileName("data.txt");
-   fileWithDataForBackup.setFileName("backupdata.txt");
-
-   if((CheckForFileExists() == true) && (CheckForFileIsOpen() == true))
+   if((CheckForFileExists(file) == true) && (CheckForFileIsOpen(file) == true))
    {
-        if(fileWithData.open(WriteOnly))
+        if(file.open(WriteOnly))
         {
-            QTextStream writeStream(&fileWithData);
-            writeStream << "NAME OF USER";
+            QTextStream writeStream(&file);
+            writeStream << "NAME OF USER like Nikita Volkov or Google";
             writeStream << "WRITE DATA IN FILE";
-            fileWithData.flush();
+            file.flush();
         }
         else
         {
-            fileWithData.close();
+            file.close();
         }
    }
+
+   QDir().mkdir(QApplication::applicationDirPath()+"/../data");
 }
 
 bool Datasave::CheckForFileExists(QFile &fileWithData)
 {
-    if(exists("data.txt"))
+    if(fileWithData.exists())
     {
         return true;
     }
@@ -115,8 +117,8 @@ void Datasave::CheckYourMemorySize()
 
 void Datasave::DeleteAllDataForFreeMemory(QFile &fileWithData, QFile &fileWithDataForBackup)
 {
-    QFile("data.txt").remove();
-    QFile("backupdata.txt").remove();
+    fileWithData.remove();
+    fileWithDataForBackup.remove();
 
     return;
 }
@@ -165,11 +167,4 @@ void Datasave::ReadFile(QFile &fileWithData)
     }
 
     return;
-}
-
-void Datasave::MakeFileWithData(QFile& fileWithDataOfAnyUser)
-{
-    fileWithDataOfAnyUser.setFileName("data.txt");
-
-
 }

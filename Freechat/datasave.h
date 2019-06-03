@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QSaveFile>
 #include <QIODevice>
+#include <QDateTime>
 #include <QTimer>
 #include <QFile>
 
@@ -20,9 +21,6 @@ class Datasave : public QFile
     Q_OBJECT
 
 public:
-    QFile fileWithData;
-    QFile fileWithDataForBackup;
-
     QTimer runTimer;
     QByteArray block;
 
@@ -42,7 +40,6 @@ public slots:
     void DeleteAllDataForFreeMemory(QFile &fileWithData, QFile &fileWithDataForBackup);
     void RunBackupFiles(QFile &fileWithData, QFile &fileWithDataForBackup);
     void ReadFile(QFile &fileWithData);
-    void MakeFileWithData(QFile &fileWithDataOfAnyUser);
 
 protected:
     inline bool CheckForFileExists(QFile &fileWithData);
