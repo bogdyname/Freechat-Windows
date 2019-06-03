@@ -6,6 +6,7 @@
 #ifndef DATASAVE_H
 #define DATASAVE_H
 
+#include "ui_freechat.h"
 #include <QStorageInfo>
 #include <QTextStream>
 #include <QSaveFile>
@@ -15,6 +16,7 @@
 #include <QFile>
 
 class Username;
+class Freechat;
 
 class Datasave : public QFile
 {

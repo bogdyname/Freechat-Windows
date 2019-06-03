@@ -32,7 +32,7 @@ Datasave::Datasave(QObject *parent)
         {
             QTextStream writeStream(&file);
             writeStream << "NAME OF USER like Nikita Volkov or Google";
-            writeStream << "WRITE DATA IN FILE";
+            writeStream << ui->textFieldForViewMessages->setText(file.readAll());;
             file.flush();
         }
         else

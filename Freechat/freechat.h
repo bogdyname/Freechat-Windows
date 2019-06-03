@@ -16,23 +16,6 @@ class Freechat : public QDialog, private Ui::Freechat
 
 public:
     Freechat(QWidget *parent = nullptr);
-
-public slots:
-    void AppendMessage(const QString &from, const QString &message);
-
-private slots:
-    void ReturnPressed();
-    void HiiiiiiBoy();
-    void SlotsFAQ();
-    void UserIsJoined(const QString &nick);
-    void UserIsLeft(const QString &nick);
-
-signals:
-    void SignalFAQ();
-
-private:
-    QString whoami;
-    QTextTableFormat tableFormat;
 };
 
 #endif // FREECHAT_H
