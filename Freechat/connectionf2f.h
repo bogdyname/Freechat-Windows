@@ -25,6 +25,7 @@ class ConnectionF2F : public QTcpSocket
     Q_OBJECT
 
     ConnectionF2F(QObject *parent = nullptr);
+    ~ConnectionF2F();
 
 private slots:
     void DigitalSignature();
@@ -33,11 +34,11 @@ private slots:
     void SocketDisconnected();
     void ReadyForReadOfData();
 
-public:
+private:
     void SockedErroe();
     void MakeSocket();
 
-protected:
+private:
     quint16 GetPeerPort();
     QHostAddress GetPeerAddress();
 

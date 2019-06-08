@@ -32,9 +32,6 @@ public:
     inline void GetMacAddresses(QString textWithMacAddresOfUser);
     inline QString GetIpV4AndV6Protocol();
 
-private:
-    void TranslationName(QFile &fileWithMAC, QString &translator);
-
 public:
     int nIter = 0;
     int nInter = 0;
