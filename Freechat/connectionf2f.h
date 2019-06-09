@@ -32,11 +32,17 @@ private slots:
     void ConnectingToPeer();
     void SocketConnected();
     void SocketDisconnected();
-    void ReadyForReadOfData();
+    void ReadyReadOfData();
+    void ListenPort();
+
+public:
+    void GetSocketFromClient();
+    void getSocketFromHost();
 
 private:
+    void MakeSocketByClient();
+    void MakeSocketByHost();
     void SockedErroe();
-    void MakeSocket();
 
 private:
     quint16 GetPeerPort();
