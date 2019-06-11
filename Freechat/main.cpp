@@ -514,6 +514,7 @@ Contact: bogdyname@gmail.com
 */
 
 #include "freechat.h"
+#include "datasave.h"
 #include <QtGui>
 #include <QApplication>
 #include <QtCore/QSettings>
@@ -528,6 +529,8 @@ int main(int argc, char *argv[])
 
     QNetworkConfigurationManager manager;
 
+    Datasave newFile;
+  
     Freechat freechat;
     freechat.show();
     return app.exec();
