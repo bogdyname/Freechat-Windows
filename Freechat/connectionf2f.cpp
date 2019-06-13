@@ -17,3 +17,25 @@ ConnectionF2F::~ConnectionF2F()
 {
 
 }
+
+Client::Client(QObject *parent)
+    : QTcpSocket(parent)
+{
+
+}
+
+Client::~Client()
+{
+
+}
+
+Host::Host(QObject *parent)
+    :QTcpServer(parent)
+{
+
+}
+
+Host::~Host()
+{
+
+}
