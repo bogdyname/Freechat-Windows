@@ -6,6 +6,7 @@
 #include "username.h"
 #include "datasave.h"
 #include "freechat.h"
+#include "ui_freechat.h"
 #include "connectionf2f.h"
 
 Username::Username(QObject *parent)
@@ -14,11 +15,11 @@ Username::Username(QObject *parent)
 
 }
 
-void Username::ReadingIpAddress(QFile &fileWithIP)
+inline void Username::ReadingIpAddress(QFile &fileWithIP)
 {
     if ((fileWithIP.exists()) && (fileWithIP.open(ReadOnly)))
     {
-        ui->textBrowser->setTextWithNetworkData(fileWithIP.readAll());
+        ui->listViewWithNetworkData->setText(fileWithIP.readAll());
         fileWithIP.close();
     }
     else
@@ -29,7 +30,7 @@ void Username::ReadingIpAddress(QFile &fileWithIP)
     return;
 }
 
-void Username::ReadingMACAddress(QFile &fileWithMac)
+inline void Username::ReadingMACAddress(QFile &fileWithMac)
 {
     if ((fileWithMac.exists()) && (fileWithMac.open(ReadOnly)))
     {
@@ -138,4 +139,6 @@ void Usernametable::GetIpAddressFromWAN(QString &textWithIPAddres)
         );
 
         textWithIPAddres = IP.toString();
+
+        return;
 }

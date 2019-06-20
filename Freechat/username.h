@@ -33,8 +33,8 @@ public:
     Username(QObject *parent = nullptr);
 
 public slots:
-    void ReadingIpAddress(QFile &fileWithIP);
-    void ReadingMACAddress(QFile &fileWithMac);
+    inline void ReadingIpAddress(QFile &fileWithIP);
+    inline void ReadingMACAddress(QFile &fileWithMac);
     void TranslationName(QFile &fileWithMAC, QString &translator);
 };
 
