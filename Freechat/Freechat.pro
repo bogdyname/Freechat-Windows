@@ -18,21 +18,21 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
+CONFIG += c++14
+CONFIG += c++17
 
 SOURCES += \
         connectionf2f.cpp \
         main.cpp \
         freechat.cpp \
         datasave.cpp \
-        username.cpp \
-        usernametable.cpp
+        username.cpp
 
 HEADERS += \
         connectionf2f.h \
         freechat.h \
         datasave.h \
-        username.h \
-        usernametable.h
+        username.h
 
 FORMS += \
         freechat.ui

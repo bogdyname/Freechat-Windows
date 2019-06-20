@@ -6,7 +6,6 @@
 #include "username.h"
 #include "datasave.h"
 #include "freechat.h"
-#include "usernametable.h"
 
 Datasave::Datasave(QObject *parent)
     : QFile(parent)

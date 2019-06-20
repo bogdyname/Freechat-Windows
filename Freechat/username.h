@@ -7,6 +7,7 @@
 #include <QtCore/QCoreApplication>
 #include <QAbstractSocket>
 #include <QHostAddress>
+#include <QJsonObject>
 #include <QTextStream>
 #include <QDataStream>
 #include <QByteArray>
@@ -34,6 +35,7 @@ public:
 public slots:
     void ReadingIpAddress(QFile &fileWithIP);
     void ReadingMACAddress(QFile &fileWithMac);
+    void TranslationName(QFile &fileWithMAC, QString &translator);
 };
 
 #endif // USERNAME_H
@@ -52,19 +54,9 @@ public:
     Usernametable(QObject *parent = nullptr);
     Usernametable(Usernametable &&MoveNameSource, QFile &);
 
-    inline void GetIpAddresses();
-    inline void GetMacAddresses(QString &textWithMacAddresOfUser);
-    inline QString GetIpV4AndV6Protocol();
-
 private:
-    void TranslationName(QFile &fileWithMAC, QString &translator);
-
-public:
-    int nIter = 0;
-    int nInter = 0;
-    QString protocol = "???";
-    QList<QHostAddress> list = QNetworkInterface::allAddresses();
-    QList<QHostAddress> addresses = QHostInfo::fromName(QHostInfo::localHostName()).addresses();
+    void GetIpAddressFromWAN(QString &textWithIPAddres);
+    inline void GetMacAddress(QString &textWithMacAddresOfUser);
 };
 
 

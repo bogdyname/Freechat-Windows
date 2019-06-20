@@ -44,27 +44,42 @@ void Username::ReadingMACAddress(QFile &fileWithMac)
     return;
 }
 
+void Username::TranslationName(QFile &fileWithMAC, QString &translator)
+{
+    fileWithMAC = ReadingMACAddress(fileWithMAC);
+
+    return;
+}
+
+
 Usernametable::Usernametable(QObject *parent)
     : QFile(parent)
 {
-          foreach (const QHostAddress &addr, addresses)
+          QString macOfUser;
+          GetMacAddress(macOfUser);
+
+          QString fnamem = "macadd" +
+                  QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+          QFile filem(fnamem);
+
+          if((filem.exists()) && (filem.isOpen()))
           {
-              switch (addr.protocol())
-              {
-                  case QAbstractSocket::IPv4Protocol:
-                      protocol = "IPv4";
-                  break;
-                  case QAbstractSocket::IPv6Protocol:
-                      protocol = "IPv6";
-                  break;
-              }
-              qDebug() << addr.toString() << "(" << protocol << ")";
+               if(filem.open(WriteOnly))
+               {
+                   QTextStream writeStream(&filem);
+                   writeStream << macOfUser;
+                   filem.flush();
+               }
+               else
+               {
+                   filem.close();
+               }
           }
 
-          QString macOfUser;
-          GetMacAddresses(macOfUser);
+          QString ipOfUser;
+          GetIpAddressFromWAN(ipOfUser);
 
-          QString fname = "macadd" +
+          QString fname = "ipadd" +
                   QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
           QFile file(fname);
 
@@ -73,7 +88,7 @@ Usernametable::Usernametable(QObject *parent)
                if(file.open(WriteOnly))
                {
                    QTextStream writeStream(&file);
-                   writeStream << macOfUser;
+                   writeStream << ipOfUser;
                    file.flush();
                }
                else
@@ -83,39 +98,7 @@ Usernametable::Usernametable(QObject *parent)
           }
 }
 
-inline QString Usernametable::GetIpV4AndV6Protocol()
-    {
-        if((list[nIter].protocol() == QAbstractSocket::IPv4Protocol) &&
-                (list[nIter].protocol() == QAbstractSocket::IPv6Protocol))
-        {
-            list[nIter].toString();
-        }
-        else
-        {
-            /*clear code*/
-        }
-
-        return list[nIter].toString();
-}
-
-inline void Usernametable::GetIpAddresses()
-{
-    for(nInter < list.count();; nInter++)
-    {
-        if(!list[nInter].isLoopback())
-        {
-            GetIpV4AndV6Protocol();
-        }
-        else
-        {
-            /*clear code*/
-        }
-    }
-
-    return;
-}
-
-inline void Usernametable::GetMacAddresses(QString &textWithMacAddresOfUser)
+inline void Usernametable::GetMacAddress(QString &textWithMacAddresOfUser)
 {
             foreach(QNetworkInterface interface, QNetworkInterface::allInterfaces())
             {
@@ -125,9 +108,34 @@ inline void Usernametable::GetMacAddresses(QString &textWithMacAddresOfUser)
     return;
 }
 
-void Usernametable::TranslationName(QFile &fileWithMAC, QString &translator)
+void Usernametable::GetIpAddressFromWAN(QString &textWithIPAddres)
 {
-    fileWithMAC = ReadingMACAddress(fileWithMAC);
+        QNetworkAccessManager networkManager;
+        QHostAddress IP;
 
-    return;
+        QUrl url("https://api.ipify.org");
+        QUrlQuery query;
+        query.addQueryItem("format", "json");
+        url.setQuery(query);
+
+        QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
+
+        connect(reply, &QNetworkReply::finished, [&]()
+        {
+            if(reply->error() != QNetworkReply::NoError)
+            {
+                qDebug() << "error: " << reply->error();
+            }
+            else
+            {
+                QJsonObject jsonObject= QJsonDocument::fromJson(reply->readAll()).object();
+                QHostAddress ip(jsonObject["ip"].toString());
+
+                IP = ip;
+            }
+            reply->deleteLater();
+        }
+        );
+
+        textWithIPAddres = IP.toString();
 }
