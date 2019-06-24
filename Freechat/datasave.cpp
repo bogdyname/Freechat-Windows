@@ -8,7 +8,7 @@
 #include "freechat.h"
 
 Datasave::Datasave(QObject *parent)
-    : QFile(parent)
+    : Username(parent)
 {
    connect( , SIGNAL(RunTimeIsOver()),
             this, SLOT(RunBackupFiles()));

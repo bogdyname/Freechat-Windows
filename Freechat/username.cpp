@@ -47,56 +47,63 @@ inline void Username::ReadingMACAddress(QFile &fileWithMac)
 
 void Username::TranslationName(QFile &fileWithMAC, QString &translator)
 {
-    fileWithMAC = ReadingMACAddress(fileWithMAC);
 
     return;
 }
 
 
 Usernametable::Usernametable(QObject *parent)
-    : QFile(parent)
+    : Username(parent)
 {
-          QString macOfUser;
-          GetMacAddress(macOfUser);
 
-          QString fnamem = "macadd" +
-                  QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
-          QFile filem(fnamem);
+}
 
-          if((filem.exists()) && (filem.isOpen()))
-          {
-               if(filem.open(WriteOnly))
-               {
-                   QTextStream writeStream(&filem);
-                   writeStream << macOfUser;
-                   filem.flush();
-               }
-               else
-               {
-                   filem.close();
-               }
-          }
+inline void Usernametable::MakeFileWithIp()
+{
+    QString ipOfUser;
+    GetIpAddressFromWAN(ipOfUser);
 
-          QString ipOfUser;
-          GetIpAddressFromWAN(ipOfUser);
+    QString fname = "ipadd" +
+            QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+    QFile file(fname);
 
-          QString fname = "ipadd" +
-                  QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
-          QFile file(fname);
+    if((file.exists()) && (file.isOpen()))
+    {
+         if(file.open(WriteOnly))
+         {
+             QTextStream writeStream(&file);
+             writeStream << ipOfUser;
+             file.flush();
+         }
+         else
+         {
+             file.close();
+         }
+    }
+}
 
-          if((file.exists()) && (file.isOpen()))
-          {
-               if(file.open(WriteOnly))
-               {
-                   QTextStream writeStream(&file);
-                   writeStream << ipOfUser;
-                   file.flush();
-               }
-               else
-               {
-                   file.close();
-               }
-          }
+inline void Usernametable::MakeFileWithMac()
+{
+    QString macOfUser;
+    GetMacAddress(macOfUser);
+
+    QString fnamem = "macadd" +
+            QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+    QFile filem(fnamem);
+
+    if((filem.exists()) && (filem.isOpen()))
+    {
+         if(filem.open(WriteOnly))
+         {
+             QTextStream writeStream(&filem);
+             writeStream << macOfUser;
+             filem.flush();
+         }
+         else
+         {
+             filem.close();
+         }
+    }
 }
 
 inline void Usernametable::GetMacAddress(QString &textWithMacAddresOfUser)

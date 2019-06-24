@@ -3,6 +3,7 @@
 ***Contact: bogdyname@gmail.com
 */
 
+#include "username.h"
 #include <QNetworkInterface>
 #include <QAbstractSocket>
 #include <QNetworkSession>
@@ -19,7 +20,6 @@ using namespace QPasswordDigestor;
 
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
-
 class ConnectionF2F : public QTcpSocket
 {
     Q_OBJECT
@@ -42,13 +42,11 @@ private:
     QTimerEvent TimerForWaitingConnection();
 
 };
-
-#endif // CONNECTIONF2F_H
+#endif
 
 #ifndef CLIENT_H
 #define CLIENT_H
-
-class Client : public QTcpSocket
+class Client : public ConnectionF2F, Username
 {
     Q_OBJECT
 
@@ -77,13 +75,11 @@ private:
     QWaitCondition cond;
     bool quit;
 };
-
-#endif // CLIENT_H
+#endif
 
 #ifndef HOST_H
 #define HOST_H
-
-class Host : public QTcpServer
+class Host : public ConnectionF2F, Username
 {
     Q_OBJECT
 
@@ -98,5 +94,4 @@ private:
     void SockedErroe(int socketError, const QString &message);
     void ListenPort();
 };
-
-#endif // HOST_H
+#endif

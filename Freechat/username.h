@@ -20,7 +20,6 @@
 
 #ifndef USERNAME_H
 #define USERNAME_H
-
 class Freechat;
 class Connection;
 class Usernametable;
@@ -37,27 +36,24 @@ public slots:
     inline void ReadingMACAddress(QFile &fileWithMac);
     void TranslationName(QFile &fileWithMAC, QString &translator);
 };
-
-#endif // USERNAME_H
+#endif
 
 #ifndef USERNAMETABLE_H
 #define USERNAMETABLE_H
-
 class Username;
 
-class Usernametable : public QFile
+class Usernametable : public Username
 {
     Q_OBJECT
 
 public:
     ~Usernametable();
     Usernametable(QObject *parent = nullptr);
-    Usernametable(Usernametable &&MoveNameSource, QFile &);
 
-private:
+protected:
+    inline void MakeFileWithIp();
+    inline void MakeFileWithMac();
     void GetIpAddressFromWAN(QString &textWithIPAddres);
     inline void GetMacAddress(QString &textWithMacAddresOfUser);
 };
-
-
-#endif // USERNAMETABLE_H
+#endif
