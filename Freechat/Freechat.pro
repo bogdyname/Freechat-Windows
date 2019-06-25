@@ -7,6 +7,7 @@
 
 QT       += gui
 QT       += svg
+QT       += widgets
 QT       += network
 QT       += core gui
 
@@ -35,7 +36,8 @@ HEADERS += \
         username.h
 
 FORMS += \
-        freechat.ui
+        freechat.ui \
+        username.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

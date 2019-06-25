@@ -9,17 +9,26 @@
 #include "ui_freechat.h"
 #include "connectionf2f.h"
 
-Username::Username(QObject *parent)
+Username::Username(QWidget *parent)
     : QFile(parent)
 {
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+}
 
+Username::~Username()
+{
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
 }
 
 inline void Username::ReadingIpAddress(QFile &fileWithIP)
 {
     if ((fileWithIP.exists()) && (fileWithIP.open(ReadOnly)))
     {
-        ui->listViewWithNetworkData->setText(fileWithIP.readAll());
+        fileWithIP.readAll();
         fileWithIP.close();
     }
     else
@@ -34,7 +43,7 @@ inline void Username::ReadingMACAddress(QFile &fileWithMac)
 {
     if ((fileWithMac.exists()) && (fileWithMac.open(ReadOnly)))
     {
-        ui->listViewWithNetworkData->setText(fileWithMac.readAll());
+        fileWithMac.readAll();
         fileWithMac.close();
     }
     else
@@ -45,17 +54,47 @@ inline void Username::ReadingMACAddress(QFile &fileWithMac)
     return;
 }
 
-void Username::TranslationName(QFile &fileWithMAC, QString &translator)
-{
-
-    return;
-}
-
-
-Usernametable::Usernametable(QObject *parent)
+Usernametable::Usernametable(QWidget *parent)
     : Username(parent)
 {
+     MakeFileWithIp();
+     MakeFileWithMac();
 
+     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+}
+
+Usernametable::~Usernametable()
+{
+    delete buffer;
+}
+
+void Usernametable::TranslationName(QFile &fileWithMAC, QString &translator)
+{
+    QString *buffer = new QString;
+    GetMacAddress(translator);
+
+    QWidget *widget = new QWidget;
+    Ui::Username ui;
+    ui.setupUi(widget);
+
+    if((fileWithMAC.exists()) && (fileWithMAC.open(ReadOnly)))
+    {
+        fileWithMAC.readAll();
+        buffer << fileWithMAC;
+        fileWithMAC.close();
+    }
+    else
+    {
+        fileWithMAC.flush();
+    }
+
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+
+    return;
 }
 
 inline void Usernametable::MakeFileWithIp()
@@ -89,6 +128,7 @@ inline void Usernametable::MakeFileWithMac()
 
     QString fnamem = "macadd" +
             QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+
     QFile filem(fnamem);
 
     if((filem.exists()) && (filem.isOpen()))

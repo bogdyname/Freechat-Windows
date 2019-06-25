@@ -20,10 +20,11 @@ using namespace QPasswordDigestor;
 
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
-class ConnectionF2F : public QTcpSocket
+class ConnectionF2F : public QTcpSocket, Usernametable
 {
     Q_OBJECT
 
+public:
     ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 
@@ -46,7 +47,7 @@ private:
 
 #ifndef CLIENT_H
 #define CLIENT_H
-class Client : public ConnectionF2F, Username
+class Client : public ConnectionF2F
 {
     Q_OBJECT
 
@@ -79,7 +80,7 @@ private:
 
 #ifndef HOST_H
 #define HOST_H
-class Host : public ConnectionF2F, Username
+class Host : public ConnectionF2F
 {
     Q_OBJECT
 
