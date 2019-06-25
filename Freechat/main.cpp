@@ -513,8 +513,8 @@ copy of the Program in return for a fee.
 Contact: bogdyname@gmail.com
 */
 
-#include "freechat.h"
-#include "datasave.h"
+#include "Bin/freechat.h"
+#include "Data/datasave.h"
 #include <QtGui>
 #include <QApplication>
 #include <QtCore/QSettings>
@@ -528,15 +528,6 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QNetworkConfigurationManager manager;
-
-    Datasave newFile;
-  
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
 
     Freechat freechat;
     freechat.show();

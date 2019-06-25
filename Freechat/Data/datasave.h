@@ -4,8 +4,8 @@
 */
 
 #include "ui_freechat.h"
-#include "User/username.h"
-#include "User/freechat.h"
+#include "Bin/bin.h"
+#include "Bin/freechat.h"
 #include <QStorageInfo>
 #include <QDateTime>
 #include <QTimer>
@@ -14,7 +14,7 @@
 #ifndef DATASAVE_H
 #define DATASAVE_H
 
-class Datasave : public Username, public Freechat
+class Datasave : public Bin, public Freechat
 {
     Q_OBJECT
 

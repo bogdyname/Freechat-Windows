@@ -23,21 +23,20 @@ CONFIG += c++14
 CONFIG += c++17
 
 SOURCES += \
+        Bin/bin.cpp \
         Network/connectionf2f.cpp \
         main.cpp \
-        User/freechat.cpp \
-        Data/datasave.cpp \
-        User/username.cpp
+        Bin/freechat.cpp \
+        Data/datasave.cpp
 
 HEADERS += \
+        Bin/bin.h \
         Network/connectionf2f.h \
-        User/freechat.h \
-        Data/datasave.h \
-        User/username.h
+        Bin/freechat.h \
+        Data/datasave.h
 
 FORMS += \
-        Designer/freechat.ui \
-        Designer/username.ui
+        Designer/freechat.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

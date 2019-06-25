@@ -3,7 +3,7 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "User/username.h"
+#include "Bin/bin.h"
 #include <QNetworkInterface>
 #include <QAbstractSocket>
 #include <QNetworkSession>
@@ -20,7 +20,7 @@ using namespace QPasswordDigestor;
 
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
-class ConnectionF2F : public QTcpSocket, Usernametable
+class ConnectionF2F : public QTcpSocket, public Bin
 {
     Q_OBJECT
 

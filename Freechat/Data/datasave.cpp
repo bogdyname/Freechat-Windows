@@ -3,17 +3,13 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "User/username.h"
+#include "Bin/bin.h"
 #include "datasave.h"
-#include "User/freechat.h"
+#include "Bin/freechat.h"
 
 Datasave::Datasave(Freechat *parent)
-    : Username(parent)
+    : Bin(parent)
 {
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-
    connect( , SIGNAL(RunTimeIsOver()),
             this, SLOT(RunBackupFiles()));
    connect( , SIGNAL(SaveDataFileAs()),

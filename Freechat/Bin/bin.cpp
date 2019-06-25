@@ -3,28 +3,24 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "User/username.h"
+#include "Bin/bin.h"
 #include "Data/datasave.h"
-#include "User/freechat.h"
-#include "ui_freechat.h"
+#include "Bin/freechat.h"
 #include "Network/connectionf2f.h"
 
-Username::Username(QWidget *parent)
+Bin::Bin(QWidget *parent)
     : QFile(parent)
 {
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    MakeFileWithIp();
+    MakeFileWithMac();
 }
 
-Username::~Username()
+Bin::~Bin()
 {
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
+    delete buffer;
 }
 
-inline void Username::ReadingIpAddress(QFile &fileWithIP)
+inline void Bin::ReadingIpAddress(QFile &fileWithIP)
 {
     if ((fileWithIP.exists()) && (fileWithIP.open(ReadOnly)))
     {
@@ -39,7 +35,7 @@ inline void Username::ReadingIpAddress(QFile &fileWithIP)
     return;
 }
 
-inline void Username::ReadingMACAddress(QFile &fileWithMac)
+inline void Bin::ReadingMACAddress(QFile &fileWithMac)
 {
     if ((fileWithMac.exists()) && (fileWithMac.open(ReadOnly)))
     {
@@ -54,50 +50,7 @@ inline void Username::ReadingMACAddress(QFile &fileWithMac)
     return;
 }
 
-Usernametable::Usernametable(QWidget *parent)
-    : Username(parent)
-{
-     MakeFileWithIp();
-     MakeFileWithMac();
-
-     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-}
-
-Usernametable::~Usernametable()
-{
-    delete buffer;
-}
-
-void Usernametable::TranslationName(QFile &fileWithMAC, QString &translator)
-{
-    QString *buffer = new QString;
-    GetMacAddress(translator);
-
-    QWidget *widget = new QWidget;
-    Ui::Username ui;
-    ui.setupUi(widget);
-
-    if((fileWithMAC.exists()) && (fileWithMAC.open(ReadOnly)))
-    {
-        fileWithMAC.readAll();
-        buffer << fileWithMAC;
-        fileWithMAC.close();
-    }
-    else
-    {
-        fileWithMAC.flush();
-    }
-
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-    //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
-
-    return;
-}
-
-inline void Usernametable::MakeFileWithIp()
+inline void Bin::MakeFileWithIp()
 {
     QString ipOfUser;
     GetIpAddressFromWAN(ipOfUser);
@@ -121,7 +74,7 @@ inline void Usernametable::MakeFileWithIp()
     }
 }
 
-inline void Usernametable::MakeFileWithMac()
+inline void Bin::MakeFileWithMac()
 {
     QString macOfUser;
     GetMacAddress(macOfUser);
@@ -146,7 +99,7 @@ inline void Usernametable::MakeFileWithMac()
     }
 }
 
-inline void Usernametable::GetMacAddress(QString &textWithMacAddresOfUser)
+inline void Bin::GetMacAddress(QString &textWithMacAddresOfUser)
 {
             foreach(QNetworkInterface interface, QNetworkInterface::allInterfaces())
             {
@@ -156,7 +109,7 @@ inline void Usernametable::GetMacAddress(QString &textWithMacAddresOfUser)
     return;
 }
 
-void Usernametable::GetIpAddressFromWAN(QString &textWithIPAddres)
+void Bin::GetIpAddressFromWAN(QString &textWithIPAddres)
 {
         QNetworkAccessManager networkManager;
         QHostAddress IP;
