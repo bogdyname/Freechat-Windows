@@ -25,6 +25,8 @@ CONFIG += c++17
 SOURCES += \
         Bin/bin.cpp \
         Network/connectionf2f.cpp \
+        Network/cryptography.cpp \
+        Network/firewall.cpp \
         main.cpp \
         Bin/freechat.cpp \
         Data/datasave.cpp
@@ -33,7 +35,9 @@ HEADERS += \
         Bin/bin.h \
         Network/connectionf2f.h \
         Bin/freechat.h \
-        Data/datasave.h
+        Data/datasave.h \
+        Network/cryptography.h \
+        Network/firewall.h
 
 FORMS += \
         Designer/freechat.ui
