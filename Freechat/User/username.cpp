@@ -3,11 +3,11 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "username.h"
-#include "datasave.h"
-#include "freechat.h"
+#include "User/username.h"
+#include "Data/datasave.h"
+#include "User/freechat.h"
 #include "ui_freechat.h"
-#include "connectionf2f.h"
+#include "Network/connectionf2f.h"
 
 Username::Username(QWidget *parent)
     : QFile(parent)

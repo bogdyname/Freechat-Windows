@@ -4,7 +4,8 @@
 */
 
 #include "ui_freechat.h"
-#include "username.h"
+#include "User/username.h"
+#include "User/freechat.h"
 #include <QStorageInfo>
 #include <QDateTime>
 #include <QTimer>
@@ -12,10 +13,8 @@
 
 #ifndef DATASAVE_H
 #define DATASAVE_H
-class Username;
-class Freechat;
 
-class Datasave : public Username
+class Datasave : public Username, public Freechat
 {
     Q_OBJECT
 
@@ -27,7 +26,7 @@ private:
 
 public:
     ~Datasave();
-    Datasave(QObject *parent = nullptr);
+    Datasave(Freechat *parent = nullptr);
     Datasave(Datasave &&MoveSource, QFile &fileWithDataForBackup);
     Datasave(QFile &fileWithData, QFile &fileWithDataForBackup);
 

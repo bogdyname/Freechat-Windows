@@ -3,7 +3,7 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "username.h"
+#include "User/username.h"
 #include <QNetworkInterface>
 #include <QAbstractSocket>
 #include <QNetworkSession>

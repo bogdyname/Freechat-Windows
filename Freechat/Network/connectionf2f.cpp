@@ -4,7 +4,7 @@
 */
 
 #include "connectionf2f.h"
-#include "username.h"
+#include "User/username.h"
 
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)

@@ -4,7 +4,7 @@
 */
 
 #include <QtWidgets>
-#include "freechat.h"
+#include "User/freechat.h"
 
 using namespace Qt;
 

@@ -3,11 +3,11 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "username.h"
+#include "User/username.h"
 #include "datasave.h"
-#include "freechat.h"
+#include "User/freechat.h"
 
-Datasave::Datasave(QObject *parent)
+Datasave::Datasave(Freechat *parent)
     : Username(parent)
 {
     //HEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHEREHERE
