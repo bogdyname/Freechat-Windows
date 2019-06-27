@@ -21,22 +21,59 @@ class ConnectionF2F : public QTcpSocket
 {
     Q_OBJECT
 
+    friend class Bin;
+
 public:
     ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 
     void ConnectingToPeer();
-    void SocketConnected();
-    void SocketDisconnected();
     void ReadyReadOfData();
 
-    void MakeSocket();
-    void SocketError();
-    void ConnectinByWANIPAddr();
     void AskForConnectingToPortPeer();
     void AskForDisconnectingFromPortPeer();
+};
+#endif
+
+#ifndef PEEROUT
+#define PEEROUT
+class Peerout : public ConnectionF2F
+{
+    Q_OBJECT
+
+    friend void GetIpAddressFromWAN(QString &textWithIPAddres);
+
+public:
+    Peerout();
+    ~Peerout();
 
 private:
-    friend class Bin;
+    void MakeSocket();
+    void SocketError();
+    void SocketConnected();
+    void SocketDisconnected();
+
+private:
+    QTcpSocket *socket = nullptr;
+};
+#endif
+
+#ifndef PEERONSIDE
+#define PEERONSIDE
+class Peerinside : public ConnectionF2F
+{
+    Q_OBJECT
+
+    Peerinside();
+    ~Peerinside();
+
+private:
+    void MakeSocket();
+    void SocketError();
+    void SocketConnected();
+    void SocketDisconnected();
+
+private:
+    QTcpSocket *socket = nullptr;
 };
 #endif
