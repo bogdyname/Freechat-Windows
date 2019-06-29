@@ -21,8 +21,6 @@ class ConnectionF2F : public QTcpSocket
 {
     Q_OBJECT
 
-    friend class Bin;
-
 public:
     ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
@@ -41,8 +39,6 @@ class Peerout : public ConnectionF2F
 {
     Q_OBJECT
 
-    friend void GetIpAddressFromWAN(QString &textWithIPAddres);
-
 public:
     Peerout();
     ~Peerout();
@@ -52,9 +48,11 @@ private:
     void SocketError();
     void SocketConnected();
     void SocketDisconnected();
+    void GetIpAddressFromWAN(QString &textWithIPAddres);
 
 private:
     QTcpSocket *socket = nullptr;
+    QString strWANip;
 };
 #endif
 

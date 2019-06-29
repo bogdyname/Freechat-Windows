@@ -14,25 +14,21 @@
 
 #ifndef BIN_H
 #define BIN_H
-class Bin : public QFile
+class Peerout;
+class ConnectionF2F;
+
+class Bin : public QObject
 {
     Q_OBJECT
 
 public:
     ~Bin();
-    Bin(QWidget *parent = nullptr);
+    Bin(QObject *parent = nullptr);
 
-public slots:
-    inline void ReadingIpAddress(QFile &fileWithIP);
-    inline void ReadingMACAddress(QFile &fileWithMac);
+signals:
+    void RebootConnectin();
 
-private:
-    QString *buffer = nullptr;
-
-protected:
-    inline void MakeFileWithIp();
-    inline void MakeFileWithMac();
-    void GetIpAddressFromWAN(QString &textWithIPAddres);
-    inline void GetMacAddress(QString &textWithMacAddresOfUser);
+private slots:
+    void SlotForRebootConnection();
 };
 #endif
