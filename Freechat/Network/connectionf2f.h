@@ -15,6 +15,9 @@
 #include <QtNetwork>
 #include <QSsl>
 
+using namespace QSsl;
+using namespace QPasswordDigestor;
+
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
 class ConnectionF2F : public QTcpSocket
@@ -43,11 +46,14 @@ public:
     Peerout();
     ~Peerout();
 
+private slots:
+    void ReadyRead();
+    void DoConnect();
+    void Connected();
+    void Disconnected();
+    void BytesWrittenOfData(qint64 bytes);
+
 private:
-    void MakeSocket();
-    void SocketError();
-    void SocketConnected();
-    void SocketDisconnected();
     void GetIpAddressFromWAN(QString &textWithIPAddres);
 
 private:
