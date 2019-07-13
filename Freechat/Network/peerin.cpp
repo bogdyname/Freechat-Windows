@@ -10,7 +10,7 @@ Peerin::Peerin()
     connect(&showNetworkInfo, SIGNAL(ShowWANIpForUser()), this, SLOT(PassOnMyIpAddress()));
 }
 
-void Peerinside::PassOnMyIpAddress()
+void Peerin::PassOnMyIpAddress()
 {
     PassOnWANIp(strPassOnWANip);
 

@@ -16,7 +16,6 @@
 #define BIN_H
 class Peerout;
 class ConnectionF2F;
-
 class Bin : public QObject
 {
     Q_OBJECT
