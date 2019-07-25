@@ -33,7 +33,7 @@
    <property name="bottomMargin">
     <number>9</number>
    </property>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout">
      <property name="spacing">
       <number>6</number>
@@ -65,14 +65,18 @@ color: rgb(255, 255, 255);</string>
      <item>
       <widget class="QLineEdit" name="lineForTypeText">
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
+        <string notr="true">font: 8pt &quot;Letter Gothic Std&quot;;
+color: rgb(255, 255, 255);
 background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0.392045 rgba(0, 0, 0, 255), stop:0.607955 rgba(255, 255, 255, 255));</string>
+       </property>
+       <property name="text">
+        <string>Type here</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <layout class="QHBoxLayout">
      <property name="spacing">
       <number>6</number>
@@ -124,6 +128,32 @@ background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0.392
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLineEdit" name="writeNickOfPeer">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Write here nickname of peer to insert in table</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="writeIpOfPeer">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Write here IP of peer to connecting</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QPushButton" name="showNetworkSettings">
        <property name="styleSheet">
@@ -131,7 +161,7 @@ background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0.392
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
        </property>
        <property name="text">
-        <string>Settings</string>
+        <string>Settings of Network</string>
        </property>
       </widget>
      </item>
@@ -142,7 +172,7 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
        </property>
        <property name="text">
-        <string>Info</string>
+        <string>Info of Network</string>
        </property>
       </widget>
      </item>

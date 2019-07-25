@@ -3,14 +3,16 @@
 ***Contact: bogdyname@gmail.com
 */
 
+#ifndef NETWORKSETTINGS_H
+#define NETWORKSETTINGS_H
+
 #include "Bin/freechat.h"
 #include <QWidget>
 
-#ifndef NETWORKSETTINGS_H
-#define NETWORKSETTINGS_H
 class NetworkSettings : public Freechat
 {
     Q_OBJECT
+
 public:
     explicit NetworkSettings(QWidget *parent = nullptr);
 
@@ -18,4 +20,5 @@ signals:
 
 public slots:
 };
+
 #endif

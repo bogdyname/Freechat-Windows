@@ -3,31 +3,32 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include <QHostAddress>
-#include <QJsonObject>
-#include <QIODevice>
-#include <QHostInfo>
-#include <QSaveFile>
-#include <QDateTime>
-#include <QString>
-#include <QFile>
-
 #ifndef BIN_H
 #define BIN_H
-class Peerout;
-class ConnectionF2F;
+
+#include <QString>
+#include <QList>
+
 class Bin : public QObject
 {
     Q_OBJECT
+
+private:
+    QList<QString> listWithNickName;
+    QList<QString> listWithIpAddress;
 
 public:
     ~Bin();
     Bin(QObject *parent = nullptr);
 
-signals:
-    void RebootConnectin();
+private:
+    void WriteInNickNameListOfPeers(const QString &nickname);
+    void WriteInIpListOfPeers(const QString &ip);
 
-private slots:
-    void SlotForRebootConnection();
+    void RemoveFromIpLIst();
+    void RemoveFromNickNameList();
+
+    void GetElementFromIpList();
+    void GetElementFromNickNameList();
 };
 #endif

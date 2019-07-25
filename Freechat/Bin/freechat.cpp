@@ -17,8 +17,8 @@ Freechat::Freechat(QWidget *parent)
     textFieldForViewMessages->setReadOnly(true);
     listWithIpOfUsers->setFocusPolicy(NoFocus);
 
-    connect(&showNetworkInfo, SIGNAL(), SLOT());
-
+    connect(&on_showNetworkInfo_clicked, SIGNAL(), SLOT());
+    connect(&on_showNetworkSettings_clicked, SIGNAL(), SLOT());
 }
 
 void Freechat::on_showNetworkSettings_clicked(bool checked)
@@ -29,7 +29,7 @@ void Freechat::on_showNetworkSettings_clicked(bool checked)
 
         if (checked && !text.isEmpty())
         {
-            writeIpOfPeer->setText(text);
+            writeIpOfPeer.setText(text);
         }
         else
         {
@@ -42,4 +42,19 @@ void Freechat::on_showNetworkSettings_clicked(bool checked)
 void Freechat::on_showNetworkInfo_clicked(bool checked)
 {
 
+
+    return;
+}
+
+void Freechat::on_writeIpOfPeer_textEdited(const QString &arg1)
+{
+
+    return;
+}
+
+void Freechat::on_writeNickOfPeer_textEdited(const QString &arg1)
+{
+
+
+    return;
 }
