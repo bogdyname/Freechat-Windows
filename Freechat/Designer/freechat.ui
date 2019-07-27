@@ -161,7 +161,7 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
        </property>
        <property name="text">
-        <string>Settings of Network</string>
+        <string>Click here for connecting to peer</string>
        </property>
       </widget>
      </item>

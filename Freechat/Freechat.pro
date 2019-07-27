@@ -25,7 +25,6 @@ CONFIG += qt
 
 SOURCES += \
         Bin/bin.cpp \
-        Bin/networksettings.cpp \
         Network/connectionf2f.cpp \
         Network/cryptography.cpp \
         Network/cryptography.cpp \
@@ -37,7 +36,6 @@ SOURCES += \
 
 HEADERS += \
         Bin/bin.h \
-        Bin/networksettings.h \
         Network/connectionf2f.h \
         Bin/freechat.h \
         Data/datasave.h \
