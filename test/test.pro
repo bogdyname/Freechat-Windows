@@ -31,11 +31,13 @@ CONFIG += c++11
 SOURCES += \
         connectionf2f.cpp \
         main.cpp \
-        freechat.cpp
+        freechat.cpp \
+        peerout.cpp
 
 HEADERS += \
         connectionf2f.h \
-        freechat.h
+        freechat.h \
+        peerout.h
 
 FORMS += \
         freechat.ui
