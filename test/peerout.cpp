@@ -25,6 +25,12 @@ Peerout::~Peerout()
     }
 }
 
+void Peerout::WriteIpAddressFromPeer()
+{
+
+    return;
+}
+
 void Peerout::DoConnect()
 {
     socket = new QTcpSocket(this);

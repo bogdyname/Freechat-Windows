@@ -12,7 +12,7 @@ class Peerout : public ConnectionF2F
 {
     Q_OBJECT
 
-private:
+public:
     explicit Peerout();
     ~Peerout();
 

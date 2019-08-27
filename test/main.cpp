@@ -11,8 +11,10 @@ int main(int argc, char *argv[])
 
     ConnectionF2F testOnIP; //do not show WAN IP
 
-    Peerout testOnConnecting;
-    testOnConnecting.DoConnect();
+    testOnIP.DoConnect();
+
+    //Peerout testOnConnecting;
+    //testOnConnecting.DoConnect();
 
     return a.exec();
 }

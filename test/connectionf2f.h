@@ -31,8 +31,12 @@ public:
 
 public:
     void PassOnWANIp(QString &buffer);
+    void DoConnect();
 
 private:
     void GetIpAddressFromWAN(QString &textWithIPAddres);
+
+private:
+    QTcpSocket *socket = nullptr;
 };
 #endif
