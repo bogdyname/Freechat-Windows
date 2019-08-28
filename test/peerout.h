@@ -13,11 +13,13 @@ class Peerout : public ConnectionF2F
     Q_OBJECT
 
 public:
-    explicit Peerout();
+    explicit Peerout(QObject *parent = nullptr);
     ~Peerout();
 
-protected slots:
+public slots:
     void WriteIpAddressFromPeer();
+
+signals:
 
 public slots:
     void ReadyRead();
@@ -29,6 +31,7 @@ public slots:
 
 private:
     QTcpSocket *socket = nullptr;
+    QChar ipAddress;
     QString strWANip;
 };
 #endif

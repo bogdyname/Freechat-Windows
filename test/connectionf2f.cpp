@@ -8,8 +8,7 @@
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-    QString ip;
-    PassOnWANIp(ip);
+
 }
 
 void ConnectionF2F::PassOnWANIp(QString &buffer)
@@ -54,44 +53,6 @@ void ConnectionF2F::GetIpAddressFromWAN(QString &textWithIPAddres)
         });
 
         textWithIPAddres = IP.toString();
-
-        return;
-}
-
-void ConnectionF2F::DoConnect()
-{
-    socket = new QTcpSocket(this);
-
-    #ifndef Q_DEBUG
-    qDebug() << "A new socket created.";
-    #endif
-
-    //QString str("92.243.182.174");
-
-    socket->connectToHost("192.168.1.1", 80);
-
-        if(socket->waitForConnected(3000))
-        {
-            #ifndef Q_DEBUG
-            qDebug() << "Connected!";
-            #endif
-
-            socket->write("DATA OF TEXT");
-            socket->waitForBytesWritten(1000);
-            socket->waitForReadyRead(3000);
-            #ifndef Q_DEBUG
-            qDebug() << "Reading: " << socket->bytesAvailable();
-            qDebug() << socket->readAll();
-            #endif
-
-            socket->close();
-        }
-        else
-        {
-            #ifndef Q_DEBUG
-            qDebug() << "Not connected!";
-            #endif
-        }
 
         return;
 }

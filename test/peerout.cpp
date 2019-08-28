@@ -5,8 +5,15 @@
 
 #include "peerout.h"
 
-Peerout::Peerout()
+Peerout::Peerout(QObject *parent)
+    : ConnectionF2F(parent)
 {
+    socket = new QTcpSocket(this);
+
+    #ifndef Q_DEBUG
+    qDebug() << "A new socket created.";
+    #endif
+
     connect(socket, SIGNAL(Connected()), this, SLOT(Connected()));
     connect(socket, SIGNAL(DoConnect()), this, SLOT(DoConnect()));
     connect(socket, SIGNAL(ReadyRead()), this, SLOT(ReadyRead()));
@@ -28,18 +35,24 @@ Peerout::~Peerout()
 void Peerout::WriteIpAddressFromPeer()
 {
 
+    auto list = QHostInfo::fromName(QHostInfo::localHostName()).addresses();
+
+    #ifndef Q_DEBUG
+    qDebug() << "Addresses: " << list << endl;
+    #endif
+
     return;
 }
 
 void Peerout::DoConnect()
 {
-    socket = new QTcpSocket(this);
+    /*
+       If I write DNS or default gateway
+       It is work, but another IP addresses not at all
+    */
+    ipAddress = QHostAddress("92.243.182.174").toIPv4Address();
 
-    #ifndef Q_DEBUG
-    qDebug() << "A new socket created.";
-    #endif
-
-    socket->connectToHost("92.243.182.174", 80);
+    socket->connectToHost(ipAddress, 80);
 
         if(socket->waitForConnected(3000))
         {

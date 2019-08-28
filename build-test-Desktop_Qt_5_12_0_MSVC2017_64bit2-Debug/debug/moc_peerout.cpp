@@ -66,7 +66,7 @@ static const uint qt_meta_data_Peerout[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x09 /* Protected */,
+       1,    0,   49,    2, 0x0a /* Public */,
        3,    0,   50,    2, 0x0a /* Public */,
        4,    0,   51,    2, 0x0a /* Public */,
        5,    0,   52,    2, 0x0a /* Public */,

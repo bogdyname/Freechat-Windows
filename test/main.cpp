@@ -9,12 +9,9 @@ int main(int argc, char *argv[])
     Freechat w;
     w.show();
 
-    ConnectionF2F testOnIP; //do not show WAN IP
-
-    testOnIP.DoConnect();
-
-    //Peerout testOnConnecting;
-    //testOnConnecting.DoConnect();
+    Peerout testOnConnecting;
+    testOnConnecting.DoConnect();
+    testOnConnecting.WriteIpAddressFromPeer();
 
     return a.exec();
 }
