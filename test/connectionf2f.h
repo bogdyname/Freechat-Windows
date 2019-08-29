@@ -6,8 +6,6 @@
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
 
-#define WIN32_LEAN_AND_MEAN
-
 #include <QNetworkInterface>
 #include <QAbstractSocket>
 #include <QNetworkSession>
@@ -24,6 +22,7 @@ class ConnectionF2F : public QTcpSocket
 
 public:
     ConnectionF2F(QObject *parent = nullptr);
+    ~ConnectionF2F();
 
     void ConnectingToPeer();
     void ReadyReadOfData();
@@ -31,13 +30,22 @@ public:
     void AskForConnectingToPortPeer();
     void AskForDisconnectingFromPortPeer();
 
-public:
-    void PassOnWANIp(QString &buffer);
+public slots:
+    void WriteIpAddressFromPeer();
 
-public:
-    void GetIpAddressFromWAN(QString &textWithIPAddres);
+signals:
+
+public slots:
+    void ReadyRead();
+    void DoConnect();
+    void Connected();
+    void Disconnected();
+    void TaskResult(unsigned int &Number);
+    void BytesWrittenOfData(qint64 bytes);
 
 private:
     QTcpSocket *socket = nullptr;
+    QChar ipAddress;
+    QString strWANip;
 };
 #endif

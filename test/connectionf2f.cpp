@@ -8,54 +8,115 @@
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-    QString tts;
-    GetIpAddressFromWAN(tts);
-}
-
-void ConnectionF2F::PassOnWANIp(QString &buffer)
-{
-    GetIpAddressFromWAN(buffer);
+    socket = new QTcpSocket(this);
 
     #ifndef Q_DEBUG
-    qDebug() << "Your IP address: " << buffer;
+    qDebug() << "A new socket created.";
+    #endif
+
+    connect(socket, SIGNAL(Connected()), this, SLOT(Connected()));
+    connect(socket, SIGNAL(DoConnect()), this, SLOT(DoConnect()));
+    connect(socket, SIGNAL(ReadyRead()), this, SLOT(ReadyRead()));
+    connect(socket, SIGNAL(BytesWrittenOfData(qint64)), this, SLOT(BytesWrittenOfData(qint64)));
+}
+
+ConnectionF2F::~ConnectionF2F()
+{
+    if(socket != nullptr)
+    {
+        delete socket;
+    }
+    else
+    {
+        /*clear code*/
+    }
+}
+
+void ConnectionF2F::WriteIpAddressFromPeer()
+{
+
+    auto list = QHostInfo::fromName(QHostInfo::localHostName()).addresses();
+
+    #ifndef Q_DEBUG
+    qDebug() << "Addresses: " << list << endl;
     #endif
 
     return;
 }
 
-void ConnectionF2F::GetIpAddressFromWAN(QString &textWithIPAddres)
+void ConnectionF2F::DoConnect()
 {
-        QNetworkAccessManager networkManager;
-        QHostAddress IP;
+    /*
+       If I write DNS or default gateway
+       It is work, but another IP addresses not at all
+    */
+    ipAddress = QHostAddress("92.243.182.174").toIPv4Address();
 
-        QUrl url("https://api.ipify.org");
-        QUrlQuery query;
-        query.addQueryItem("format", "json");
-        url.setQuery(query);
+    socket->connectToHost(ipAddress, 80);
 
-        QNetworkReply* reply = networkManager.get(QNetworkRequest(url));
-
-        connect(reply, &QNetworkReply::finished, [&]()
+        if(socket->waitForConnected(3000))
         {
-            if(reply->error() != QNetworkReply::NoError)
-            {
-                #ifndef Q_DEBUG
-                qDebug() << "error: " << reply->error();
-                #endif
-            }
-            else
-            {
-                QJsonObject jsonObject= QJsonDocument::fromJson(reply->readAll()).object();
-                QHostAddress ip(jsonObject["ip"].toString());
+            #ifndef Q_DEBUG
+            qDebug() << "Connected!";
+            #endif
 
-                qDebug() << "external ip: " << ip;
-                IP = ip;
-            }
-            reply->deleteLater();
-        });
+            socket->write("DATA OF TEXT");
+            socket->waitForBytesWritten(1000);
+            socket->waitForReadyRead(3000);
+            #ifndef Q_DEBUG
+            qDebug() << "Reading: " << socket->bytesAvailable();
+            qDebug() << socket->readAll();
+            #endif
 
-        textWithIPAddres = IP.toString();
+            socket->close();
+        }
+        else
+        {
+            #ifndef Q_DEBUG
+            qDebug() << "Not connected!";
+            #endif
+        }
 
         return;
 }
+
+void ConnectionF2F::BytesWrittenOfData(qint64 bytes)
+{
+    #ifndef Q_DEBUG
+    qDebug() << bytes << " bytes written...";
+    #endif
+
+    return;
+}
+
+void ConnectionF2F::Connected()
+{
+
+    return;
+}
+
+void ConnectionF2F::Disconnected()
+{
+
+    return;
+}
+
+void ConnectionF2F::ReadyRead()
+{
+    #ifndef Q_DEBUG
+    qDebug() << "reading...";
+    qDebug() << socket->readAll();
+    #endif
+
+    return;
+}
+
+void ConnectionF2F::TaskResult(unsigned int &Number)
+{
+    Number = 0;
+
+    return;
+}
+
+
 
