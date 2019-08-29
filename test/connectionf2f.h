@@ -6,6 +6,8 @@
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
 
+#define WIN32_LEAN_AND_MEAN
+
 #include <QNetworkInterface>
 #include <QAbstractSocket>
 #include <QNetworkSession>
@@ -32,7 +34,7 @@ public:
 public:
     void PassOnWANIp(QString &buffer);
 
-private:
+public:
     void GetIpAddressFromWAN(QString &textWithIPAddres);
 
 private:

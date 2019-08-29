@@ -9,9 +9,7 @@ int main(int argc, char *argv[])
     Freechat w;
     w.show();
 
-    Peerout testOnConnecting;
-    testOnConnecting.DoConnect();
-    testOnConnecting.WriteIpAddressFromPeer();
+
 
     return a.exec();
 }

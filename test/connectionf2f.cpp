@@ -8,7 +8,8 @@
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-
+    QString tts;
+    GetIpAddressFromWAN(tts);
 }
 
 void ConnectionF2F::PassOnWANIp(QString &buffer)
@@ -47,6 +48,7 @@ void ConnectionF2F::GetIpAddressFromWAN(QString &textWithIPAddres)
                 QJsonObject jsonObject= QJsonDocument::fromJson(reply->readAll()).object();
                 QHostAddress ip(jsonObject["ip"].toString());
 
+                qDebug() << "external ip: " << ip;
                 IP = ip;
             }
             reply->deleteLater();
@@ -56,3 +58,4 @@ void ConnectionF2F::GetIpAddressFromWAN(QString &textWithIPAddres)
 
         return;
 }
+
