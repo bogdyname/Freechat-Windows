@@ -15,7 +15,8 @@ class Bin : public QObject
 
 private:
     QList<QString> listWithNickName;
-    QList<QString> listWithIpAddress;
+    QList<QString> listWithWANIpAddress;
+    QList<QString> listWithLANIpAddress;
 
 public:
     ~Bin();
@@ -23,12 +24,22 @@ public:
 
 private:
     void WriteInNickNameListOfPeers(const QString &nickname);
-    void WriteInIpListOfPeers(const QString &ip);
+    void WriteInIpListOfPeers(const QString &lanIP, const QString &wanIP);
 
-    void RemoveFromIpLIst();
+    void RemoveFromIpList();
     void RemoveFromNickNameList();
 
     void GetElementFromIpList();
     void GetElementFromNickNameList();
+
+private:
+    template <typename Wcontainer>
+    Wcontainer WriteElementsInList(Wcontainer &list, const QString &element);
+
+    template <typename Gcontainer>
+    Gcontainer GetElementsFromList(Gcontainer &list);
+
+    template <typename Rcontainer>
+    Rcontainer RemoveElementsFromList(Rcontainer &list);
 };
 #endif

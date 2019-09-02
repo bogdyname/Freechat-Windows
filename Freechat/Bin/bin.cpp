@@ -19,6 +19,46 @@ Bin::~Bin()
 
 }
 
+template <typename Wcontainer>
+Wcontainer Bin::WriteElementsInList(Wcontainer &list, const QString &element)
+{
+    list << element;
+
+    return;
+}
+
+template <typename Gcontainer>
+Gcontainer Bin::GetElementsFromList(Gcontainer &list)
+{
+    QList<QString>::const_iterator it = list.constBegin();
+
+    for(; it != list.end(); ++it)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Element from list: " << *it << endl;
+        #endif
+    }
+
+    return;
+}
+
+template <typename Rcontainer>
+Rcontainer Bin::RemoveElementsFromList(Rcontainer &list)
+{
+    QList<QString>::iterator it = list.begin();
+
+    for(; it != list.end(); ++it)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Deleted element from list: " << *it << endl;
+        #endif
+
+        //list.erase(*it);
+    }
+
+    return;
+}
+
 void Bin::WriteInNickNameListOfPeers(const QString &nickname)
 {
     listWithNickName << nickname;
@@ -26,21 +66,35 @@ void Bin::WriteInNickNameListOfPeers(const QString &nickname)
     return;
 }
 
-void Bin::WriteInIpListOfPeers(const QString &ip)
+void Bin::WriteInIpListOfPeers(const QString &lanIP, const QString &wanIP)
 {
-    listWithIpAddress << ip;
+    listWithLANIpAddress << lanIP;
+    listWithWANIpAddress << wanIP;
 
     return;
 }
 
 void Bin::GetElementFromIpList()
 {
-    QList<QString>::const_iterator it = listWithIpAddress.constBegin();
+    /*wan ip list*/
 
-    for(; it != listWithIpAddress.end(); ++it)
+    QList<QString>::const_iterator itWAN = listWithWANIpAddress.constBegin();
+
+    for(; itWAN != listWithWANIpAddress.end(); ++itWAN)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Element from IP list: " << *it << endl;
+        qDebug() << "Element from WAN IP list: " << *itWAN << endl;
+        #endif
+    }
+
+    /*lan ip list*/
+
+    QList<QString>::const_iterator itLAN = listWithLANIpAddress.constBegin();
+
+    for(; itLAN != listWithWANIpAddress.end(); ++itLAN)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Element from LAN IP list: " << *itLAN << endl;
         #endif
     }
 
@@ -61,18 +115,34 @@ void Bin::GetElementFromNickNameList()
     return;
 }
 
-void Bin::RemoveFromIpLIst()
+void Bin::RemoveFromIpList()
 {
-    QList<QString>::iterator it = listWithIpAddress.begin();
+    /*wan ip list*/
 
-    for(; it != listWithIpAddress.end(); ++it)
+    QList<QString>::const_iterator itWAN = listWithWANIpAddress.constBegin();
+
+    for(; itWAN != listWithWANIpAddress.end(); ++itWAN)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Deleted element from Nickname list: " << *it << endl;
+        qDebug() << "Deleted element from WAN IP list: " << *itWAN << endl;
         #endif
 
-        //listWithIpAddress.erase(*it);
+        //listWithWANIpAddress.erase(*it);
     }
+
+    /*lan ip list*/
+
+    QList<QString>::const_iterator itLAN = listWithLANIpAddress.constBegin();
+
+    for(; itLAN != listWithWANIpAddress.end(); ++itLAN)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Deleted element from LAN IP list: " << *itWAN << endl;
+        #endif
+
+        //listWithLANIpAddress.erase(*it);
+    }
+
 
     return;
 }
