@@ -24,7 +24,26 @@ void Freechat::on_showNetworkInfo_clicked(bool checked)
     {
     case true:
         QMessageBox::information(this, tr("Network Info"),
-                                 tr("Your IP address: "), yourIp);
+                                 tr("Your LAN IP address: "), yourIp);
+        break;
+    case false:
+        break;
+    }
+
+    return;
+}
+
+void Freechat::on_connectionToPeer_clicked(bool checked)
+{
+    switch(checked)
+    {
+    case true:
+    {
+        QMessageBox::information(this, tr("Connection"),
+                                 tr("Connecting to peer..."));
+
+        //make connection
+    }
         break;
     case false:
         break;

@@ -23,16 +23,6 @@ public:
     Bin(QObject *parent = nullptr);
 
 private:
-    void WriteInNickNameListOfPeers(const QString &nickname);
-    void WriteInIpListOfPeers(const QString &lanIP, const QString &wanIP);
-
-    void RemoveFromIpList();
-    void RemoveFromNickNameList();
-
-    void GetElementFromIpList();
-    void GetElementFromNickNameList();
-
-private:
     template <typename Wcontainer>
     Wcontainer WriteElementsInList(Wcontainer &list, const QString &element);
 

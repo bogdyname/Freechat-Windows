@@ -30,5 +30,6 @@ public:
 
 private slots:
     void on_showNetworkInfo_clicked(bool checked);
+    void on_connectionToPeer_clicked(bool checked);
 };
 #endif

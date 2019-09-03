@@ -150,12 +150,23 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
        </property>
        <property name="text">
-        <string>Write here IP of peer to connecting</string>
+        <string>Write here LAN IP of peer</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="showNetworkSettings">
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Write here WAN IP of peer</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="connectionToPeer">
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
