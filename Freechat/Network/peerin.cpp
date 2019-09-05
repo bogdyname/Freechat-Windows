@@ -11,13 +11,6 @@ Peerin::Peerin(ConnectionF2F *parent)
 
 }
 
-void Peerin::PassOnMyIpAddress()
-{
-    PassOnWANIp(strPassOnWANip);
-
-    return;
-}
-
 void Peerin::CheckPortsForConnection()
 {
     if(listen(QHostAddress::Any, 1234))

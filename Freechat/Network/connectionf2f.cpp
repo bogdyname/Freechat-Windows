@@ -12,3 +12,15 @@ ConnectionF2F::ConnectionF2F(QObject *parent)
 {
 
 }
+
+void ConnectionF2F::OpenConnectingToPortPeer()
+{
+
+    return;
+}
+
+void ConnectionF2F::OpenDisconnectingFromPortPeer()
+{
+
+    return;
+}

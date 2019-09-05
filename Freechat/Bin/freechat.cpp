@@ -35,6 +35,8 @@ void Freechat::on_showNetworkInfo_clicked(bool checked)
 
 void Freechat::on_connectionToPeer_clicked(bool checked)
 {
+    bool reply = false;
+
     switch(checked)
     {
     case true:
@@ -42,7 +44,17 @@ void Freechat::on_connectionToPeer_clicked(bool checked)
         QMessageBox::information(this, tr("Connection"),
                                  tr("Connecting to peer..."));
 
-        //make connection
+        AskForConnectingToPortPeer(); //ask for connection
+
+        if(ReplyFromPortPeer(reply) == true) // reply
+        {
+
+        }
+        else
+        {
+            QMessageBox::information(this, tr("Disconnected"),
+                                     tr("Peer does not want to connect with you"));
+        }
     }
         break;
     case false:
@@ -51,3 +63,28 @@ void Freechat::on_connectionToPeer_clicked(bool checked)
 
     return;
 }
+
+void Freechat::AskForConnectingToPortPeer()
+{
+
+    return;
+}
+
+void Freechat::AskForDisconnectingFromPortPeer()
+{
+
+    return;
+}
+
+bool Freechat::ReplyFromPortPeer(bool &reply)
+{
+    if(reply == true)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+

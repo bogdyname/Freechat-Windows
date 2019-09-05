@@ -20,11 +20,7 @@ private:
     void CheckPortsForConnection();
     void Connection();
 
-public:
-    void PassOnMyIpAddress();
-
 private:
     QTcpSocket *socket = nullptr;
-    QString strPassOnWANip;
 };
 #endif

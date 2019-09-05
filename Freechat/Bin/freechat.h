@@ -23,10 +23,16 @@ private:
     QString ipOfPeer;
     QString nickNameOfPeer;
     QString yourIp;
+    bool *replyForCD = nullptr; //not sure
 
 public:
     Freechat(QWidget *parent = nullptr);
     ~Freechat();
+
+private:
+    void AskForConnectingToPortPeer();
+    void AskForDisconnectingFromPortPeer();
+    bool ReplyFromPortPeer(bool &reply);
 
 private slots:
     void on_showNetworkInfo_clicked(bool checked);

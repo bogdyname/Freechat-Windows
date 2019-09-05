@@ -20,7 +20,7 @@ Peerout::~Peerout()
 
 void Peerout::WriteIpAddressFromPeer()
 {
-        strWANip = ;
+        //strWANip = ;
 
         return;
 }
