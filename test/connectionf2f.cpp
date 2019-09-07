@@ -3,6 +3,7 @@
 ***Contact: bogdyname@gmail.com
 */
 
+#include "peerin.h"
 #include "connectionf2f.h"
 
 ConnectionF2F::ConnectionF2F(QObject *parent)
@@ -52,7 +53,7 @@ void ConnectionF2F::DoConnect()
     */
     ipAddress = QHostAddress("92.243.182.174").toIPv4Address();
 
-    socket->connectToHost(ipAddress, 80);
+    socket->connectToHost(ipAddress, 1234);
 
         if(socket->waitForConnected(3000))
         {
