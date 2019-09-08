@@ -53,13 +53,11 @@ void ConnectionF2F::DoConnect()
     */
     ipAddress = QHostAddress("92.243.182.174").toIPv4Address();
 
-    socket->connectToHost(ipAddress, 1234);
+    socket->connectToHost("192.168.1.28", 80);
 
         if(socket->waitForConnected(3000))
         {
-            #ifndef Q_DEBUG
-            qDebug() << "Connected!";
-            #endif
+            Connected();
 
             socket->write("DATA OF TEXT");
             socket->waitForBytesWritten(1000);
@@ -92,12 +90,18 @@ void ConnectionF2F::BytesWrittenOfData(qint64 bytes)
 
 void ConnectionF2F::Connected()
 {
+    #ifndef Q_DEBUG
+    qDebug() << "Connected!";
+    #endif
 
     return;
 }
 
 void ConnectionF2F::Disconnected()
 {
+    #ifndef Q_DEBUG
+    qDebug() << "Disconnected!";
+    #endif
 
     return;
 }

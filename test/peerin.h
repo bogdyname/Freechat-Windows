@@ -25,12 +25,15 @@ class Peerin : public QTcpServer
 public:
     explicit Peerin(QObject *parent = nullptr);
 
+    void incomingConnection(qintptr socketDescriptor);
+
 signals:
 
 public slots:
-    void Connection();
+    void ReadData();
+    void Disconnecting();
 
 private:
-    QTcpServer *socketserv = nullptr;
+    QTcpServer *server;
 };
 #endif

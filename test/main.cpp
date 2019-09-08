@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     w.show();
 
     Peerin testServer;
-    testServer.Connection();
+    testServer.newConnection();
 
     ConnectionF2F test1;
     test1.DoConnect();

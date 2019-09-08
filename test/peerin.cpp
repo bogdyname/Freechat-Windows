@@ -4,35 +4,46 @@
 */
 
 #include "peerin.h"
+#include "connectionf2f.h"
 
 Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
-    socketserv = new QTcpServer(this);
-    connect(socketserv,SIGNAL(newConnection()),this,SLOT(newConnection()));
+    server = new QTcpServer(this);
 
-    if(listen(QHostAddress::Any, 1234))
-        {
-            #ifndef Q_DEBUG
-            qDebug() << "Server: started";
-            #endif
-        }
-        else
-        {
-            #ifndef Q_DEBUG
-            qDebug() << "Server: not started!";
-            #endif
-        }
+    if(listen(QHostAddress::Any, 80))
+    {
+       #ifndef Q_DEBUG
+       qDebug() << "Server: started";
+       #endif
+    }
+    else
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Server: not started: " << errorString();
+        #endif
+    }
 }
 
-void Peerin::Connection()
+void Peerin::incomingConnection(qintptr socketDescriptor)
 {
-    QTcpSocket *socket = socketserv->nextPendingConnection();
-    socket->write("hello client\r\n");
-    socket->flush(); // check this out
+    QTcpSocket *socket = new QTcpSocket();
+    socket->setSocketDescriptor(socketDescriptor);
 
-    socket->waitForBytesWritten(3000);
-    socket->close();
+    connect(socket, SIGNAL(readyRead()), this, SLOT(ReadData()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(Disconnecting()));
+
+    return;
+}
+
+void Peerin::ReadData()
+{
+
+    return;
+}
+
+void Peerin::Disconnecting()
+{
 
     return;
 }
