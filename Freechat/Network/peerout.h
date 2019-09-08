@@ -25,11 +25,11 @@ public slots:
     void DoConnect();
     void Connected();
     void Disconnected();
-    void TaskResult(unsigned int Number);
+    void TaskResult(unsigned int &Number);
     void BytesWrittenOfData(qint64 bytes);
 
 private:
     QTcpSocket *socket = nullptr;
-    QString strWANip;
+    QString ip;
 };
 #endif

@@ -9,18 +9,25 @@
 #include "Network/connectionf2f.h"
 #include "Network/peerout.h"
 
-class Peerin : public ConnectionF2F, public QTcpServer
+class Peerin : public QTcpServer
 {
     Q_OBJECT
 
-    Peerin(ConnectionF2F *parent = nullptr);
+private:
+    explicit Peerin(QObject *parent = nullptr);
     ~Peerin();
 
 private:
     void CheckPortsForConnection();
-    void Connection();
+    void incomingConnection(qintptr socketDescriptor);
+
+signals:
+
+public slots:
+    void ReadData();
+    void Disconnecting();
 
 private:
-    QTcpSocket *socket = nullptr;
+    QTcpServer *server = nullptr;
 };
 #endif
