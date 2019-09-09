@@ -18,14 +18,13 @@ private:
     ~Peerin();
 
 private:
-    void CheckPortsForConnection();
+    void CheckPortForConnection();
     void incomingConnection(qintptr socketDescriptor);
 
 signals:
 
 public slots:
     void ReadData();
-    void Disconnecting();
 
 private:
     QTcpServer *server = nullptr;

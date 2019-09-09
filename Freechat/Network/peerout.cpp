@@ -72,7 +72,7 @@ void Peerout::DoConnect()
         return;
 }
 
-void Peerout::BytesWrittenOfData(qint64 bytes)
+void Peerout::BytesWrittenOfData(qint64 &bytes)
 {
     #ifndef Q_DEBUG
     qDebug() << bytes << " bytes written...";
@@ -90,28 +90,12 @@ void Peerout::Connected()
     return;
 }
 
-void Peerout::Disconnected()
-{
-    #ifndef Q_DEBUG
-    qDebug() << "Disconnected!";
-    #endif
-
-    return;
-}
-
 void Peerout::ReadyRead()
 {
     #ifndef Q_DEBUG
     qDebug() << "reading...";
     qDebug() << socket->readAll();
     #endif
-
-    return;
-}
-
-void Peerout::TaskResult(unsigned int &Number)
-{
-    Number = 0;
 
     return;
 }

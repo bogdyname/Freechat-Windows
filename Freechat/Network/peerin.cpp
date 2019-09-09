@@ -8,11 +8,11 @@
 Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
-    CheckPortsForConnection();
+    CheckPortForConnection();
 
 }
 
-void Peerin::CheckPortsForConnection()
+void Peerin::CheckPortForConnection()
 {
     server = new QTcpServer(this);
 
@@ -44,12 +44,6 @@ void Peerin::incomingConnection(qintptr socketDescriptor)
 }
 
 void Peerin::ReadData()
-{
-
-    return;
-}
-
-void Peerin::Disconnecting()
 {
 
     return;
