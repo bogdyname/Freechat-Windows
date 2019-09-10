@@ -8,10 +8,16 @@
 #include "Bin/freechat.h"
 #include "Network/connectionf2f.h"
 
+using namespace std;
+
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
+    //signals from freechat for connect UI with bin header
 
+    connect(, SIGNAL(), this, SLOT(AddPeer(QString)));
+    connect(, SIGNAL(), this, SLOT(DeletePeer()));
+    connect(, SIGNAL(), this, SLOT(GetNickname()));
 }
 
 Bin::~Bin()
@@ -19,12 +25,35 @@ Bin::~Bin()
 
 }
 
+void Bin::AddPeer(QString &nickname, QString &Lanip, QString &Wanip)
+{
+    WriteElementsInList(listWithNickName, nickname);
+    WriteElementsInList(listWithWANIpAddress, Lanip);
+    WriteElementsInList(listWithLANIpAddress, Wanip);
+
+    return;
+}
+
+void Bin::DeletePeer()
+{
+    RemoveElementsFromList(listWithNickName);
+    RemoveElementsFromList(listWithWANIpAddress);
+    RemoveElementsFromList(listWithLANIpAddress);
+
+    return;
+}
+
+void Bin::GetNickname()
+{
+    GetElementsFromList(listWithNickName);
+
+    return;
+}
+
 template <typename Wcontainer>
 Wcontainer Bin::WriteElementsInList(Wcontainer &list, const QString &element)
 {
     list << element;
-
-    return;
 }
 
 template <typename Gcontainer>
@@ -38,8 +67,6 @@ Gcontainer Bin::GetElementsFromList(Gcontainer &list)
         qDebug() << "Element from list: " << *it << endl;
         #endif
     }
-
-    return;
 }
 
 template <typename Rcontainer>
@@ -53,8 +80,7 @@ Rcontainer Bin::RemoveElementsFromList(Rcontainer &list)
         qDebug() << "Deleted element from list: " << *it << endl;
         #endif
 
-        //list.erase(*it);
+        list.erase(it);
     }
 
-    return;
 }
