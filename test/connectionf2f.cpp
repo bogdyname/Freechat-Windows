@@ -47,10 +47,6 @@ void ConnectionF2F::WriteIpAddressFromPeer()
 
 void ConnectionF2F::DoConnect()
 {
-    /*
-       If I write DNS or default gateway
-       It is work, but another IP addresses not at all
-    */
     ipAddress = QHostAddress("92.243.182.174").toIPv4Address();
 
     socket->connectToHost("192.168.1.28", 80);
@@ -115,13 +111,3 @@ void ConnectionF2F::ReadyRead()
 
     return;
 }
-
-void ConnectionF2F::TaskResult(unsigned int &Number)
-{
-    Number = 0;
-
-    return;
-}
-
-
-
