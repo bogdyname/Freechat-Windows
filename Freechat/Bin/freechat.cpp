@@ -88,3 +88,20 @@ bool Freechat::ReplyFromPortPeer(bool &reply)
     }
 }
 
+
+void Freechat::on_writeNickOfPeer_textChanged(const QString &nickname)
+{
+
+    return;
+}
+void Freechat::on_writeLanIpOfPeer_textChanged(const QString &ip)
+{
+
+    return;
+}
+
+void Freechat::on_writeWanIpOfPeer_textChanged(const QString &ip)
+{
+
+    return;
+}
