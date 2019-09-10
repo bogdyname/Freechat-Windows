@@ -27,9 +27,6 @@ public:
     void ConnectingToPeer();
     void ReadyReadOfData();
 
-    void AskForConnectingToPortPeer();
-    void AskForDisconnectingFromPortPeer();
-
 public slots:
     void WriteIpAddressFromPeer();
 
@@ -40,7 +37,6 @@ public slots:
     void DoConnect();
     void Connected();
     void Disconnected();
-    void TaskResult(unsigned int &Number);
     void BytesWrittenOfData(qint64 bytes);
 
 private:

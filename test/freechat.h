@@ -18,5 +18,4 @@ public:
 private:
     Ui::Freechat *ui;
 };
-
-#endif // FREECHAT_H
+#endif
