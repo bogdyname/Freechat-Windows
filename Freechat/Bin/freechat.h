@@ -37,8 +37,8 @@ private:
 private slots:
     void on_showNetworkInfo_clicked(bool checked);
     void on_connectionToPeer_clicked(bool checked);
-    void on_writeNickOfPeer_textChanged(const QString &arg1);
-    void on_writeLanIpOfPeer_textChanged(const QString &arg1);
-    void on_writeWanIpOfPeer_textChanged(const QString &arg1);
+    void on_writeNickOfPeer_textChanged(const QString &nickname);
+    void on_writeLanIpOfPeer_textChanged(const QString &ip);
+    void on_writeWanIpOfPeer_textChanged(const QString &ip);
 };
 #endif
