@@ -144,7 +144,7 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="writeIpOfPeer">
+      <widget class="QLineEdit" name="writeLanIpOfPeer">
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
@@ -155,7 +155,7 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="writeWanIpOfPeer">
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
