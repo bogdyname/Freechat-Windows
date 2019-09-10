@@ -44,9 +44,9 @@ void Freechat::on_connectionToPeer_clicked(bool checked)
         QMessageBox::information(this, tr("Connection"),
                                  tr("Connecting to peer..."));
 
-        AskForConnectingToPortPeer(); //ask for connection
+        AskForConnectingToPortPeer();
 
-        if(ReplyFromPortPeer(reply) == true) // reply
+        if(ReplyFromPortPeer(reply) == true)
         {
 
         }
