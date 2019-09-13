@@ -15,9 +15,11 @@ Bin::Bin(QObject *parent)
 {
     //signals from freechat for connect UI with bin header
 
+    /*
     connect(, SIGNAL(), this, SLOT(AddPeer(QString)));
     connect(, SIGNAL(), this, SLOT(DeletePeer()));
     connect(, SIGNAL(), this, SLOT(GetNickname()));
+    */
 }
 
 Bin::~Bin()
@@ -43,9 +45,9 @@ void Bin::DeletePeer()
     return;
 }
 
-void Bin::GetNickname()
+void Bin::GetNickname(QList<QString> &nick)
 {
-    GetElementsFromList(listWithNickName);
+    nick = GetElementsFromList(listWithNickName);
 
     return;
 }
