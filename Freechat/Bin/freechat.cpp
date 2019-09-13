@@ -3,19 +3,26 @@
 ***Contact: bogdyname@gmail.com
 */
 
+#include "Bin/bin.h"
 #include "Bin/freechat.h"
 #include "Network/connectionf2f.h"
 
 Freechat::Freechat(QWidget *parent)
-    : QDialog(parent)
+    : QDialog(parent),
+      ui(new Ui::Freechat)
 {
-    setupUi(this);
+    ui->setupUi(this);
 
-    lineForTypeText->setFocusPolicy(StrongFocus);
-    textFieldForViewMessages->setFocusPolicy(NoFocus);
-    textFieldForViewMessages->setReadOnly(true);
-    listWithIpOfUsers->setFocusPolicy(NoFocus);
+    ui->lineForTypeText->setFocusPolicy(StrongFocus);
+    ui->textFieldForViewMessages->setFocusPolicy(NoFocus);
+    ui->textFieldForViewMessages->setReadOnly(true);
+    ui->listWithIpOfUsers->setFocusPolicy(NoFocus);
 
+}
+
+Freechat::~Freechat()
+{
+    delete ui;
 }
 
 void Freechat::on_showNetworkInfo_clicked(bool checked)
@@ -88,19 +95,89 @@ bool Freechat::ReplyFromPortPeer(bool &reply)
     }
 }
 
-
-void Freechat::on_writeNickOfPeer_textChanged(const QString &nickname)
-{
-
-    return;
-}
-void Freechat::on_writeLanIpOfPeer_textChanged(const QString &ip)
+void Freechat::SetTextInsideFiledOfChat()
 {
 
     return;
 }
 
-void Freechat::on_writeWanIpOfPeer_textChanged(const QString &ip)
+void Freechat::on_writeNickOfPeer_textChanged()
+{
+
+    return;
+}
+void Freechat::on_writeLanIpOfPeer_textChanged()
+{
+
+    return;
+}
+
+void Freechat::on_writeWanIpOfPeer_textChanged()
+{
+
+
+    return;
+}
+
+void Freechat::on_wanButton_clicked(bool checked)
+{
+
+    switch(checked)
+    {
+    case true:
+        wanIpOfPeer = ui->writeWanIpOfPeer->text();
+        break;
+    case false:
+        break;
+    }
+
+    return;
+}
+
+void Freechat::on_lanButton_clicked(bool checked)
+{
+    switch(checked)
+    {
+    case true:
+        lanIpOfPeer = ui->writeLanIpOfPeer->text();
+        break;
+    case false:
+        break;
+    }
+
+    return;
+}
+
+void Freechat::on_nickButton_clicked(bool checked)
+{
+    switch(checked)
+    {
+    case true:
+        nickNameOfPeer = ui->writeNickOfPeer->text();
+        break;
+    case false:
+        break;
+    }
+
+    return;
+}
+
+void Freechat::on_listWithIpOfUsers_itemDoubleClicked(QListWidgetItem *item)
+{
+    connect(textFieldForViewMessages, SIGNAL(SetTextInsideFiledOfChat()), this, SLOT(paste()));
+
+    // need to add elements from nick list into *item QListWidgetItem for show nicknames
+    // not done
+    QListWidgetItem *item = new QListWidgetItem(listWithNickName->toPlainText());
+
+    ui->listWithIpOfUsers->addItem(item);
+
+    //write here double ckicked on nick and copy data from file and past it in chat field
+
+    return;
+}
+
+void Freechat::on_lineForTypeText_textEdited(const QString &masseg)
 {
 
     return;
