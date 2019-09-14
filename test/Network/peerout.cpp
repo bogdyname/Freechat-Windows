@@ -33,13 +33,7 @@ Peerout::~Peerout()
 
 void Peerout::WriteIpAddressFromPeer()
 {
-    auto list = QHostInfo::fromName(QHostInfo::localHostName()).addresses();
-
-    #ifndef Q_DEBUG
-    qDebug() << "Addresses: " << list << endl;
-    #endif
-
-    //strWANip = ;
+    ip += globalNetworkBuffer;
 
     return;
 }
