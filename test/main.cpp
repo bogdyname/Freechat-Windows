@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 
     Peerin testServer;
 
-    ConnectionF2F test1;
-    test1.DoConnect();
+    //ConnectionF2F test1;
+    //test1.DoConnect();
 
     return a.exec();
 }
