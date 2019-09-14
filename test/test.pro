@@ -1,8 +1,4 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2019-07-27T18:59:54
-#
-#-------------------------------------------------
+
 
 QT       += gui
 QT       += svg
@@ -18,17 +14,24 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
+CONFIG += c++14
+CONFIG += c++17
+CONFIG += qt
 
 SOURCES += \
-        connectionf2f.cpp \
-        peerin.cpp \
+        Bin/bin.cpp \
+        Network/connectionf2f.cpp \
+        Network/peerin.cpp \
+        Network/peerout.cpp \
         main.cpp \
-        freechat.cpp
+        Bin/freechat.cpp
 
 HEADERS += \
-        connectionf2f.h \
-        freechat.h \
-        peerin.h
+        Bin/bin.h \
+        Network/connectionf2f.h \
+        Bin/freechat.h \
+        Network/peerin.h \
+        Network/peerout.h
 
 FORMS += \
         freechat.ui
