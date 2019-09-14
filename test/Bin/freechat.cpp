@@ -16,7 +16,7 @@ Freechat::Freechat(QWidget *parent)
     ui->lineForTypeText->setFocusPolicy(StrongFocus);
     ui->textFieldForViewMessages->setFocusPolicy(NoFocus);
     ui->textFieldForViewMessages->setReadOnly(true);
-    ui->listWithIpOfUsers->setFocusPolicy(NoFocus);
+    ui->writeNickOfPeer->setFocusPolicy(NoFocus);
 
 }
 
@@ -27,6 +27,9 @@ Freechat::~Freechat()
 
 void Freechat::on_showNetworkInfo_clicked(bool checked)
 {
+    globalBuffer += ;
+    yourIp += globalBuffer;
+
     switch(checked)
     {
     case true:
@@ -95,12 +98,6 @@ bool Freechat::ReplyFromPortPeer(bool &reply)
     }
 }
 
-void Freechat::SetTextInsideFiledOfChat()
-{
-
-    return;
-}
-
 void Freechat::on_writeNickOfPeer_textChanged()
 {
 
@@ -162,7 +159,7 @@ void Freechat::on_nickButton_clicked(bool checked)
     return;
 }
 
-void Freechat::on_listWithIpOfUsers_itemDoubleClicked(QListWidgetItem *item)
+void Freechat::on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
 {
     connect(textFieldForViewMessages, SIGNAL(SetTextInsideFiledOfChat()), this, SLOT(paste()));
 
@@ -170,7 +167,7 @@ void Freechat::on_listWithIpOfUsers_itemDoubleClicked(QListWidgetItem *item)
     // not done
     QListWidgetItem *item = new QListWidgetItem(listWithNickName->toPlainText());
 
-    ui->listWithIpOfUsers->addItem(item);
+    ui->listWithNickName->addItem(item);
 
     //write here double ckicked on nick and copy data from file and past it in chat field
 

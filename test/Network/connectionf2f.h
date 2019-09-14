@@ -21,10 +21,15 @@ class ConnectionF2F : public QTcpSocket
     Q_OBJECT
 
 public:
+    static QString globalNetworkBuffer;
+
+public:
     ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 
+private:
     void OpenConnectingToPortPeer();
     void OpenDisconnectingFromPortPeer();
+    void NetworkInfo();
 };
 #endif

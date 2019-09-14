@@ -39,9 +39,6 @@ private:
     void AskForDisconnectingFromPortPeer();
     bool ReplyFromPortPeer(bool &reply);
 
-signals:
-    void SetTextInsideFiledOfChat();
-
 private slots:
     void PassMessagesInsideBuffer();
 
@@ -55,7 +52,7 @@ private slots:
     void on_lanButton_clicked(bool checked);
     void on_nickButton_clicked(bool checked);
 
-    void on_listWithIpOfUsers_itemDoubleClicked(QListWidgetItem *item);
+    void on_listWithNickName_itemDoubleClicked(QListWidgetItem *item);
 
     void on_lineForTypeText_textEdited(QString &messages);
 
