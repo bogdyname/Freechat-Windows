@@ -2,12 +2,11 @@
 #Freechat (decentralized chat)
 #Freechat via C++ & Qt
 #Debugger(Qt 5.12.0 for UWP 64bit (MSVC 2015)2)
-#Copyleft (C) 2019 Softwater, Inc.
+#Copyright (C) 2019 Softwater, Inc.
 #---------------------------------
 
 QT       += gui
 QT       += svg
-QT       += widgets
 QT       += network
 QT       += core gui
 
@@ -27,7 +26,6 @@ SOURCES += \
         Bin/bin.cpp \
         Network/connectionf2f.cpp \
         Network/cryptography.cpp \
-        Network/cryptography.cpp \
         Network/peerin.cpp \
         Network/peerout.cpp \
         main.cpp \
@@ -39,7 +37,6 @@ HEADERS += \
         Network/connectionf2f.h \
         Bin/freechat.h \
         Data/datasave.h \
-        Network/cryptography.h \
         Network/cryptography.h \
         Network/peerin.h \
         Network/peerout.h
