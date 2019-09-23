@@ -16,7 +16,6 @@ Peerout::Peerout()
     connect(socket, SIGNAL(connected()), this, SLOT(Connected()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(Disconnected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(ReadyRead()));
-    connect(socket, SIGNAL(bytesWritten(qint64)), this, SLOT(BytesWrittenOfData(qint64)));
 }
 
 Peerout::~Peerout()
@@ -33,52 +32,46 @@ Peerout::~Peerout()
 
 void Peerout::WriteIpAddressFromPeer()
 {
-    auto list = QHostInfo::fromName(QHostInfo::localHostName()).addresses();
-
-    #ifndef Q_DEBUG
-    qDebug() << "Addresses: " << list << endl;
-    #endif
-
-    //strWANip = ;
+    ip += ConnectionF2F::globalNetworkBuffer;
+    ConnectionF2F::globalNetworkBuffer.clear();
 
     return;
 }
 
 void Peerout::DoConnect()
 {
-    socket->connectToHost(ip, 80);
+    socket->connectToHost(ip, 1234);
 
         if(socket->waitForConnected(3000))
         {
-            Connected();
-
-            socket->write("DATA OF TEXT");
-            socket->waitForBytesWritten(1000);
-            socket->waitForReadyRead(3000);
             #ifndef Q_DEBUG
-            qDebug() << "Reading: " << socket->bytesAvailable();
-            qDebug() << socket->readAll();
+            qDebug() << "Connecting,..";
             #endif
 
+            Connected();
+
+            QByteArray outBuf;
+            QDataStream outStream(&outBuf, QIODevice::WriteOnly);
+            outStream.setVersion(QDataStream::Qt_4_6);
+            outStream<<QString(ConnectionF2F::globalNetworkBuffer);
+            socket->write(outBuf);
+            socket->waitForBytesWritten(1000);
+            socket->waitForReadyRead(3000);
+
+            ReadyRead();
+
             socket->close();
+            socket->flush();
         }
         else
         {
             #ifndef Q_DEBUG
             qDebug() << "Not connected!";
+            qDebug() << "Error: " << socket->errorString();
             #endif
         }
 
         return;
-}
-
-void Peerout::BytesWrittenOfData(qint64 &bytes)
-{
-    #ifndef Q_DEBUG
-    qDebug() << bytes << " bytes written...";
-    #endif
-
-    return;
 }
 
 void Peerout::Connected()
@@ -90,10 +83,20 @@ void Peerout::Connected()
     return;
 }
 
+void Peerout::Disconnected()
+{
+    #ifndef Q_DEBUG
+    qDebug() << "Disconnected!";
+    #endif
+
+    return;
+}
+
 void Peerout::ReadyRead()
 {
     #ifndef Q_DEBUG
     qDebug() << "reading...";
+    qDebug() << "Reading: " << socket->bytesAvailable();
     qDebug() << socket->readAll();
     #endif
 

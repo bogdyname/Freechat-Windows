@@ -163,7 +163,7 @@ background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0.392
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWithIpOfUsers">
+      <widget class="QListWidget" name="listWithNickName">
        <property name="maximumSize">
         <size>
          <width>180</width>

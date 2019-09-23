@@ -25,7 +25,6 @@ public slots:
     void DoConnect();
     void Connected();
     void Disconnected();
-    void BytesWrittenOfData(qint64 &buffer);
 
 private:
     QTcpSocket *socket = nullptr;

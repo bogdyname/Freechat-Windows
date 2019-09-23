@@ -25,6 +25,7 @@ signals:
 
 public slots:
     void ReadData();
+    void newConnection();
 
 private:
     QTcpServer *server = nullptr;
