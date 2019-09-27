@@ -8,17 +8,11 @@
 Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
-    CheckPortForConnection();
-
-}
-
-void Peerin::CheckPortForConnection()
-{
     server = new QTcpServer(this);
 
-    connect(server, SIGNAL(newConnection()), this, SLOT(newConnection()));
+    connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
 
-        if(listen(QHostAddress::Any, 1234))
+        if(server->listen(QHostAddress::Any, 3366))
         {
            #ifndef Q_DEBUG
            qDebug() << "Server: started";
@@ -27,44 +21,94 @@ void Peerin::CheckPortForConnection()
         else
         {
             #ifndef Q_DEBUG
-            qDebug() << "Server: not started: " << errorString();
+            qDebug() << "Server: not started: " << server->errorString();
             #endif
+
+            server->close();
+            return;
         }
 
+        connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
+
+        return;
+}
+
+void Peerin::SlotNewConnection()
+{
+    QTcpSocket *clientSocket = server->nextPendingConnection();
+
+    connect(clientSocket, SIGNAL(disconnect()), clientSocket, SLOT(deleteLater()));
+    connect(clientSocket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
+
+    SendResponseToClient(clientSocket, "Respons from peer: ");
+
     return;
 }
 
-void Peerin::incomingConnection(qintptr socketDescriptor)
+void Peerin::SlotReadClient()
 {
-    QTcpSocket *socket = new QTcpSocket();
-    socket->setSocketDescriptor(socketDescriptor);
+    QTcpSocket *clientSocket = (QTcpSocket*)sender();
+    QDataStream in(clientSocket);
 
-    connect(socket, SIGNAL(readyRead()), this, SLOT(ReadData()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(Disconnecting()));
+    in.setVersion(QDataStream::Qt_5_12);
+
+    for(;;)
+    {
+        if(!nextBlockSize)
+        {
+            if((clientSocket->bytesAvailable()) < (sizeof (quint16)))
+            {
+                break;
+            }
+            else
+            {
+                /*clear code*/
+            }
+
+            in >> nextBlockSize;
+        }
+        else
+        {
+            /*clear code*/
+        }
+
+        if((clientSocket->bytesAvailable()) < nextBlockSize)
+        {
+            break;
+        }
+        else
+        {
+            /*clear code*/
+        }
+
+        QTime time;
+        QString strOfTime;
+        in >> time >> strOfTime;
+
+        QString strMessage = time.toString() + "Respons from peer: " + strOfTime;
+
+        ConnectionF2F::globalNetworkBuffer = strMessage;
+        nextBlockSize = 0;
+
+        SendResponseToClient(clientSocket, "Respons from peer: ");
+
+    }
 
     return;
 }
 
-void Peerin::ReadData()
+void Peerin::SendResponseToClient(QTcpSocket *socket, const QString &str)
 {
+    QByteArray block;
+
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_12);
+    out << quint16(0) << QTime::currentTime() << str;
+
+    out.device()->seek(0);
+    out << quint16(block.size() - sizeof (quint16));
+
+    socket->write(block);
 
     return;
-}
-
-void Peerin::newConnection()
-{
-    QTcpSocket *socket = server->nextPendingConnection();
-
-    QByteArray outBuf;
-    QDataStream outStream(&outBuf, QIODevice::WriteOnly);
-    outStream.setVersion(QDataStream::Qt_4_6);
-    outStream<<QString(ConnectionF2F::globalNetworkBuffer);
-    socket->write(outBuf);
-    socket->flush();
-
-    socket->waitForBytesWritten(3000);
-
-    socket->close();
-
-    ConnectionF2F::globalNetworkBuffer.clear();
 }

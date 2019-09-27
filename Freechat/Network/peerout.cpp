@@ -40,7 +40,7 @@ void Peerout::WriteIpAddressFromPeer()
 
 void Peerout::DoConnect()
 {
-    socket->connectToHost(ip, 1234);
+    socket->connectToHost(ip, 3366);
 
         if(socket->waitForConnected(3000))
         {

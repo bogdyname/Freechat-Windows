@@ -9,25 +9,28 @@
 #include "Network/connectionf2f.h"
 #include "Network/peerout.h"
 
+class Peerout;
+class QTcpSpcket;
+class ConnectionF2F;
+
 class Peerin : public QTcpServer
 {
     Q_OBJECT
+
+private:
+    QTcpServer *server = nullptr;
+    quint16 nextBlockSize = 0;
 
 private:
     explicit Peerin(QObject *parent = nullptr);
     ~Peerin();
 
 private:
-    void CheckPortForConnection();
-    void incomingConnection(qintptr socketDescriptor);
-
-signals:
+    void SendResponseToClient(QTcpSocket *socket, const QString &str);
 
 public slots:
-    void ReadData();
-    void newConnection();
+    virtual void SlotNewConnection();
+    void SlotReadClient ();
 
-private:
-    QTcpServer *server = nullptr;
 };
 #endif
