@@ -72,3 +72,11 @@ void ConnectionF2F::NetworkInfo()
 
        globalNetworkBuffer += localhostIP;
 }
+
+void ConnectionF2F::WriteIpAddressFromPeer()
+{
+    ip += ConnectionF2F::globalNetworkBuffer;
+    ConnectionF2F::globalNetworkBuffer.clear();
+
+    return;
+}

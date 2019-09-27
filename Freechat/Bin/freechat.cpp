@@ -193,6 +193,7 @@ void Freechat::on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
 void Freechat::on_lineForTypeText_textEdited(QString &messages)
 {
     connect(lineForTypeText, SIGNAL(inputRejected()), this, SLOT(PassMessagesInsideBuffer()));
+    connect(lineForTypeText, SIGNAL(returnPressed()), this, SLOT(SlotSendToServer()));
 
     messages = ui->lineForTypeText->text(); //pass text from line for type
     bufferOfMessages += messages;//write inside buffer

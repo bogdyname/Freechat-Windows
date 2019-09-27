@@ -9,25 +9,26 @@
 #include "Network/connectionf2f.h"
 #include "Bin/freechat.h"
 
+class Peerin;
+class Freechat;
+class ConnectionF2F;
+
 class Peerout : public ConnectionF2F
 {
     Q_OBJECT
 
 public:
-    Peerout();
+    Peerout(const QString &ipHost);
     ~Peerout();
 
-protected slots:
-    void WriteIpAddressFromPeer();
-
 public slots:
-    void ReadyRead();
-    void DoConnect();
-    void Connected();
-    void Disconnected();
+    void SlotReadyRead();
+    void SlotConnected();
+    void SlotSendToServer();
+    void SlotError(QAbstractSocket::SocketError);
 
 private:
     QTcpSocket *socket = nullptr;
-    QString ip;
+    quint16 nextBlockSize = 0;
 };
 #endif

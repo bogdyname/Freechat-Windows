@@ -5,7 +5,8 @@
 
 #include "peerout.h"
 
-Peerout::Peerout()
+Peerout::Peerout(const QString &ipHost)
+    : nextBlockSize(0)
 {
     socket = new QTcpSocket(this);
 
@@ -13,9 +14,12 @@ Peerout::Peerout()
     qDebug() << "A new socket created.";
     #endif
 
-    connect(socket, SIGNAL(connected()), this, SLOT(Connected()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(Disconnected()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(ReadyRead()));
+    socket->connectToHost(ipHost, 3366);
+
+    connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+            this, SLOT(slotError(QAbstractSocket::SocketError)));
 }
 
 Peerout::~Peerout()
@@ -30,75 +34,85 @@ Peerout::~Peerout()
     }
 }
 
-void Peerout::WriteIpAddressFromPeer()
+void Peerout::SlotReadyRead()
 {
-    ip += ConnectionF2F::globalNetworkBuffer;
-    ConnectionF2F::globalNetworkBuffer.clear();
+    QDataStream in(socket);
+    in.setVersion(QDataStream::Qt_5_12);
 
-    return;
-}
-
-void Peerout::DoConnect()
-{
-    socket->connectToHost(ip, 3366);
-
-        if(socket->waitForConnected(3000))
+    for(;;)
+    {
+        if(!nextBlockSize)
         {
-            #ifndef Q_DEBUG
-            qDebug() << "Connecting,..";
-            #endif
+            if((socket->bytesAvailable() < (sizeof (quint16))))
+            {
+                    break;
+            }
+            else
+            {
+                /*clear code*/
+            }
 
-            Connected();
-
-            QByteArray outBuf;
-            QDataStream outStream(&outBuf, QIODevice::WriteOnly);
-            outStream.setVersion(QDataStream::Qt_4_6);
-            outStream<<QString(ConnectionF2F::globalNetworkBuffer);
-            socket->write(outBuf);
-            socket->waitForBytesWritten(1000);
-            socket->waitForReadyRead(3000);
-
-            ReadyRead();
-
-            socket->close();
-            socket->flush();
+            in >> nextBlockSize;
         }
         else
         {
-            #ifndef Q_DEBUG
-            qDebug() << "Not connected!";
-            qDebug() << "Error: " << socket->errorString();
-            #endif
+            /*clear code*/
         }
 
-        return;
-}
+        if((socket->bytesAvailable() < nextBlockSize))
+        {
+            break;
+        }
+        else
+        {
+             /*clear code*/
+        }
 
-void Peerout::Connected()
-{
-    #ifndef Q_DEBUG
-    qDebug() << "Connected!";
-    #endif
+        QTime time;
+        QString str;
+        in >> time >> str;
+
+        Freechat::globalBuffer.append(time.toString() + " " + str);
+        nextBlockSize = 0;
+    }
 
     return;
 }
 
-void Peerout::Disconnected()
+void Peerout::SlotError(QAbstractSocket::SocketError err)
 {
-    #ifndef Q_DEBUG
-    qDebug() << "Disconnected!";
-    #endif
+    QString strError =
+            "Error: " + (err == QAbstractSocket::HostNotFoundError ?
+                         "The host was not found." :
+                         err == QAbstractSocket::RemoteHostClosedError ?
+                         "The remote host is closed." :
+                         err == QAbstractSocket::ConnectionRefusedError ?
+                         "The connection was refused." :
+                         QString(socket->errorString()));
+
+    Freechat::globalBuffer.append(strError);
 
     return;
 }
 
-void Peerout::ReadyRead()
+void Peerout::SlotSendToServer()
 {
-    #ifndef Q_DEBUG
-    qDebug() << "reading...";
-    qDebug() << "Reading: " << socket->bytesAvailable();
-    qDebug() << socket->readAll();
-    #endif
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_12);
+    out << quint16(0) << QTime::currentTime() << Freechat::globalBuffer;
+
+    out.device()->seek(0);
+    out << quint16(block.size() - sizeof(quint16));
+
+    socket->write(block);
+
+    return;
+}
+
+void Peerout::SlotConnected()
+{
+    Freechat::globalBuffer.append("Connected!");
 
     return;
 }
