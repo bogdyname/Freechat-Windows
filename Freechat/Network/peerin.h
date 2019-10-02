@@ -26,7 +26,7 @@ private:
     ~Peerin();
 
 private:
-    void SendResponseToClient(QTcpSocket *socket, const QString &str);
+    void SendResponseToClient(QTcpSocket *socket, QString &messages);
 
 public slots:
     virtual void SlotNewConnection();

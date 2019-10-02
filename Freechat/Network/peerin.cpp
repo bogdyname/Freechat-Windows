@@ -40,7 +40,7 @@ void Peerin::SlotNewConnection()
     connect(clientSocket, SIGNAL(disconnect()), clientSocket, SLOT(deleteLater()));
     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
 
-    SendResponseToClient(clientSocket, "Respons from peer: ");
+    SendResponseToClient(clientSocket, Freechat::bufferOfMessages);
 
     return;
 }
@@ -87,28 +87,30 @@ void Peerin::SlotReadClient()
 
         QString strMessage = time.toString() + "Respons from peer: " + strOfTime;
 
-        ConnectionF2F::globalNetworkBuffer = strMessage;
+        Freechat::viewField = strMessage;
         nextBlockSize = 0;
 
-        SendResponseToClient(clientSocket, "Respons from peer: ");
+        SendResponseToClient(clientSocket, Freechat::bufferOfMessages);
 
     }
 
     return;
 }
 
-void Peerin::SendResponseToClient(QTcpSocket *socket, const QString &str)
+void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 {
     QByteArray block;
 
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_12);
-    out << quint16(0) << QTime::currentTime() << str;
-
+    out << quint16(0) << QTime::currentTime() << messages;
     out.device()->seek(0);
     out << quint16(block.size() - sizeof (quint16));
 
     socket->write(block);
+    socket->flush();
+
+    messages.clear();
 
     return;
 }
