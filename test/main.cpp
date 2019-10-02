@@ -1,6 +1,5 @@
-#include "peerin.h"
-#include "freechat.h"
-#include "connectionf2f.h"
+#include "Bin/freechat.h"
+#include "Network/connectionf2f.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -9,10 +8,7 @@ int main(int argc, char *argv[])
     Freechat w;
     w.show();
 
-    Peerin testServer;
-
-    //ConnectionF2F test1;
-    //test1.DoConnect();
+    ConnectionF2F test1;
 
     return a.exec();
 }

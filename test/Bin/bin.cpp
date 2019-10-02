@@ -4,7 +4,6 @@
 */
 
 #include "Bin/bin.h"
-#include "Data/datasave.h"
 #include "Bin/freechat.h"
 #include "Network/connectionf2f.h"
 
@@ -55,7 +54,7 @@ void Bin::GetNickname(QList<QString> &nick)
 template <typename Wcontainer>
 Wcontainer Bin::WriteElementsInList(Wcontainer &list, const QString &element)
 {
-    list << element;
+    return list << element;
 }
 
 template <typename Gcontainer>
@@ -69,6 +68,8 @@ Gcontainer Bin::GetElementsFromList(Gcontainer &list)
         qDebug() << "Element from list: " << *it << endl;
         #endif
     }
+
+    return list;
 }
 
 template <typename Rcontainer>
@@ -85,4 +86,5 @@ Rcontainer Bin::RemoveElementsFromList(Rcontainer &list)
         list.erase(it);
     }
 
+    return list;
 }

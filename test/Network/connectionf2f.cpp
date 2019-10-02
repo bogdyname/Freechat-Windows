@@ -4,13 +4,12 @@
 */
 
 #include "Network/connectionf2f.h"
-#include "Bin/freechat.h"
-#include "Bin/bin.h"
 
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-
+    Peerout peer("192.168.1.27");
+    Peerin server(3366);
 }
 
 void ConnectionF2F::OpenConnectingToPortPeer()
@@ -71,4 +70,12 @@ void ConnectionF2F::NetworkInfo()
        #endif
 
        globalNetworkBuffer += localhostIP;
+}
+
+void ConnectionF2F::WriteIpAddressFromPeer()
+{
+    ip += ConnectionF2F::globalNetworkBuffer;
+    ConnectionF2F::globalNetworkBuffer.clear();
+
+    return;
 }

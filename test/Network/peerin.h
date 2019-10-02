@@ -6,27 +6,31 @@
 #ifndef PEERIN_H
 #define PEERIN_H
 
-#include "Network/connectionf2f.h"
-#include "Network/peerout.h"
+#include "Bin/freechat.h"
+#include <QTcpServer>
+#include <QTcpSocket>
+
+class QTcpSocket;
+class QTcpServer;
 
 class Peerin : public QTcpServer
 {
     Q_OBJECT
 
 private:
-    explicit Peerin(QObject *parent = nullptr);
+    QTcpServer *server = nullptr;
+    quint16 nextBlockSize;
+
+public:
+    explicit Peerin(unsigned short port, QObject *parent = nullptr);
     ~Peerin();
 
 private:
-    void CheckPortForConnection();
-    void incomingConnection(qintptr socketDescriptor);
-
-signals:
+    void SendResponseToClient(QTcpSocket *socket, QString &messages);
 
 public slots:
-    void ReadData();
+    virtual void SlotNewConnection();
+    void SlotReadClient ();
 
-private:
-    QTcpServer *server = nullptr;
 };
 #endif

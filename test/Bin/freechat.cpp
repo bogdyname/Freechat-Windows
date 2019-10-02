@@ -16,7 +16,7 @@ Freechat::Freechat(QWidget *parent)
     ui->lineForTypeText->setFocusPolicy(StrongFocus);
     ui->textFieldForViewMessages->setFocusPolicy(NoFocus);
     ui->textFieldForViewMessages->setReadOnly(true);
-    ui->writeNickOfPeer->setFocusPolicy(NoFocus);
+    ui->listWithNickName->setFocusPolicy(NoFocus);
 
 }
 
@@ -27,9 +27,6 @@ Freechat::~Freechat()
 
 void Freechat::on_showNetworkInfo_clicked(bool checked)
 {
-    globalBuffer += ;
-    yourIp += globalBuffer;
-
     switch(checked)
     {
     case true:
@@ -116,77 +113,13 @@ void Freechat::on_writeWanIpOfPeer_textChanged()
     return;
 }
 
-void Freechat::on_wanButton_clicked(bool checked)
-{
-
-    switch(checked)
-    {
-    case true:
-        wanIpOfPeer = ui->writeWanIpOfPeer->text();
-        break;
-    case false:
-        break;
-    }
-
-    return;
-}
-
-void Freechat::on_lanButton_clicked(bool checked)
-{
-    switch(checked)
-    {
-    case true:
-        lanIpOfPeer = ui->writeLanIpOfPeer->text();
-        break;
-    case false:
-        break;
-    }
-
-    return;
-}
-
-void Freechat::on_nickButton_clicked(bool checked)
-{
-    switch(checked)
-    {
-    case true:
-        nickNameOfPeer = ui->writeNickOfPeer->text();
-        break;
-    case false:
-        break;
-    }
-
-    return;
-}
-
-void Freechat::on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
-{
-    connect(textFieldForViewMessages, SIGNAL(SetTextInsideFiledOfChat()), this, SLOT(paste()));
-
-    // need to add elements from nick list into *item QListWidgetItem for show nicknames
-    // not done
-    QListWidgetItem *item = new QListWidgetItem(listWithNickName->toPlainText());
-
-    ui->listWithNickName->addItem(item);
-
-    //write here double ckicked on nick and copy data from file and past it in chat field
-
-    return;
-}
-
 void Freechat::on_lineForTypeText_textEdited(QString &messages)
 {
     connect(lineForTypeText, SIGNAL(inputRejected()), this, SLOT(PassMessagesInsideBuffer()));
+    connect(lineForTypeText, SIGNAL(returnPressed()), this, SLOT(SlotSendToServer()));
 
     messages = ui->lineForTypeText->text(); //pass text from line for type
     bufferOfMessages += messages;//write inside buffer
-
-    return;
-}
-
-void Freechat::PassMessagesInsideBuffer()
-{
-    globalBuffer += bufferOfMessages; // pass messages to global buffer for save in file
 
     return;
 }

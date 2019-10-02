@@ -1,34 +1,34 @@
 /*
-***Copyleft (C) 2019 Softwater, Inc
+***Copyright (C) 2019 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
 #ifndef PEEROUT
 #define PEEROUT
 
-#include "Network/connectionf2f.h"
 #include "Bin/freechat.h"
+#include <QTcpSocket>
 
-class Peerout : public ConnectionF2F
+class Freechat;
+class QTcpSocket;
+class ConnectionF2F;
+
+class Peerout : public QTcpSocket
 {
     Q_OBJECT
 
 public:
-    Peerout();
+    Peerout(const QString &ipHost);
     ~Peerout();
 
-protected slots:
-    void WriteIpAddressFromPeer();
-
 public slots:
-    void ReadyRead();
-    void DoConnect();
-    void Connected();
-    void Disconnected();
-    void BytesWrittenOfData(qint64 &buffer);
+    void SlotReadyRead();
+    void SlotConnected();
+    void SlotSendToServer();
+    void SlotError(QAbstractSocket::SocketError);
 
 private:
     QTcpSocket *socket = nullptr;
-    QString ip;
+    quint16 nextBlockSize;
 };
 #endif
