@@ -26,9 +26,6 @@ private:
     QString ip;
 
 public:
-    static QString globalNetworkBuffer;
-
-public:
     ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 

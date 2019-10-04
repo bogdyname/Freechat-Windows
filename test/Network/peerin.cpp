@@ -5,6 +5,15 @@
 
 #include "peerin.h"
 
+extern QString globalBuffer;
+extern QString viewField;
+
+extern QString yourIp;
+extern QString lanIpOfPeer;
+extern QString wanIpOfPeer;
+extern QString nickNameOfPeer;
+extern QString bufferOfMessages;
+
 Peerin::Peerin(unsigned short port, QObject *parent)
     : QTcpServer(parent)
 {
@@ -33,6 +42,18 @@ Peerin::Peerin(unsigned short port, QObject *parent)
         return;
 }
 
+Peerin::~Peerin()
+{
+    if(server != nullptr)
+    {
+        delete server;
+    }
+    else
+    {
+        /*clear code*/
+    }
+}
+
 void Peerin::SlotNewConnection()
 {
     QTcpSocket *clientSocket = server->nextPendingConnection();
@@ -40,7 +61,7 @@ void Peerin::SlotNewConnection()
     connect(clientSocket, SIGNAL(disconnect()), clientSocket, SLOT(deleteLater()));
     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
 
-    SendResponseToClient(clientSocket, Freechat::bufferOfMessages);
+    SendResponseToClient(clientSocket, bufferOfMessages);
 
     return;
 }
@@ -87,10 +108,10 @@ void Peerin::SlotReadClient()
 
         QString strMessage = time.toString() + "Respons from peer: " + strOfTime;
 
-        Freechat::viewField = strMessage;
+        viewField = strMessage;
         nextBlockSize = 0;
 
-        SendResponseToClient(clientSocket, Freechat::bufferOfMessages);
+        SendResponseToClient(clientSocket, bufferOfMessages);
 
     }
 

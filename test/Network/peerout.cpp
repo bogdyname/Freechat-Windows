@@ -5,6 +5,15 @@
 
 #include "peerout.h"
 
+extern QString globalBuffer;
+extern QString viewField;
+
+extern QString yourIp;
+extern QString lanIpOfPeer;
+extern QString wanIpOfPeer;
+extern QString nickNameOfPeer;
+extern QString bufferOfMessages;
+
 Peerout::Peerout(const QString &ipHost)
     : nextBlockSize(0)
 {
@@ -74,7 +83,7 @@ void Peerout::SlotReadyRead()
 
 
         // write data into variables for pass it in view field widget
-        Freechat::viewField.append(time.toString() + " " + str);
+        viewField.append(time.toString() + " " + str);
         nextBlockSize = 0;
     }
 
@@ -93,7 +102,7 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->errorString()));
 
     // show error in view field
-    Freechat::viewField.append(strError);
+    viewField.append(strError);
 
     return;
 }
@@ -104,7 +113,7 @@ void Peerout::SlotSendToServer()
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_12);
     // pass wroted data from line edit into socket through buffer
-    out << quint16(0) << QTime::currentTime() << Freechat::bufferOfMessages;
+    out << quint16(0) << QTime::currentTime() << bufferOfMessages;
 
     out.device()->seek(0);
     out << quint16(block.size() - sizeof(quint16));
@@ -112,7 +121,7 @@ void Peerout::SlotSendToServer()
     socket->write(block);
     socket->flush();
 
-    Freechat::bufferOfMessages.clear();
+    bufferOfMessages.clear();
 
     return;
 }

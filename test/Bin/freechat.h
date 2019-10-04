@@ -20,17 +20,6 @@ class Freechat : public QDialog, private Ui::Freechat
     Q_OBJECT
 
 public:
-    static QString globalBuffer;
-    static QString viewField;
-
-public:
-    static QString yourIp;
-    static QString lanIpOfPeer;
-    static QString wanIpOfPeer;
-    static QString nickNameOfPeer;
-    static QString bufferOfMessages;
-
-public:
     Freechat(QWidget *parent = nullptr);
     ~Freechat();
 
@@ -47,7 +36,6 @@ private slots:
     void on_writeLanIpOfPeer_textChanged();
     void on_writeWanIpOfPeer_textChanged();
 
-    void on_listWithNickName_itemDoubleClicked(QListWidgetItem *item);
     void on_lineForTypeText_textEdited(QString &messages);
 
 private:

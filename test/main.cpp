@@ -5,10 +5,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Freechat w;
-    w.show();
 
-    ConnectionF2F test1;
+    // network
+    ConnectionF2F networkTest;
+
+    // ui
+    Freechat window;
+    window.show();
 
     return a.exec();
 }

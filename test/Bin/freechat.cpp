@@ -7,6 +7,15 @@
 #include "Bin/freechat.h"
 #include "Network/connectionf2f.h"
 
+static QString globalBuffer;
+static QString viewField;
+
+static QString yourIp;
+static QString lanIpOfPeer;
+static QString wanIpOfPeer;
+static QString nickNameOfPeer;
+static QString bufferOfMessages;
+
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
       ui(new Ui::Freechat)
@@ -111,6 +120,11 @@ void Freechat::on_writeWanIpOfPeer_textChanged()
 
 
     return;
+}
+
+void on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
+{
+
 }
 
 void Freechat::on_lineForTypeText_textEdited(QString &messages)

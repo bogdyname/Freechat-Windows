@@ -5,11 +5,18 @@
 
 #include "Network/connectionf2f.h"
 
+static QString globalNetworkBuffer;
+
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
     Peerout peer("192.168.1.27");
     Peerin server(3366);
+}
+
+ConnectionF2F::~ConnectionF2F()
+{
+
 }
 
 void ConnectionF2F::OpenConnectingToPortPeer()
@@ -74,8 +81,8 @@ void ConnectionF2F::NetworkInfo()
 
 void ConnectionF2F::WriteIpAddressFromPeer()
 {
-    ip += ConnectionF2F::globalNetworkBuffer;
-    ConnectionF2F::globalNetworkBuffer.clear();
+    ip += globalNetworkBuffer;
+    globalNetworkBuffer.clear();
 
     return;
 }
