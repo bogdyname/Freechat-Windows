@@ -10,6 +10,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 
+class Freechat;
 class QTcpSocket;
 class QTcpServer;
 

@@ -32,6 +32,7 @@ public:
     void NetworkInfo();
     void WriteIpAddressFromPeer();
     void OpenConnectingToPortPeer();
+    QString PassData(QString variables);
     void OpenDisconnectingFromPortPeer();
 };
 #endif

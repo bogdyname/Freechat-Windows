@@ -11,6 +11,7 @@
 #include <QTextTableFormat>
 #include <QMessageBox>
 #include <QtWidgets>
+#include <QString>
 #include <QDialog>
 
 using namespace Qt;
@@ -18,6 +19,15 @@ using namespace Qt;
 class Freechat : public QDialog, private Ui::Freechat
 {
     Q_OBJECT
+
+public:
+    static QString globalBuffer;
+    static QString viewField;
+    static QString yourIp;
+    static QString lanIpOfPeer;
+    static QString wanIpOfPeer;
+    static QString nickNameOfPeer;
+    static QString bufferOfMessages;
 
 public:
     Freechat(QWidget *parent = nullptr);
