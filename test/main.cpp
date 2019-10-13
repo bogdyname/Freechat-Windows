@@ -8,6 +8,10 @@ int main(int argc, char *argv[])
 
     // network
     ConnectionF2F networkTest;
+    networkTest.NetworkInfo();
+
+    Peerout peer("192.168.1.27");
+    Peerin server(3366);
 
     // ui
     Freechat window;

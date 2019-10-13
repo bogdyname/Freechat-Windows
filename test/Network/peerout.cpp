@@ -27,7 +27,7 @@ Peerout::Peerout(const QString &ipHost)
     connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
-            this, SLOT(slotError(QAbstractSocket::SocketError)));
+            this, SLOT(SlotError(QAbstractSocket::SocketError)));
 }
 
 Peerout::~Peerout()

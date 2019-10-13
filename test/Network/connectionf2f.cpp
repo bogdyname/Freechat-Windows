@@ -10,25 +10,12 @@ static QString globalNetworkBuffer;
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-    Peerout peer("192.168.1.27");
-    Peerin server(3366);
+
 }
 
 ConnectionF2F::~ConnectionF2F()
 {
 
-}
-
-void ConnectionF2F::OpenConnectingToPortPeer()
-{
-
-    return;
-}
-
-void ConnectionF2F::OpenDisconnectingFromPortPeer()
-{
-
-    return;
 }
 
 void ConnectionF2F::NetworkInfo()

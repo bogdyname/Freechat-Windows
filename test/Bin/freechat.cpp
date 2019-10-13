@@ -42,6 +42,8 @@ void Freechat::on_showNetworkInfo_clicked(bool checked)
                                  tr("Your LAN IP address: "), yourIp);
         break;
     case false:
+        QMessageBox::information(this, tr("Error"),
+                                 tr("Check your network connection."));
         break;
     }
 
@@ -50,89 +52,45 @@ void Freechat::on_showNetworkInfo_clicked(bool checked)
 
 void Freechat::on_connectionToPeer_clicked(bool checked)
 {
-    bool reply = false;
-
     switch(checked)
     {
     case true:
     {
         QMessageBox::information(this, tr("Connection"),
                                  tr("Connecting to peer..."));
-
-        AskForConnectingToPortPeer();
-
-        if(ReplyFromPortPeer(reply) == true)
-        {
-
-        }
-        else
-        {
-            QMessageBox::information(this, tr("Disconnected"),
-                                     tr("Peer does not want to connect with you"));
-        }
     }
         break;
     case false:
+        QMessageBox::information(this, tr("Disconnected"),
+                                 tr("Peer does not want to connect with you"));
         break;
     }
 
     return;
-}
-
-void Freechat::AskForConnectingToPortPeer()
-{
-
-    return;
-}
-
-void Freechat::AskForDisconnectingFromPortPeer()
-{
-
-    return;
-}
-
-bool Freechat::ReplyFromPortPeer(bool &reply)
-{
-    if(reply == true)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-void Freechat::on_writeNickOfPeer_textChanged()
-{
-
-    return;
-}
-void Freechat::on_writeLanIpOfPeer_textChanged()
-{
-
-    return;
-}
-
-void Freechat::on_writeWanIpOfPeer_textChanged()
-{
-
-
-    return;
-}
-
-void on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
-{
-
 }
 
 void Freechat::on_lineForTypeText_textEdited(QString &messages)
 {
-    connect(lineForTypeText, SIGNAL(inputRejected()), this, SLOT(PassMessagesInsideBuffer()));
-    connect(lineForTypeText, SIGNAL(returnPressed()), this, SLOT(SlotSendToServer()));
-
     messages = ui->lineForTypeText->text(); //pass text from line for type
     bufferOfMessages += messages;//write inside buffer
+
+    return;
+}
+
+void Freechat::on_writeWanIpOfPeer_returnPressed()
+{
+
+    return;
+}
+
+void Freechat::on_writeLanIpOfPeer_returnPressed()
+{
+
+    return;
+}
+
+void Freechat::on_writeNickOfPeer_returnPressed()
+{
 
     return;
 }

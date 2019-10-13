@@ -29,10 +29,8 @@ public:
     ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 
+public slots:
     void NetworkInfo();
     void WriteIpAddressFromPeer();
-    void OpenConnectingToPortPeer();
-    QString PassData(QString variables);
-    void OpenDisconnectingFromPortPeer();
 };
 #endif
