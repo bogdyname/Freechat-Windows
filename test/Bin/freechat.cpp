@@ -21,10 +21,13 @@ Freechat::Freechat(QWidget *parent)
 {
     ui->setupUi(this);
 
+
     ui->lineForTypeText->setFocusPolicy(StrongFocus);
     ui->textFieldForViewMessages->setFocusPolicy(NoFocus);
     ui->textFieldForViewMessages->setReadOnly(true);
     ui->listWithNickName->setFocusPolicy(NoFocus);
+
+    //connect(lineForTypeText, SIGNAL(returnPressed()), this, SLOT(clear()));
 
 }
 
@@ -69,6 +72,7 @@ void Freechat::on_connectionToPeer_clicked(bool checked)
     return;
 }
 
+/*
 void Freechat::on_lineForTypeText_textEdited(QString &messages)
 {
     messages = ui->lineForTypeText->text(); //pass text from line for type
@@ -76,21 +80,4 @@ void Freechat::on_lineForTypeText_textEdited(QString &messages)
 
     return;
 }
-
-void Freechat::on_writeWanIpOfPeer_returnPressed()
-{
-
-    return;
-}
-
-void Freechat::on_writeLanIpOfPeer_returnPressed()
-{
-
-    return;
-}
-
-void Freechat::on_writeNickOfPeer_returnPressed()
-{
-
-    return;
-}
+*/

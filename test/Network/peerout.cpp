@@ -24,6 +24,17 @@ Peerout::Peerout(const QString &ipHost)
 
     socket->connectToHost(ipHost, 3366);
 
+    if(bool connected = (socket->state() == QTcpSocket::ConnectedState) == true)
+    {
+        SlotConnected();
+    }
+    else
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Error connection.";
+        #endif
+    }
+
     connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),

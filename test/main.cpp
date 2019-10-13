@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     ConnectionF2F networkTest;
     networkTest.NetworkInfo();
 
-    Peerout peer("192.168.1.27");
+    Peerout peer("192.168.1.30");
     Peerin server(3366);
 
     // ui
