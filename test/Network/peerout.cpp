@@ -13,7 +13,7 @@ extern QString wanIpOfPeer;
 extern QString nickNameOfPeer;
 extern QString bufferOfMessages;
 
-Peerout::Peerout(const QString &ipHost)
+Peerout::Peerout(QString &ipHost)
     : nextBlockSize(0)
 {
     socket = new QTcpSocket(this);
@@ -39,6 +39,8 @@ Peerout::Peerout(const QString &ipHost)
     connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(SlotError(QAbstractSocket::SocketError)));
+
+    return;
 }
 
 Peerout::~Peerout()
