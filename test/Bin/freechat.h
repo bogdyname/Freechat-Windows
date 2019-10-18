@@ -37,7 +37,7 @@ private slots:
     void on_showNetworkInfo_clicked(bool checked);
     void on_connectionToPeer_clicked(bool checked);
 
-public:
+private slots:
     void on_lineForTypeText_returnPressed();
     void on_writeWanIpOfPeer_returnPressed();
     void on_writeLanIpOfPeer_returnPressed();

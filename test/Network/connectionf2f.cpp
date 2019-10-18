@@ -10,8 +10,9 @@ extern QString yourIp;
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-    Peerout peer(Freechat::lanIpOfPeer);
-    Peerin server(3366);
+     /*now is empty*/
+
+    return;
 }
 
 ConnectionF2F::~ConnectionF2F()
