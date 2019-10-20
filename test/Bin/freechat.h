@@ -29,13 +29,17 @@ public:
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
 
+private:
+    int (*checkNetworkConnection)() = nullptr;
+    bool (*checkConnection)() = nullptr;
+
 public:
     explicit Freechat(QWidget *parent = nullptr);
     ~Freechat();
 
 private slots:
-    void on_showNetworkInfo_clicked(bool checked);
-    void on_connectionToPeer_clicked(bool checked);
+    void on_showNetworkInfo_clicked();
+    void on_connectionToPeer_clicked();
 
 private slots:
     void on_lineForTypeText_returnPressed();
