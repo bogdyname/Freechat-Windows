@@ -18,6 +18,7 @@ ConnectionF2F::ConnectionF2F(QObject *parent)
 ConnectionF2F::~ConnectionF2F()
 {
 
+    return;
 }
 
 int ConnectionF2F::CheckConnection()

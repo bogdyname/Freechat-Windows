@@ -47,6 +47,9 @@ private slots:
     void on_writeLanIpOfPeer_returnPressed();
     void on_writeNickOfPeer_returnPressed();
 
+    void on_listWithNickName_itemDoubleClicked(QListWidgetItem *item);
+    void on_listWithNickName_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::Freechat *ui;
 };

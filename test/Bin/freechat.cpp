@@ -27,6 +27,9 @@ Freechat::Freechat(QWidget *parent)
     ConnectionF2F netManager;
     netManager.NetworkInfo();
 
+    //Bin
+    Bin bin;
+
     //variables for pointer of function from ConnectionF2F
     checkNetworkConnection = ConnectionF2F::CheckConnection;
 
@@ -35,11 +38,14 @@ Freechat::Freechat(QWidget *parent)
     {
         case 101:
         {
-            /*clear code*/
+            #ifndef Q_DEBUG
+            qDebug() << "Network access";
+            #endif
         }
         break;
         case 404:
         {
+            //block all field without network access
             ui->writeNickOfPeer->setReadOnly(true);
             ui->writeWanIpOfPeer->setReadOnly(true);
             ui->writeLanIpOfPeer->setReadOnly(true);
@@ -47,6 +53,13 @@ Freechat::Freechat(QWidget *parent)
         }
         break;
     }
+
+    //Connecting UI widgets with bin code
+    connect(ui->writeNickOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerNick()));
+    connect(ui->writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerLan()));
+    connect(ui->writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
+    connect(ui->listWithNickName, SIGNAL(itemClicked(QListWidgetItem)), &bin, SLOT(GetNickname(QList)));
+    connect(ui->listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem)), &bin, SLOT(DeletePeer()));
 
     //Connecting UI widgets with network object code
     connect(ui->connectionToPeer, SIGNAL(clicked()), &peer, SLOT(SlotConnected()));
@@ -87,7 +100,16 @@ Freechat::Freechat(QWidget *parent)
 
 Freechat::~Freechat()
 {
-    delete ui;
+    if(ui != nullptr)
+    {
+        delete ui;
+    }
+    else
+    {
+        /*clear code*/
+    }
+
+    return;
 }
 
 void Freechat::on_showNetworkInfo_clicked()
@@ -141,7 +163,7 @@ void Freechat::on_lineForTypeText_returnPressed()
     qDebug() << "Freechat class: " << Freechat::bufferOfMessages;
     #endif
 
-    Freechat::bufferOfMessages.clear();
+    //Freechat::bufferOfMessages.clear();
 
     return;
 }
@@ -154,7 +176,7 @@ void Freechat::on_writeWanIpOfPeer_returnPressed()
     qDebug() << "Freechat class: " << Freechat::wanIpOfPeer;
     #endif
 
-    Freechat::wanIpOfPeer.clear();
+    //Freechat::wanIpOfPeer.clear();
 
     return;
 }
@@ -167,7 +189,7 @@ void Freechat::on_writeLanIpOfPeer_returnPressed()
     qDebug() << "Freechat class: " << Freechat::lanIpOfPeer;
     #endif
 
-    Freechat::lanIpOfPeer.clear();
+    //Freechat::lanIpOfPeer.clear();
 
     return;
 }
@@ -180,7 +202,19 @@ void Freechat::on_writeNickOfPeer_returnPressed()
     qDebug() << "Freechat class: " << Freechat::nickNameOfPeer;
     #endif
 
-    Freechat::nickNameOfPeer.clear();
+    //Freechat::nickNameOfPeer.clear();
+
+    return;
+}
+
+void Freechat::on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
+{
+
+    return;
+}
+
+void Freechat::on_listWithNickName_itemClicked(QListWidgetItem *item)
+{
 
     return;
 }
