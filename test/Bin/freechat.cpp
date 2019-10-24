@@ -58,11 +58,9 @@ Freechat::Freechat(QWidget *parent)
     connect(ui->writeNickOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerNick()));
     connect(ui->writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerLan()));
     connect(ui->writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
-    connect(ui->listWithNickName, SIGNAL(itemClicked(QListWidgetItem)), &bin, SLOT(GetNickname(QList)));
-    connect(ui->listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem)), &bin, SLOT(DeletePeer()));
 
     //Connecting UI widgets with network object code
-    connect(ui->connectionToPeer, SIGNAL(clicked()), &peer, SLOT(SlotConnected()));
+    connect(ui->connectionToPeer, SIGNAL(clicked(bool)), &peer, SLOT(SlotConnected()));
     connect(ui->lineForTypeText, SIGNAL(returnPressed()), &peer, SLOT(SlotSendToServer()));
 
     //UI connection
@@ -70,8 +68,8 @@ Freechat::Freechat(QWidget *parent)
     connect(ui->writeWanIpOfPeer, SIGNAL(returnPressed()), ui->writeWanIpOfPeer, SLOT(clear()));
     connect(ui->writeLanIpOfPeer, SIGNAL(returnPressed()), ui->writeLanIpOfPeer, SLOT(clear()));
     connect(ui->writeNickOfPeer, SIGNAL(returnPressed()), ui->writeNickOfPeer, SLOT(clear()));
-    connect(ui->showNetworkInfo, SIGNAL(clicked(bool)), ui->showNetworkInfo, SLOT(setChecked(bool)));
-    connect(ui->connectionToPeer, SIGNAL(clicked(bool)), ui->connectionToPeer, SLOT(setChecked(bool)));
+    connect(ui->showNetworkInfo, SIGNAL(clicked()), this, SLOT(on_showNetworkInfo_clicked()));
+    connect(ui->connectionToPeer, SIGNAL(clicked()), this, SLOT(on_connectionToPeer_clicked()));
 
     //UI style and focus
     ui->showNetworkInfo->setText("Info of Network");
@@ -141,7 +139,7 @@ void Freechat::on_connectionToPeer_clicked() // do nto use this button now, bc i
 
     bool ok = false;
 
-    if(ok == true)
+    if(ok)
     {
         QMessageBox::information(this, tr("<title>Connection</title>"),
                              tr("<h1>Connecting to peer...</h1>"), "ok");
@@ -203,18 +201,6 @@ void Freechat::on_writeNickOfPeer_returnPressed()
     #endif
 
     //Freechat::nickNameOfPeer.clear();
-
-    return;
-}
-
-void Freechat::on_listWithNickName_itemDoubleClicked(QListWidgetItem *item)
-{
-
-    return;
-}
-
-void Freechat::on_listWithNickName_itemClicked(QListWidgetItem *item)
-{
 
     return;
 }
