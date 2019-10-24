@@ -21,6 +21,8 @@ class Peerin : public QTcpServer
 private:
     QTcpServer *server = nullptr;
     quint16 nextBlockSize;
+    QTcpSocket *clientSocket1 = nullptr;
+    QTcpSocket *clientSocket2 = nullptr;
 
 public:
     explicit Peerin(unsigned short port, QObject *parent = nullptr);
@@ -31,6 +33,7 @@ private:
 
 public slots:
     virtual void SlotNewConnection();
+    void SendToClientFlush();
     void SlotReadClient ();
 
 };

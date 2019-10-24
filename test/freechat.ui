@@ -121,8 +121,6 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);
-background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0.392045 rgba(0, 0, 0, 255), stop:0.607955 rgba(255, 255, 255, 255));
-color: rgb(255, 255, 255);
 font: 57 12pt &quot;Letter Gothic Std&quot;;
 </string>
        </property>
@@ -147,8 +145,6 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);
-background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:0, stop:0.392045 rgba(0, 0, 0, 255), stop:0.607955 rgba(255, 255, 255, 255));
-color: rgb(255, 255, 255);
 font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
        </property>
       </widget>
