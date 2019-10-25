@@ -11,9 +11,9 @@ Peerin::Peerin(QObject *parent)
     server = new QTcpServer(this);
     server->setMaxPendingConnections(1);
 
-    connect(server, SIGNAL(newConnection(qintptr)), this, SLOT(SlotNewConnection(qintptr)));
+    connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
 
-        if(listen(QHostAddress::Any, 80))
+        if(server->listen(QHostAddress::Any, 80))
         {
            #ifndef Q_DEBUG
            qDebug() << "Server: started";
@@ -43,10 +43,9 @@ Peerin::~Peerin()
     return;
 }
 
-void Peerin::SlotNewConnection(qintptr socketDescriptor)
+void Peerin::SlotNewConnection()
 {
     clientSocket1 = server->nextPendingConnection();
-    clientSocket1->setSocketDescriptor(socketDescriptor);
 
     connect(clientSocket1, SIGNAL(disconnect()), clientSocket1, SLOT(deleteLater()));
     connect(clientSocket1, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));

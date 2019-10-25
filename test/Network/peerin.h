@@ -32,7 +32,7 @@ private:
     void SendResponseToClient(QTcpSocket *socket, QString &messages);
 
 public slots:
-    virtual void SlotNewConnection(qintptr socketDescriptor);
+    virtual void SlotNewConnection();
     void SendToClientFlush();
     void SlotReadClient ();
 
