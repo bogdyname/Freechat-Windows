@@ -42,8 +42,8 @@ private slots:
     void on_writeWanIpOfPeer_returnPressed();
     void on_writeLanIpOfPeer_returnPressed();
     void on_writeNickOfPeer_returnPressed();
-    void on_connectionToPeer_clicked();
     void on_showNetworkInfo_clicked();
+    void on_connectionToPeer_clicked();
 
 private:
     Ui::Freechat *ui;

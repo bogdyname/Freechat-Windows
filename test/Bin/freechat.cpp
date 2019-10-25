@@ -30,14 +30,13 @@ Freechat::Freechat(QWidget *parent)
     connect(ui->writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
 
     //Network
-    Peerout peer;
-    Peerin server(3366);
+    Peerout peerout;
+    Peerin server;
     ConnectionF2F netManager;
     netManager.NetworkInfo();
 
     //Connecting UI widgets with network object code
-    connect(ui->connectionToPeer, SIGNAL(clicked()), &peer, SLOT(SlotConnected()));
-    connect(ui->lineForTypeText, SIGNAL(returnPressed()), &peer, SLOT(SlotSendToServer()));
+    connect(ui->lineForTypeText, SIGNAL(returnPressed()), &peerout, SLOT(SlotSendToServer()));
     connect(ui->lineForTypeText, SIGNAL(returnPressed()), &server, SLOT(SendToClientFlush()));
 
     //UI connection
@@ -132,13 +131,6 @@ void Freechat::on_showNetworkInfo_clicked()
     return;
 }
 
-void Freechat::on_connectionToPeer_clicked()
-{
-    //checkConnection = ; need make f() for check connection to peer and passing it like * of f() to here
-
-    return;
-}
-
 void Freechat::on_lineForTypeText_returnPressed()
 {
     QTime time = QTime::currentTime();
@@ -180,6 +172,25 @@ void Freechat::on_writeNickOfPeer_returnPressed()
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::nickNameOfPeer;
     #endif
+
+    return;
+}
+
+void Freechat::on_connectionToPeer_clicked()
+{
+    Peerout peerout;
+
+    if(Freechat::lanIpOfPeer != "")
+    {
+        peerout.SlotConnecting();
+        QMessageBox::information(ui->connectionToPeer, tr("Connecting"),
+                         tr("<h1>Connecting to peer.</h1>"), "ok");
+    }
+    else
+    {
+        QMessageBox::critical(ui->connectionToPeer, tr("Connecting error"),
+                         tr("<h1>Check IP of peer.</h1>"), "ok");
+    }
 
     return;
 }

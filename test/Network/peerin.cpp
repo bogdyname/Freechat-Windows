@@ -5,15 +5,15 @@
 
 #include "peerin.h"
 
-Peerin::Peerin(unsigned short port, QObject *parent)
+Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
     server = new QTcpServer(this);
     server->setMaxPendingConnections(1);
 
-    connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
+    connect(server, SIGNAL(newConnection(qintptr)), this, SLOT(SlotNewConnection(qintptr)));
 
-        if(server->listen(QHostAddress::Any, port))
+        if(listen(QHostAddress::Any, 80))
         {
            #ifndef Q_DEBUG
            qDebug() << "Server: started";
@@ -26,10 +26,7 @@ Peerin::Peerin(unsigned short port, QObject *parent)
             #endif
 
             server->close();
-            return;
         }
-
-        return;
 }
 
 Peerin::~Peerin()
@@ -46,9 +43,10 @@ Peerin::~Peerin()
     return;
 }
 
-void Peerin::SlotNewConnection()
+void Peerin::SlotNewConnection(qintptr socketDescriptor)
 {
     clientSocket1 = server->nextPendingConnection();
+    clientSocket1->setSocketDescriptor(socketDescriptor);
 
     connect(clientSocket1, SIGNAL(disconnect()), clientSocket1, SLOT(deleteLater()));
     connect(clientSocket1, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));

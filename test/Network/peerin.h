@@ -25,14 +25,14 @@ private:
     QTcpSocket *clientSocket2 = nullptr;
 
 public:
-    explicit Peerin(unsigned short port, QObject *parent = nullptr);
+    explicit Peerin(QObject *parent = nullptr);
     ~Peerin();
 
 private:
     void SendResponseToClient(QTcpSocket *socket, QString &messages);
 
 public slots:
-    virtual void SlotNewConnection();
+    virtual void SlotNewConnection(qintptr socketDescriptor);
     void SendToClientFlush();
     void SlotReadClient ();
 
