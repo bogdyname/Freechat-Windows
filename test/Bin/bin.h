@@ -28,10 +28,9 @@ public slots:
     void AddPeerLan();
     void AddPeerWan();
     void AddPeerNick();
-    void DeletePeer();
+    void DeleteAllPeer();
+    void DeleteSelectedPeer(unsigned short int peer);
     void GetNickname(QList<QString> &nick);
-
-    void Test();
 
 private:
     template <typename Wcontainer>

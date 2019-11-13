@@ -20,23 +20,11 @@ Bin::~Bin()
 
 }
 
-void Bin::Test()
-{
-    QList<QString>::const_iterator it = listWithNickName.constBegin();
-
-    for(; it != listWithNickName.end(); ++it)
-    {
-        #ifndef Q_DEBUG
-        qDebug() << "Element from list: " << *it << endl;
-        #endif
-    }
-
-    return;
-}
-
 void Bin::AddPeerLan()
 {
     WriteElementsInList(listWithWANIpAddress, Freechat::lanIpOfPeer);
+
+    Freechat::lanIpOfPeer.clear();
 
     return;
 }
@@ -45,6 +33,8 @@ void Bin::AddPeerWan()
 {
     WriteElementsInList(listWithLANIpAddress, Freechat::wanIpOfPeer);
 
+    Freechat::wanIpOfPeer.clear();
+
     return;
 }
 
@@ -52,14 +42,26 @@ void Bin::AddPeerNick()
 {
     WriteElementsInList(listWithNickName, Freechat::nickNameOfPeer);
 
+    Freechat::nickNameOfPeer.clear();
+
     return;
 }
 
-void Bin::DeletePeer()
+void Bin::DeleteAllPeer()
 {
     RemoveElementsFromList(listWithNickName);
     RemoveElementsFromList(listWithWANIpAddress);
     RemoveElementsFromList(listWithLANIpAddress);
+
+    return;
+}
+
+void Bin::DeleteSelectedPeer(unsigned short int peer)
+{
+    //variables peer need for select element from containers
+    //nick cont
+    //lan cont
+    //wan cont
 
     return;
 }
