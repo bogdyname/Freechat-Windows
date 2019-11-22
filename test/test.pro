@@ -24,14 +24,16 @@ SOURCES += \
         Network/peerin.cpp \
         Network/peerout.cpp \
         main.cpp \
-        Bin/freechat.cpp
+        Bin/freechat.cpp\
+        Data/datasave.cpp
 
 HEADERS += \
         Bin/bin.h \
         Network/connectionf2f.h \
         Bin/freechat.h \
         Network/peerin.h \
-        Network/peerout.h
+        Network/peerout.h\
+        Data/datasave.h
 
 FORMS += \
         freechat.ui
