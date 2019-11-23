@@ -10,6 +10,8 @@ Datasave::Datasave(Freechat *parent)
 {
    bufferNickname = new QString;
 
+   //CAHNGE THIS CODE FOR MAKE ONE OBJECT WHILE CODE IS RUNNING
+
    QString fname = "filewd" +
            QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
    QFile file(fname);
@@ -24,7 +26,7 @@ Datasave::Datasave(Freechat *parent)
             {
                 QTextStream writeStream(&file);
                 writeStream << *bufferNickname;
-                writeStream << /*Data from text field*/; // variables bufferOfMessages
+                writeStream << //Data from text field NOT variables bufferOfMessages
                 file.write(*buffer);
                 file.close();
             }
@@ -75,7 +77,8 @@ Datasave::~Datasave()
 
 inline bool Datasave::CheckNicknameForSaveFile(QString &nickname)
 {
-    ReadFirstStringFromDataFile(nickname);
+    //need to add more code for connecting UI with data save
+    // code as still checking by true code via nickname
 
     if(*bufferNickname == nickname)
     {
@@ -85,13 +88,6 @@ inline bool Datasave::CheckNicknameForSaveFile(QString &nickname)
     {
         return false;
     }
-}
-
-inline QString Datasave::ReadFirstStringFromDataFile(QString &nickname)
-{
-    //get first string from data file
-
-    return nickname;
 }
 
 void Datasave::CheckYourMemorySize()
@@ -142,7 +138,8 @@ inline void Datasave::DeleteAllDataForFreeMemory(QFile &fileWithData, QFile &fil
 void Datasave::ReadFileForViewMessages(QFile &file, QString &nickname)
 {
     ReadFile(file);
-    ReadFirstStringFromDataFile(nickname);
+
+    //nickname will be useing via Freechat::OBJECT
 
     switch(CheckNicknameForSaveFile(*bufferNickname))
     {

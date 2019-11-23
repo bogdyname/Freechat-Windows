@@ -13,6 +13,13 @@
 #include <QTimer>
 #include <QFile>
 
+//CHECK THIS SIDE
+//need to refactoring all datasave code
+//--- first step: check all methods
+//--- second step: refactoring, delete, create methods for this class
+//--- third step: connect this code with UI
+//P.S - create datasave via timer (QTimer as every 5 min)
+
 class Datasave : public QFile,
 private ConnectionF2F, private Freechat
 {
@@ -44,6 +51,5 @@ private slots:
 private:
     void RSAMODULE(QFile &fileWithData);
     inline bool CheckNicknameForSaveFile(QString &nickname);
-    inline QString ReadFirstStringFromDataFile(QString &nickname);
 };
 #endif
