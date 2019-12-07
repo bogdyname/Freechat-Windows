@@ -9,11 +9,12 @@ Datasave::Datasave(Freechat *parent)
     : QFile(parent)
 {
    bufferNickname = new QString;
+   bufferNickname = &Freechat::nickNameOfPeer;
 
    //CAHNGE THIS CODE FOR MAKE ONE OBJECT WHILE CODE IS RUNNING
 
-   QString fname = "filewd" +
-           QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".txt";
+   QString fname = /*need to past nickname of peer here*/ + ".txt";
+
    QFile file(fname);
 
    if(buffer != nullptr)
@@ -41,7 +42,7 @@ Datasave::Datasave(Freechat *parent)
         }
    }
 
-   QDir().mkdir(QApplication::applicationDirPath()+"/../savedata");
+   QDir().mkdir(QApplication::applicationDirPath()+"/../.savedata");
 }
 
 Datasave::Datasave(QFile &fileWithData, QFile &fileWithDataForBackup)
@@ -116,8 +117,8 @@ void Datasave::CheckYourMemorySize()
 
     if (storage.bytesFree() == 1)
     {
-        QMessageBox::information(this, tr("WARNING!"),
-                        tr("Check your memory size!"));
+        QMessageBox::critical(this, tr("WARNING!"),
+                        tr("<h1>Check your memory size!</h1>"), "ok");
     }
     else
     {

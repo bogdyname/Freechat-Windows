@@ -142,6 +142,7 @@ void Freechat::ServerStillWorking()
     return;
 }
 
+//check this method for scan BUG OF DOUBLE show QMessageBox::info about ip addr
 void Freechat::on_showNetworkInfo_clicked()
 {
     QString status = QString("<h1>Your LAN IP address: %1</h1>").arg(Freechat::yourIp);

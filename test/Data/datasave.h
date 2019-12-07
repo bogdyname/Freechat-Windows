@@ -26,7 +26,7 @@ private ConnectionF2F, private Freechat
     Q_OBJECT
 
 public:
-    QString *bufferNickname = nullptr;
+    QString *bufferNickname = nullptr; //check this side, because pointer here it is bad idea
 
 private:
     QByteArray *buffer = nullptr;
@@ -34,8 +34,9 @@ private:
 
 public:
     ~Datasave();
-    Datasave(Freechat *parent = nullptr);
+    Datasave(Freechat *parent = nullptr);//refactroing it
     Datasave(QFile &fileWithData, QFile &fileWithDataForBackup);
+    //need to thinks about second constructor because it is not need at all
 
 signals:
     void CheckYourMemorySize();
