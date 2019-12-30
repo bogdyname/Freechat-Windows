@@ -1,5 +1,3 @@
-
-
 QT       += gui
 QT       += svg
 QT       += network
@@ -24,21 +22,18 @@ SOURCES += \
         Network/peerin.cpp \
         Network/peerout.cpp \
         main.cpp \
-        Bin/freechat.cpp\
-        Data/datasave.cpp
+        Bin/freechat.cpp
 
 HEADERS += \
         Bin/bin.h \
         Network/connectionf2f.h \
         Bin/freechat.h \
         Network/peerin.h \
-        Network/peerout.h\
-        Data/datasave.h
+        Network/peerout.h
 
 FORMS += \
         freechat.ui
 
-# Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
