@@ -33,37 +33,8 @@
    <property name="bottomMargin">
     <number>9</number>
    </property>
-   <item row="2" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="showNetworkInfo">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="connectionToPeer">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="4" column="0">
-    <layout class="QHBoxLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
       <number>6</number>
      </property>
@@ -169,8 +140,37 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
      </item>
     </layout>
    </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="showNetworkInfo">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="connectionToPeer">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="3" column="0">
-    <layout class="QHBoxLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_1">
      <property name="spacing">
       <number>6</number>
      </property>
@@ -186,21 +186,6 @@ font: 57 12pt &quot;Letter Gothic Std&quot;;</string>
      <property name="bottomMargin">
       <number>0</number>
      </property>
-     <item>
-      <widget class="QTextEdit" name="textFieldForViewMessages">
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-font: 57 12pt &quot;Letter Gothic Std&quot;;
-</string>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QListWidget" name="listWithNickName">
        <property name="maximumSize">

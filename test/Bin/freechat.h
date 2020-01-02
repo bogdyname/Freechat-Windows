@@ -22,17 +22,13 @@ class Freechat : public QDialog, private Ui::Freechat
     Q_OBJECT
 
 public:
-    static QTextEdit *pointerOnPeerin;
-    static QTextEdit *pointerOnPeerout;
-
-public:
     static QString globalBuffer;
-    static QString viewField;
     static QString yourIp;
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
+    static QTextEdit *viewField;
 
 private:
     int (*checkNetworkConnection)() = nullptr;

@@ -9,7 +9,6 @@ Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
     server = new QTcpServer(this);
-    pointerOfPeerin = Freechat::pointerOnPeerin;
 
     connect(server, SIGNAL(newConnection()),
             this, SLOT(SlotNewConnection()));
@@ -44,8 +43,8 @@ void Peerin::SlotNewConnection()
     connect(clientSocket1, SIGNAL(disconnected()), clientSocket1, SLOT(deleteLater()));
     connect(clientSocket1, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
 
-    Freechat::viewField = "Connected";
-    SendResponseToClient(clientSocket1, Freechat::viewField);
+    QString connect = "Connected";
+    SendResponseToClient(clientSocket1, connect);
 
     return;
 }
@@ -92,9 +91,8 @@ void Peerin::SlotReadClient()
 
         QString strMessage = "Respons from peer:" + time.toString() + ": " + Freechat::bufferOfMessages + "\n";
 
-        pointerOfPeerin->insertPlainText(Freechat::viewField = strMessage);
+        Freechat::viewField->insertPlainText(strMessage);
         nextBlockSize = 0;
-        Freechat::viewField.clear();
     }
 
     return;
@@ -113,16 +111,16 @@ void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
     socket->write(block);
     socket->flush();
 
-    pointerOfPeerin->insertPlainText(messages);
+    Freechat::viewField->insertPlainText(messages);
     messages.clear();
 
     return;
 }
 
-void Peerin::SendToClientFlush()
+void Peerin::SendToClientFlush(QString &buffer)
 {
-    SendResponseToClient(clientSocket2, Freechat::bufferOfMessages);
-    Freechat::bufferOfMessages.clear();
+    SendResponseToClient(clientSocket2, buffer);
+    buffer.clear();
 
     return;
 }

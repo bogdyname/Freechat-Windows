@@ -19,9 +19,6 @@ class Peerout : public QTcpSocket
 {
     Q_OBJECT
 
-private:
-    QTextEdit *pointerOfPeerout = nullptr;
-
 public:
     explicit Peerout();
     ~Peerout();
