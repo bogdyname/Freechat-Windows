@@ -18,6 +18,7 @@
  QString Freechat::bufferOfMessages;
 
  static QPointer<Peerin> server = nullptr;
+ static QPointer<Peerout> peerout = nullptr;
 
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
@@ -34,7 +35,6 @@ Freechat::Freechat(QWidget *parent)
     connect(ui->writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
 
     //Network
-    Peerout peerout;
     ConnectionF2F netManager;
     netManager.NetworkInfo();
     server = new Peerin;
@@ -45,7 +45,7 @@ Freechat::Freechat(QWidget *parent)
     timer->start();
 
     //Connecting UI widgets with network object code
-    connect(ui->lineForTypeText, SIGNAL(returnPressed()), &peerout, SLOT(SlotSendToServer()));
+    connect(ui->lineForTypeText, SIGNAL(returnPressed()), peerout, SLOT(SlotSendToServer()));
     connect(ui->lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
 
     //UI connection
@@ -79,7 +79,6 @@ Freechat::Freechat(QWidget *parent)
     ui->writeWanIpOfPeer->setFocusPolicy(WheelFocus);
     ui->writeLanIpOfPeer->setFocusPolicy(WheelFocus);
     ui->lineForTypeText->setFocusPolicy(WheelFocus);
-
     ui->listWithNickName->setFocusPolicy(ClickFocus);
 
     //variables for pointer of function from ConnectionF2F
@@ -211,13 +210,12 @@ void Freechat::on_writeNickOfPeer_returnPressed()
     return;
 }
 
+//check this method for peerout object (not working at all)
 void Freechat::on_connectionToPeer_clicked()
 {
-    Peerout peerout;
-
     if(Freechat::lanIpOfPeer != "")
     {
-        peerout.SlotConnecting();
+        peerout->SlotConnecting();
         QMessageBox::information(ui->connectionToPeer, tr("Connecting"),
                          tr("<h1>Connecting to peer.</h1>"), "ok");
     }

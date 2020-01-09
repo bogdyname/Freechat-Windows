@@ -98,6 +98,7 @@ void Peerin::SlotReadClient()
     return;
 }
 
+//check 113 line (maybe not need here)
 void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 {
     QByteArray block;
