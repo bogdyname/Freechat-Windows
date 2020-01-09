@@ -18,7 +18,6 @@
  QString Freechat::bufferOfMessages;
 
  static QPointer<Peerin> server = nullptr;
- static QPointer<Peerout> peerout = nullptr;
 
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
@@ -35,6 +34,7 @@ Freechat::Freechat(QWidget *parent)
     connect(ui->writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
 
     //Network
+    Peerout peerout;
     ConnectionF2F netManager;
     netManager.NetworkInfo();
     server = new Peerin;
@@ -45,7 +45,8 @@ Freechat::Freechat(QWidget *parent)
     timer->start();
 
     //Connecting UI widgets with network object code
-    connect(ui->lineForTypeText, SIGNAL(returnPressed()), peerout, SLOT(SlotSendToServer()));
+    connect(ui->connectionToPeer, SIGNAL(click()), &peerout, SLOT(SlotConnecting()));// slot not working
+    connect(ui->lineForTypeText, SIGNAL(returnPressed()), &peerout, SLOT(SlotSendToServer()));
     connect(ui->lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
 
     //UI connection
@@ -215,7 +216,6 @@ void Freechat::on_connectionToPeer_clicked()
 {
     if(Freechat::lanIpOfPeer != "")
     {
-        peerout->SlotConnecting();
         QMessageBox::information(ui->connectionToPeer, tr("Connecting"),
                          tr("<h1>Connecting to peer.</h1>"), "ok");
     }

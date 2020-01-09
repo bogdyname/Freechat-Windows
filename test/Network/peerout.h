@@ -23,12 +23,10 @@ public:
     explicit Peerout();
     ~Peerout();
 
-public:
-    void SlotConnecting();
-
 public slots:
     void SlotReadyRead();
     void SlotConnected();
+    void SlotConnecting();
     void SlotSendToServer();
     void SlotError(QAbstractSocket::SocketError);
 

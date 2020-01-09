@@ -1,6 +1,4 @@
 #include "Bin/freechat.h"
-#include "Network/connectionf2f.h"
-#include "Network/peerin.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
