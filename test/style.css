@@ -1,0 +1,24 @@
+QWidget
+{
+    font: 8pt "Letter Gothic Std", white;
+    background-color: black;
+    color: green;
+}
+
+QTextEdit
+{
+    border: 1px solid green;
+    background-color: black;
+}
+
+QListWidget
+{
+    border: 1px solid green;
+    background-color: black;
+}
+
+QLineEdit
+{
+    border: 1px solid green;
+    border-radius: 5px;
+}
