@@ -43,7 +43,7 @@ void Peerin::SlotNewConnection()
     connect(clientSocket1, SIGNAL(disconnected()), clientSocket1, SLOT(deleteLater()));
     connect(clientSocket1, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
 
-    QString connect = "Connected";
+    QString connect = "Connected\n";
     SendResponseToClient(clientSocket1, connect);
 
     return;
