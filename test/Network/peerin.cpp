@@ -118,10 +118,10 @@ void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
     return;
 }
 
-void Peerin::SendToClientFlush(QString &buffer)
+void Peerin::SendToClientFlush()
 {
-    SendResponseToClient(clientSocket2, buffer);
-    buffer.clear();
+    SendResponseToClient(clientSocket2, Freechat::bufferOfMessages);
+    Freechat::bufferOfMessages.clear();
 
     return;
 }

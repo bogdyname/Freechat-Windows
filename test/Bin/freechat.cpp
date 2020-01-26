@@ -74,22 +74,22 @@ Freechat::Freechat(QWidget *parent)
     timer->start();
 
     //Connecting UI widgets with network object code
-    connect(Freechat::showNetworkInfo, SIGNAL(clicked()), this, SLOT(on_showNetworkInfo_clicked()));
-    connect(Freechat::connectionToPeer, SIGNAL(clicked()), this, SLOT(on_connectionToPeer_clicked()));
+    connect(Freechat::showNetworkInfo, SIGNAL(clicked()), this, SLOT(showNetworkInfo_clicked()));
+    connect(Freechat::connectionToPeer, SIGNAL(clicked()), this, SLOT(connectionToPeer_clicked()));
     connect(Freechat::connectionToPeer, SIGNAL(clicked()), stpeerout, SLOT(SlotConnecting()));// slot not working
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), stpeerout, SLOT(SlotSendToServer()));
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
 
 
     //UI connection
-    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(on_lineForTypeText_returnPressed()));
+    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(lineForTypeText_returnPressed()));
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), Freechat::lineForTypeText, SLOT(clear()));
     connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(clear()));
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeLanIpOfPeer, SLOT(clear()));
     connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
-    connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(on_writeWanIpOfPeer_returnPressed()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeLanIpOfPeer, SLOT(on_writeLanIpOfPeer_returnPressed()));
-    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(on_writeNickOfPeer_returnPressed()));
+    connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(writeWanIpOfPeer_returnPressed()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(writeLanIpOfPeer_returnPressed()));
+    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), this, SLOT(writeNickOfPeer_returnPressed()));
 
     //first layer
     ui->horizontalLayout_1->addWidget(Freechat::writeNickOfPeer);
@@ -187,7 +187,7 @@ void Freechat::ServerStillWorking()
 }
 
 //check this method for scan BUG OF DOUBLE show QMessageBox::info about ip addr
-void Freechat::on_showNetworkInfo_clicked()
+void Freechat::showNetworkInfo_clicked()
 {
     switch((*checkNetworkConnection)())
     {
@@ -212,7 +212,7 @@ void Freechat::on_showNetworkInfo_clicked()
     return;
 }
 
-void Freechat::on_lineForTypeText_returnPressed()
+void Freechat::lineForTypeText_returnPressed()
 {
     QTime time = QTime::currentTime();
     Freechat::bufferOfMessages += Freechat::lineForTypeText->text();
@@ -224,7 +224,7 @@ void Freechat::on_lineForTypeText_returnPressed()
     return;
 }
 
-void Freechat::on_writeWanIpOfPeer_returnPressed()
+void Freechat::writeWanIpOfPeer_returnPressed()
 {
     Freechat::wanIpOfPeer += Freechat::writeWanIpOfPeer->text();
 
@@ -235,7 +235,7 @@ void Freechat::on_writeWanIpOfPeer_returnPressed()
     return;
 }
 
-void Freechat::on_writeLanIpOfPeer_returnPressed()
+void Freechat::writeLanIpOfPeer_returnPressed()
 {
     Freechat::lanIpOfPeer += Freechat::writeLanIpOfPeer->text();
 
@@ -246,7 +246,7 @@ void Freechat::on_writeLanIpOfPeer_returnPressed()
     return;
 }
 
-void Freechat::on_writeNickOfPeer_returnPressed()
+void Freechat::writeNickOfPeer_returnPressed()
 {
     Freechat::nickNameOfPeer += Freechat::writeNickOfPeer->text();
 
@@ -258,7 +258,7 @@ void Freechat::on_writeNickOfPeer_returnPressed()
 }
 
 //check this method for peerout object (not working at all)
-void Freechat::on_connectionToPeer_clicked()
+void Freechat::connectionToPeer_clicked()
 {
     if(Freechat::lanIpOfPeer != "")
     {

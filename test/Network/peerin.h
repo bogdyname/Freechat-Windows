@@ -33,7 +33,7 @@ private:
 
 public slots:
     virtual void SlotNewConnection();
-    void SendToClientFlush(QString &buffer);
+    void SendToClientFlush();
     void SlotReadClient();
 
 };

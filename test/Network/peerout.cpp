@@ -94,7 +94,7 @@ void Peerout::SlotSendToServer()
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_12);
-    // pass wroted data from line edit into socket through buffer
+    // pass wroted data from line edit into socket through the buffer
     out << quint16(0) << QTime::currentTime() << Freechat::bufferOfMessages;
 
     out.device()->seek(0);

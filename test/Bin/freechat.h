@@ -47,12 +47,12 @@ public:
     ~Freechat();
 
 private slots:
-    void on_lineForTypeText_returnPressed();
-    void on_writeWanIpOfPeer_returnPressed();
-    void on_writeLanIpOfPeer_returnPressed();
-    void on_writeNickOfPeer_returnPressed();
-    void on_showNetworkInfo_clicked();
-    void on_connectionToPeer_clicked();
+    void lineForTypeText_returnPressed();
+    void writeWanIpOfPeer_returnPressed();
+    void writeLanIpOfPeer_returnPressed();
+    void writeNickOfPeer_returnPressed();
+    void showNetworkInfo_clicked();
+    void connectionToPeer_clicked();
 
     void ServerStillWorking();// test code
 
