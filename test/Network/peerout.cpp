@@ -76,11 +76,11 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
 {
     QString strError =
             "Error: " + (err == QAbstractSocket::HostNotFoundError ?
-                         "The host was not found." :
+                         "The host was not found.\n" :
                          err == QAbstractSocket::RemoteHostClosedError ?
-                         "The remote host is closed." :
+                         "The remote host is closed.\n" :
                          err == QAbstractSocket::ConnectionRefusedError ?
-                         "The connection was refused." :
+                         "The connection was refused.\n" :
                          QString(socket->errorString()));
 
     // show error in view field

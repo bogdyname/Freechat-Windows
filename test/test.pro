@@ -1,5 +1,6 @@
 QT       += gui
 QT       += svg
+QT       += script
 QT       += network
 QT       += core gui
 QT       += widgets

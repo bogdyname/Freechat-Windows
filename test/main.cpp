@@ -1,11 +1,12 @@
 #include "Bin/freechat.h"
 #include <QApplication>
+#include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QFile file(":/style.css");
+    QFile file(":/source/style.css");
     file.open(QFile::ReadOnly);
     app.setStyleSheet(file.readAll());
 

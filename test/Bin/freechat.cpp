@@ -26,6 +26,7 @@
  QString Freechat::bufferOfMessages;
 
  static QPointer<Peerin> server = nullptr;
+ static QPointer<Peerout> stpeerout = nullptr;
 
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
@@ -62,10 +63,10 @@ Freechat::Freechat(QWidget *parent)
     connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
 
     //Network
-    Peerout peerout;
     ConnectionF2F netManager;
     netManager.NetworkInfo();
-    server = new Peerin;
+    server = new Peerin();
+    stpeerout = new Peerout();
 
     QTimer *timer = new QTimer;
     timer->setInterval(10000);
@@ -75,8 +76,8 @@ Freechat::Freechat(QWidget *parent)
     //Connecting UI widgets with network object code
     connect(Freechat::showNetworkInfo, SIGNAL(clicked()), this, SLOT(on_showNetworkInfo_clicked()));
     connect(Freechat::connectionToPeer, SIGNAL(clicked()), this, SLOT(on_connectionToPeer_clicked()));
-    connect(Freechat::connectionToPeer, SIGNAL(clicked()), &peerout, SLOT(SlotConnecting()));// slot not working
-    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), &peerout, SLOT(SlotSendToServer()));
+    connect(Freechat::connectionToPeer, SIGNAL(clicked()), stpeerout, SLOT(SlotConnecting()));// slot not working
+    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), stpeerout, SLOT(SlotSendToServer()));
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
 
 
@@ -202,6 +203,10 @@ void Freechat::on_showNetworkInfo_clicked()
                              tr("<h1>Check your network connection.</h1>"), "ok");
         }
         break;
+        default:
+        {
+            return;
+        }
     }
 
     return;
