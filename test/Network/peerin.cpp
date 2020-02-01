@@ -9,6 +9,7 @@ Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
     server = new QTcpServer(this);
+    server->setMaxPendingConnections(1);
 
     connect(server, SIGNAL(newConnection()),
             this, SLOT(SlotNewConnection()));
@@ -98,7 +99,6 @@ void Peerin::SlotReadClient()
     return;
 }
 
-//check 113 line (maybe not need here)
 void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 {
     QByteArray block;
@@ -121,7 +121,7 @@ void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 void Peerin::SendToClientFlush()
 {
     SendResponseToClient(clientSocket2, Freechat::bufferOfMessages);
-    Freechat::bufferOfMessages.clear();
+    Freechat::bufferOfMessages.clear();// meybe not need here coz & in SendResponseToClient()
 
     return;
 }
