@@ -76,9 +76,9 @@ Freechat::Freechat(QWidget *parent)
     //Connecting UI widgets with network object code
     connect(Freechat::showNetworkInfo, SIGNAL(clicked()), this, SLOT(showNetworkInfo_clicked()));
     connect(Freechat::connectionToPeer, SIGNAL(clicked()), this, SLOT(connectionToPeer_clicked()));
-    connect(Freechat::connectionToPeer, SIGNAL(clicked()), stpeerout, SLOT(SlotConnecting()));// slot not working
-    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), stpeerout, SLOT(SlotSendToServer()));
-    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
+    connect(Freechat::connectionToPeer, SIGNAL(clicked()), stpeerout, SLOT(SlotConnecting()));
+    //connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), stpeerout, SLOT(SlotSendToServer()));
+    //connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
 
 
     //UI connection
@@ -219,6 +219,23 @@ void Freechat::lineForTypeText_returnPressed()
     Freechat::viewField->insertPlainText("Me:" + time.toString() +
                          ": " + Freechat::bufferOfMessages + "\n");
 
+    if(server->isListening())
+    {
+        connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
+
+        #ifndef Q_DEBUG
+        qDebug() << "Send this data to client: " << Freechat::bufferOfMessages;
+        #endif
+    }
+    else
+    {
+        connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), stpeerout, SLOT(SlotSendToServer()));
+
+        #ifndef Q_DEBUG
+        qDebug() << "Send this data to server: " << Freechat::bufferOfMessages;
+        #endif
+    }
+
     Freechat::bufferOfMessages.clear();//clear in netwrok code
 
     return;
@@ -257,7 +274,6 @@ void Freechat::writeNickOfPeer_returnPressed()
     return;
 }
 
-//check this method for peerout object (not working at all)
 void Freechat::connectionToPeer_clicked()
 {
     if(Freechat::lanIpOfPeer != "")
