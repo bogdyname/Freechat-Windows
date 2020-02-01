@@ -216,8 +216,7 @@ void Freechat::lineForTypeText_returnPressed()
 {
     QTime time = QTime::currentTime();
     Freechat::bufferOfMessages += Freechat::lineForTypeText->text();
-    Freechat::viewField->insertPlainText("Me:" + time.toString() +
-                         ": " + Freechat::bufferOfMessages + "\n");
+    Freechat::viewField->insertPlainText(time.toString() + ": " + "Me:" + Freechat::bufferOfMessages + "\n");
 
     if(server->isListening())
     {
@@ -235,8 +234,6 @@ void Freechat::lineForTypeText_returnPressed()
         qDebug() << "Send this data to server: " << Freechat::bufferOfMessages;
         #endif
     }
-
-    Freechat::bufferOfMessages.clear();//clear in netwrok code
 
     return;
 }

@@ -63,9 +63,8 @@ void Peerout::SlotReadyRead()
         QString str;
         in >> time >> str;
 
-
         // write data into variables for pass it in view field widget
-        Freechat::viewField->insertPlainText(time.toString() + " " + str);
+        Freechat::viewField->append(time.toString() + " " + str);
         nextBlockSize = 0;
     }
 
@@ -84,7 +83,7 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->errorString()));
 
     // show error in view field
-    Freechat::viewField->insertPlainText(strError);
+    Freechat::viewField->append(strError);
 
     return;
 }
@@ -101,9 +100,6 @@ void Peerout::SlotSendToServer()
     out << quint16(block.size() - sizeof(quint16));
 
     socket->write(block);
-    socket->flush();
-
-    Freechat::bufferOfMessages.clear();
 
     return;
 }
@@ -137,6 +133,8 @@ void Peerout::SlotConnecting()
 
 void Peerout::SlotConnected()
 {
+    Freechat::viewField->append("Connected");
+
         #ifndef Q_DEBUG
         qDebug() << "Connected.";
         #endif
