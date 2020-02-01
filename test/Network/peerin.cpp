@@ -9,7 +9,6 @@ Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
 {
     server = new QTcpServer(this);
-    server->setMaxPendingConnections(1);
 
     connect(server, SIGNAL(newConnection()),
             this, SLOT(SlotNewConnection()));
@@ -87,13 +86,17 @@ void Peerin::SlotReadClient()
         }
 
         QTime time = QTime::currentTime();
-        QString strOfTime;
-        in >> time >> strOfTime;
+        QString strOfTimeWithData;
+        in >> time >> strOfTimeWithData;
 
-        QString strMessage = "Respons from peer:" + time.toString() + ": " + Freechat::bufferOfMessages + "\n";
+        QString strMessage = "Respons from peer:" + time.toString() + strOfTimeWithData + "\n";
 
-        Freechat::viewField->insertPlainText(strMessage);
+        Freechat::viewField->append(strMessage);
         nextBlockSize = 0;
+
+        QString respons = "Passed to peer\n";
+
+        SendResponseToClient(clientSocket2, respons);
     }
 
     return;
@@ -105,12 +108,11 @@ void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_12);
-    out << quint16(0) << QTime::currentTime() << messages;
+    out << quint16(0) << messages;
     out.device()->seek(0);
     out << quint16(block.size() - sizeof (quint16));
 
     socket->write(block);
-    socket->flush();
 
     Freechat::viewField->insertPlainText(messages);
     messages.clear();
@@ -121,7 +123,6 @@ void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 void Peerin::SendToClientFlush()
 {
     SendResponseToClient(clientSocket2, Freechat::bufferOfMessages);
-    Freechat::bufferOfMessages.clear();// meybe not need here coz & in SendResponseToClient()
 
     return;
 }
