@@ -100,6 +100,7 @@ void Peerout::SlotSendToServer()
     out << quint16(block.size() - sizeof(quint16));
 
     socket->write(block);
+    Freechat::bufferOfMessages.clear();
 
     return;
 }
@@ -133,7 +134,7 @@ void Peerout::SlotConnecting()
 
 void Peerout::SlotConnected()
 {
-    Freechat::viewField->append("Connected");
+    Freechat::viewField->append("Connected to peerin\n");
 
         #ifndef Q_DEBUG
         qDebug() << "Connected.";
