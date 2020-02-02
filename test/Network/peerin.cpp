@@ -43,7 +43,7 @@ void Peerin::SlotNewConnection()
     connect(clientSocket1, SIGNAL(disconnected()), clientSocket1, SLOT(deleteLater()));
     connect(clientSocket1, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
 
-    QString connect = "Connected\n";
+    QString connect = "Connected to peerout\n";
     SendResponseToClient(clientSocket1, connect);
 
     return;
@@ -94,8 +94,7 @@ void Peerin::SlotReadClient()
         Freechat::viewField->append(strMessage);
         nextBlockSize = 0;
 
-        QString respons = "Passed to peer\n";
-
+        QString respons = "Passed to peer\n";//every time then message sent
         SendResponseToClient(clientSocket2, respons);
     }
 
@@ -123,6 +122,7 @@ void Peerin::SendResponseToClient(QTcpSocket *socket, QString &messages)
 void Peerin::SendToClientFlush()
 {
     SendResponseToClient(clientSocket2, Freechat::bufferOfMessages);
+    Freechat::bufferOfMessages.clear();
 
     return;
 }
