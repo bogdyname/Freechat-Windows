@@ -37,14 +37,32 @@ Freechat::Freechat(QWidget *parent)
     //this->setAttribute(Qt::WA_TranslucentBackground); //background clear
 
     //new UI
-    Freechat::viewField = new QTextEdit();
-    Freechat::listWithNickName = new QListWidget();
-    Freechat::showNetworkInfo = new QPushButton();
-    Freechat::connectionToPeer = new QPushButton();
-    Freechat::writeNickOfPeer = new QLineEdit();
-    Freechat::writeLanIpOfPeer = new QLineEdit();
-    Freechat::writeWanIpOfPeer = new QLineEdit();
-    Freechat::lineForTypeText = new QLineEdit();
+    try
+    {
+        Freechat::viewField = new QTextEdit();
+        Freechat::listWithNickName = new QListWidget();
+        Freechat::showNetworkInfo = new QPushButton();
+        Freechat::connectionToPeer = new QPushButton();
+        Freechat::writeNickOfPeer = new QLineEdit();
+        Freechat::writeLanIpOfPeer = new QLineEdit();
+        Freechat::writeWanIpOfPeer = new QLineEdit();
+        Freechat::lineForTypeText = new QLineEdit();
+    }
+    catch(std::bad_alloc& exp)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Exception caught: " << exp.what();
+        #endif
+        abort();
+    }
+    catch(...)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Some exception caught";
+        #endif
+        abort();
+    }
+
 
     //Bin
     Bin bin;
@@ -57,8 +75,26 @@ Freechat::Freechat(QWidget *parent)
     //Network
     ConnectionF2F netManager;
     netManager.NetworkInfo();
-    server = new Peerin();
-    stpeerout = new Peerout();
+
+    try
+    {
+        server = new Peerin();
+        stpeerout = new Peerout();
+    }
+    catch(std::bad_alloc& exp)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Exception caught: " << exp.what();
+        #endif
+        abort();
+    }
+    catch(...)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Some exception caught";
+        #endif
+        abort();
+    }
 
     QTimer *timer = new QTimer;
     timer->setInterval(10000);
