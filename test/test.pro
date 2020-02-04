@@ -1,6 +1,4 @@
 QT       += gui
-QT       += svg
-QT       += script
 QT       += network
 QT       += core gui
 QT       += widgets
@@ -15,7 +13,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 CONFIG += c++14
 CONFIG += c++17
-CONFIG += qt
 
 SOURCES += \
         Bin/bin.cpp \
