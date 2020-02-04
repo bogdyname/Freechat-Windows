@@ -12,6 +12,7 @@
 #include <QTextTableFormat>
 #include <QMessageBox>
 #include <QtWidgets>
+#include <QMetaEnum>
 #include <QString>
 #include <QDialog>
 
@@ -23,16 +24,17 @@ class Freechat : public QDialog, private Ui::Freechat
 
 public:
     static QString yourIp;
+    static QString command;
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
+    QStringList commandosList;
 
     //UI
     static QListWidget *listWithNickName;
     static QTextEdit *viewField;
-    static QPushButton *showNetworkInfo;
-    static QPushButton *connectionToPeer;
+    static QLineEdit *commandLine;
     static QLineEdit *writeNickOfPeer;
     static QLineEdit *writeLanIpOfPeer;
     static QLineEdit *writeWanIpOfPeer;
@@ -51,13 +53,14 @@ private slots:
     void writeWanIpOfPeer_returnPressed();
     void writeLanIpOfPeer_returnPressed();
     void writeNickOfPeer_returnPressed();
-    void showNetworkInfo_clicked();
-    void connectionToPeer_clicked();
+    void CommandLineInterface();
+    void networkInformation();
+    void connectionToPeerIn();
 
     void ServerStillWorking();// test code
 
 private:
-    QString status;
+   QString status;
 
 private:
     Ui::Freechat *ui;
