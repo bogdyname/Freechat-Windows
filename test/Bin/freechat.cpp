@@ -183,16 +183,9 @@ Freechat::Freechat(QWidget *parent)
 
 Freechat::~Freechat()
 {
-    if(ui != nullptr)
-    {
-        delete ui;
-        delete server;
-        delete stpeerout;
-    }
-    else
-    {
-        /*clear code*/
-    }
+    delete ui;
+    delete server;
+    delete stpeerout;
 
     return;
 }

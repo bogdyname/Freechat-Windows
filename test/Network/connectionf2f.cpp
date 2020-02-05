@@ -50,10 +50,6 @@ void ConnectionF2F::NetworkInfo()
            {
                 localhostIP = address.toString();
            }
-           else
-           {
-               /*clear code*/
-           }
        }
 
        QString localMacAddress;
@@ -68,10 +64,6 @@ void ConnectionF2F::NetworkInfo()
                    localMacAddress = networkInterface.hardwareAddress();
                    localNetmask = entry.netmask().toString();
                    break;
-               }
-               else
-               {
-                   /*clear code*/
                }
            }
        }
