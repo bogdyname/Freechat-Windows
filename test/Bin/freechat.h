@@ -29,7 +29,8 @@ public:
     static QString wanIpOfPeer;
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
-    QStringList commandosList;
+    static unsigned short int value;
+    QStringList commandsList;
 
     //UI
     static QListWidget *listWithNickName;
