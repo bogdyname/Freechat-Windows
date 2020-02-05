@@ -30,6 +30,10 @@ void Peerout::SlotReadyRead()
     QDataStream in(socket);
     in.setVersion(QDataStream::Qt_5_12);
 
+    #ifndef Q_DEBUG
+    qDebug() << "Read data from server";
+    #endif
+
     for(;;)
     {
         if(!nextBlockSize)
@@ -63,6 +67,10 @@ void Peerout::SlotReadyRead()
         QString str;
         in >> time >> str;
 
+        #ifndef Q_DEBUG
+        qDebug() << "Data from server: " << str;
+        #endif
+
         // write data into variables for pass it in view field widget
         Freechat::viewField->append(time.toString() + " " + str);
         nextBlockSize = 0;
@@ -90,16 +98,19 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
 
 void Peerout::SlotSendToServer()
 {
+    #ifndef Q_DEBUG
+    qDebug() << "Sending data to server from peerout.cpp: " << Freechat::bufferOfMessages;
+    #endif
+
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_12);
     // pass wroted data from line edit into socket through the buffer
     out << quint16(0) << QTime::currentTime() << Freechat::bufferOfMessages;
-
     out.device()->seek(0);
     out << quint16(block.size() - sizeof(quint16));
-
     socket->write(block);
+
     Freechat::bufferOfMessages.clear();
 
     return;
