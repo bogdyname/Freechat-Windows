@@ -11,9 +11,6 @@ Peerin::Peerin(QObject *parent)
     server = new QTcpServer(this);
 
     connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
-    connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
 
     if (server->listen(QHostAddress::Any, 6000))
     {
@@ -54,6 +51,10 @@ void Peerin::SlotNewConnection()
     socket = server->nextPendingConnection();
     Freechat::value = 1;
 
+    connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
+    connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
+
     #ifndef Q_DEBUG
     qDebug() << "Value already: " << Freechat::value;
     #endif
@@ -63,8 +64,9 @@ void Peerin::SlotNewConnection()
 
 void Peerin::SlotReadClient()
 {
-    QDataStream in(socket);
-    in.setVersion(QDataStream::Qt_5_12);
+    QTcpSocket* сlientSocket = (QTcpSocket*)sender();
+    QDataStream in(сlientSocket);
+    in.setVersion(QDataStream::Qt_5_4);
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from client";
@@ -74,7 +76,7 @@ void Peerin::SlotReadClient()
     {
         if(!nextBlockSize)
         {
-            if((socket->bytesAvailable()) < (sizeof (quint16)))
+            if((сlientSocket->bytesAvailable()) < (sizeof (quint16)))
             {
                 break;
             }
@@ -90,7 +92,7 @@ void Peerin::SlotReadClient()
             /*clear code*/
         }
 
-        if((socket->bytesAvailable()) < nextBlockSize)
+        if((сlientSocket->bytesAvailable()) < nextBlockSize)
         {
             break;
         }
@@ -124,7 +126,7 @@ void Peerin::SendResponseToClient()
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_12);
+    out.setVersion(QDataStream::Qt_5_4);
     out << quint16(0) << Freechat::bufferOfMessages;
     out.device()->seek(0);
     out << quint16(block.size() - sizeof (quint16));
