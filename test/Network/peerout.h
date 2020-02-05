@@ -31,7 +31,7 @@ public slots:
     void SlotError(QAbstractSocket::SocketError);
 
 private:
-    QTcpSocket *socket = nullptr;
+    QTcpSocket *socket;
     quint16 nextBlockSize;
 };
 #endif
