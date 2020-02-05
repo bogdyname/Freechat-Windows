@@ -28,7 +28,7 @@ Peerout::~Peerout()
 void Peerout::SlotReadyRead()
 {
     QDataStream in(socket);
-    in.setVersion(QDataStream::Qt_5_12);
+    in.setVersion(QDataStream::Qt_5_4);
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from server";
@@ -104,7 +104,7 @@ void Peerout::SlotSendToServer()
 
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_12);
+    out.setVersion(QDataStream::Qt_5_4);
     out << quint16(0) << QTime::currentTime() << Freechat::bufferOfMessages;
 
     out.device()->seek(0);
