@@ -10,8 +10,8 @@ Peerin::Peerin(QObject *parent)
 {
     server = new QTcpServer(this);
 
-    connect(server, SIGNAL(newConnection()),
-            this, SLOT(SlotNewConnection()));
+    connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
+    connect(clientSocket1, SIGNAL(disconnected()), this, SLOT(clearValue()));
 
     if (server->listen(QHostAddress::Any, 6000))
     {
@@ -35,10 +35,26 @@ Peerin::~Peerin()
     delete server;
 }
 
+void Peerin::clearValue()
+{
+    #ifndef Q_DEBUG
+    qDebug() << "Value was cleared!";
+    #endif
+
+    Freechat::value = 0;
+
+    return;
+}
+
 void Peerin::SlotNewConnection()
 {
     server->setMaxPendingConnections(1);
     clientSocket1 = server->nextPendingConnection();
+    Freechat::value = 1;
+
+    #ifndef Q_DEBUG
+    qDebug() << "Value already: " << Freechat::value;
+    #endif
 
     connect(clientSocket1, SIGNAL(disconnected()), clientSocket1, SLOT(deleteLater()));
     connect(clientSocket1, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));

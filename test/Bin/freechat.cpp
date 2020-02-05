@@ -23,6 +23,7 @@
  QString Freechat::wanIpOfPeer;
  QString Freechat::nickNameOfPeer;
  QString Freechat::bufferOfMessages;
+ unsigned short int Freechat::value;
 
  static QPointer<Peerin> server = nullptr;
  static QPointer<Peerout> stpeerout = nullptr;
@@ -125,7 +126,7 @@ Freechat::Freechat(QWidget *parent)
     connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
-    commandosList << "clear" << "info" << "whoami" << "shutdown";
+    commandsList << "clear" << "info" << "whoami" << "shutdown";
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -154,6 +155,7 @@ Freechat::Freechat(QWidget *parent)
 
     //variables for pointer of function from ConnectionF2F
     checkNetworkConnection = ConnectionF2F::CheckConnection;
+    Freechat::value = 0;
 
     //close all QLineEdit if network shutdown
     switch((*checkNetworkConnection)())
@@ -255,13 +257,12 @@ void Freechat::connectionToPeerIn()
 void Freechat::CommandLineInterface()
 {
     Freechat::command += Freechat::commandLine->text();
-    commandosList << "clear" << "info" << "whoami" << "shutdown";
 
     #ifndef Q_DEBUG
     qDebug() << command;
     #endif
 
-    switch(commandosList.indexOf(command))
+    switch(commandsList.indexOf(command))
     {
         case 0:
         {
@@ -298,15 +299,29 @@ void Freechat::CommandLineInterface()
     return;
 }
 
-//check this method for try and catch with SIGNALS and SLOTS of send data (server, stpeerout) WARNING!!!!!!!!!!!!!!
-// try to get peerout's IP and make double connecting between peers WARNING!!!!!!!!!!!!!! WARNING!!!!!!!!!!!!!! WARNING!!!!!!!!!!!!!!
 void Freechat::lineForTypeText_returnPressed()
 {
     QTime time = QTime::currentTime();
     Freechat::bufferOfMessages += Freechat::lineForTypeText->text();
     Freechat::viewField->insertPlainText(time.toString() + ": " + "Me:" + Freechat::bufferOfMessages + "\n");
 
-    if(server->isListening())
+    //test code
+    switch(Freechat::value)
+    {
+        case 1:
+        {
+
+        }
+        break;
+        case 0:
+        {
+
+        }
+        break;
+    }
+
+    //main code
+    if(!server->isListening())
     {
         connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
 

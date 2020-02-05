@@ -35,6 +35,7 @@ public slots:
     virtual void SlotNewConnection();
     void SendToClientFlush();
     void SlotReadClient();
+    void clearValue();
 
 };
 #endif
