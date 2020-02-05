@@ -21,15 +21,14 @@ class Peerin : public QTcpServer
 private:
     QTcpServer *server = nullptr;
     quint16 nextBlockSize;
-    QTcpSocket *clientSocket1 = nullptr;
-    QTcpSocket *clientSocket2 = nullptr;
+    QTcpSocket *socket = nullptr;
 
 public:
     explicit Peerin(QObject *parent = nullptr);
     ~Peerin();
 
 private:
-    void SendResponseToClient(QTcpSocket *socket, QString &messages);
+    void SendResponseToClient();
 
 public slots:
     virtual void SlotNewConnection();
