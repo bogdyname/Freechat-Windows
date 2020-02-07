@@ -296,13 +296,13 @@ void Freechat::lineForTypeText_returnPressed()
 {
     QTime time = QTime::currentTime();
     Freechat::bufferOfMessages += Freechat::lineForTypeText->text();
-    Freechat::viewField->insertPlainText(time.toString() + ": " + "Me:" + Freechat::bufferOfMessages + "\n");
+    Freechat::viewField->insertPlainText(time.toString() + ":" + "Me: " + Freechat::bufferOfMessages + "\n");
 
     switch(Freechat::value)
     {
         case 1:
         {
-            connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendToClientFlush()));
+            connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), server, SLOT(SendResponseToClient()));
 
             #ifndef Q_DEBUG
             qDebug() << "Send this data to client: " << Freechat::bufferOfMessages;

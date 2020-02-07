@@ -27,12 +27,9 @@ public:
     explicit Peerin(QObject *parent = nullptr);
     ~Peerin();
 
-private:
-    void SendResponseToClient();
-
 public slots:
     virtual void SlotNewConnection();
-    void SendToClientFlush();
+    void SendResponseToClient();
     void SlotReadClient();
     void clearValue();
 

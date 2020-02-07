@@ -11,6 +11,7 @@ Peerin::Peerin(QObject *parent)
     server = new QTcpServer(this);
 
     connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
 
     if (server->listen(QHostAddress::Any, 6000))
     {
@@ -52,7 +53,6 @@ void Peerin::SlotNewConnection()
     Freechat::value = 1;
 
     connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
     connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
 
     #ifndef Q_DEBUG
@@ -65,8 +65,8 @@ void Peerin::SlotNewConnection()
 void Peerin::SlotReadClient()
 {
     QTcpSocket* сlientSocket = (QTcpSocket*)sender();
-    QDataStream in(сlientSocket);
-    in.setVersion(QDataStream::Qt_4_2);
+    QDataStream stream(сlientSocket);
+    stream.setVersion(QDataStream::Qt_4_2);
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from client";
@@ -80,7 +80,7 @@ void Peerin::SlotReadClient()
             {
                 break;
             }
-            in >> nextBlockSize;
+            stream >> nextBlockSize;
         }
 
         if(сlientSocket->bytesAvailable() < nextBlockSize)
@@ -88,16 +88,15 @@ void Peerin::SlotReadClient()
             break;
         }
 
-        QTime time;
-        QString str;
-        in >> time >> str;
+        QTime time = QTime::currentTime();
+        QString message;
+        stream >> message;
 
         #ifndef Q_DEBUG
-        qDebug() << "Data from server: " << str;
+        qDebug() << "Data from server: " << message;
         #endif
 
-        QString message = time.toString() + ": " + str + "\n";
-        Freechat::viewField->append(message);
+        Freechat::viewField->append(time.toString() + ":" + "Peer: " + message + "\n");
         nextBlockSize = 0;
     }
 
@@ -111,22 +110,14 @@ void Peerin::SendResponseToClient()
     #endif
 
     QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_4_2);
-    out << quint16(0) << Freechat::bufferOfMessages;
+    QDataStream sendStream(&block, QIODevice::ReadWrite);
+    sendStream.setVersion(QDataStream::Qt_4_2);
+    sendStream << quint16(0) << Freechat::bufferOfMessages;
 
-    out.device()->seek(0);
-    out << quint16(block.size() - sizeof (quint16));
+    sendStream.device()->seek(0);
+    sendStream << (quint16)(block.size() - sizeof (quint16));
     socket->write(block);
 
-    Freechat::bufferOfMessages.clear();
-
-    return;
-}
-
-void Peerin::SendToClientFlush()
-{
-    SendResponseToClient();
     Freechat::bufferOfMessages.clear();
 
     return;
