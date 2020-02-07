@@ -27,8 +27,9 @@ Peerout::~Peerout()
 
 void Peerout::SlotReadyRead()
 {
-    QDataStream in(socket);
-    in.setVersion(QDataStream::Qt_4_2);
+    QDataStream stream(socket);
+    stream.setVersion(QDataStream::Qt_4_2);
+    QString buffer;
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from server";
@@ -38,12 +39,11 @@ void Peerout::SlotReadyRead()
     {
         if(!nextBlockSize)
         {
-            if(socket->bytesAvailable() < sizeof (quint16))
+            if(socket->bytesAvailable() < sizeof(quint16))
             {
-                    break;
+                break;
             }
-
-            in >> nextBlockSize;
+            stream >> nextBlockSize;
         }
 
         if(socket->bytesAvailable() < nextBlockSize)
@@ -51,16 +51,15 @@ void Peerout::SlotReadyRead()
             break;
         }
 
-        QTime time;
-        QString str;
-        in >> time >> str;
+        QTime time = QTime::currentTime();
+        QString message;
+        stream >> message;
 
         #ifndef Q_DEBUG
-        qDebug() << "Data from server: " << str;
+        qDebug() << "Data from server: " << message;
         #endif
 
-        QString message = time.toString() + ": " + str + "\n";
-        Freechat::viewField->append(message);
+        Freechat::viewField->append(time.toString() + ":" + "Peer: " + message + "\n");
         nextBlockSize = 0;
     }
 
@@ -91,12 +90,12 @@ void Peerout::SlotSendToServer()
     #endif
 
     QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_4_2);
-    out << quint16(0) << QTime::currentTime() << Freechat::bufferOfMessages;
+    QDataStream sendStream(&block, QIODevice::ReadWrite);
+    sendStream.setVersion(QDataStream::Qt_4_2);
+    sendStream << quint16(0) << Freechat::bufferOfMessages;
 
-    out.device()->seek(0);
-    out << quint16(block.size() - sizeof(quint16));
+    sendStream.device()->seek(0);
+    sendStream << (quint16)(block.size() - sizeof(quint16));
     socket->write(block);
 
     Freechat::bufferOfMessages.clear();

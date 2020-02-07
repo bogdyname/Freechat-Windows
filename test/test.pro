@@ -5,7 +5,7 @@ QT       += widgets
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
-TARGET = test
+TARGET = Freechat
 TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
