@@ -1,11 +1,11 @@
 /*
-***Copyright (C) 2019 Softwater, Inc
+***Copyleft (C) 2020 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
 #include "peerout.h"
 
-Peerout::Peerout(const QString &ipHost)
+Peerout::Peerout()
     : nextBlockSize(0)
 {
     socket = new QTcpSocket(this);
@@ -14,67 +14,52 @@ Peerout::Peerout(const QString &ipHost)
     qDebug() << "A new socket created.";
     #endif
 
-    socket->connectToHost(ipHost, 3366);
-
     connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
-            this, SLOT(slotError(QAbstractSocket::SocketError)));
+            this, SLOT(SlotError(QAbstractSocket::SocketError)));
 }
 
 Peerout::~Peerout()
 {
-    if(socket != nullptr)
-    {
-        delete socket;
-    }
-    else
-    {
-        /*clear code*/
-    }
+    delete socket;
 }
 
 void Peerout::SlotReadyRead()
 {
-    QDataStream in(socket);
-    in.setVersion(QDataStream::Qt_5_12);
+    QDataStream stream(socket);
+    stream.setVersion(QDataStream::Qt_4_2);
+    QString buffer;
+
+    #ifndef Q_DEBUG
+    qDebug() << "Read data from server";
+    #endif
 
     for(;;)
     {
         if(!nextBlockSize)
         {
-            if((socket->bytesAvailable() < (sizeof (quint16))))
+            if(socket->bytesAvailable() < sizeof(quint16))
             {
-                    break;
+                break;
             }
-            else
-            {
-                /*clear code*/
-            }
-
-            in >> nextBlockSize;
-        }
-        else
-        {
-            /*clear code*/
+            stream >> nextBlockSize;
         }
 
-        if((socket->bytesAvailable() < nextBlockSize))
+        if(socket->bytesAvailable() < nextBlockSize)
         {
             break;
         }
-        else
-        {
-             /*clear code*/
-        }
 
-        QTime time;
-        QString str;
-        in >> time >> str;
+        QTime time = QTime::currentTime();
+        QString message;
+        stream >> message;
 
+        #ifndef Q_DEBUG
+        qDebug() << "Data from server: " << message;
+        #endif
 
-        // write data into variables for pass it in view field widget
-        Freechat::viewField.append(time.toString() + " " + str);
+        Freechat::viewField->append(time.toString() + ":" + "Peer: " + message + "\n");
         nextBlockSize = 0;
     }
 
@@ -85,40 +70,70 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
 {
     QString strError =
             "Error: " + (err == QAbstractSocket::HostNotFoundError ?
-                         "The host was not found." :
+                         "The host was not found.\n" :
                          err == QAbstractSocket::RemoteHostClosedError ?
-                         "The remote host is closed." :
+                         "The remote host is closed.\n" :
                          err == QAbstractSocket::ConnectionRefusedError ?
-                         "The connection was refused." :
+                         "The connection was refused.\n" :
                          QString(socket->errorString()));
 
     // show error in view field
-    Freechat::viewField.append(strError);
+    Freechat::viewField->append(strError);
 
     return;
 }
 
 void Peerout::SlotSendToServer()
 {
+    #ifndef Q_DEBUG
+    qDebug() << "Sending data to server from peerout.cpp: " << Freechat::bufferOfMessages;
+    #endif
+
     QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_12);
-    // pass wroted data from line edit into socket through buffer
-    out << quint16(0) << QTime::currentTime() << Freechat::bufferOfMessages;
+    QDataStream sendStream(&block, QIODevice::ReadWrite);
+    sendStream.setVersion(QDataStream::Qt_4_2);
+    sendStream << quint16(0) << Freechat::bufferOfMessages;
 
-    out.device()->seek(0);
-    out << quint16(block.size() - sizeof(quint16));
-
+    sendStream.device()->seek(0);
+    sendStream << (quint16)(block.size() - sizeof(quint16));
     socket->write(block);
-    socket->flush();
 
     Freechat::bufferOfMessages.clear();
 
     return;
 }
 
+void Peerout::SlotConnecting()
+{
+    #ifndef Q_DEBUG
+    qDebug() << "Connecting to " << Freechat::lanIpOfPeer;
+    #endif
+
+    QHostAddress hostAddress(Freechat::lanIpOfPeer);
+    socket->connectToHost(hostAddress, 6000);
+
+    if(socket->waitForConnected(2000))
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Connected.";
+        #endif
+    }
+    else
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Error connection.";
+        #endif
+    }
+
+    Freechat::lanIpOfPeer.clear();
+
+    return;
+}
+
 void Peerout::SlotConnected()
 {
+    Freechat::viewField->append("Connected to peerin\n");
+
     #ifndef Q_DEBUG
     qDebug() << "Connected.";
     #endif

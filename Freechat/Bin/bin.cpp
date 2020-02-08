@@ -1,10 +1,9 @@
 /*
-***Copyright (C) 2019 Softwater, Inc
+***Copyleft (C) 2020 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
 #include "Bin/bin.h"
-#include "Data/datasave.h"
 #include "Bin/freechat.h"
 #include "Network/connectionf2f.h"
 
@@ -13,13 +12,7 @@ using namespace std;
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
-    //signals from freechat for connect UI with bin header
 
-    /*
-    connect(, SIGNAL(), this, SLOT(AddPeer(QString)));
-    connect(, SIGNAL(), this, SLOT(DeletePeer()));
-    connect(, SIGNAL(), this, SLOT(GetNickname()));
-    */
 }
 
 Bin::~Bin()
@@ -27,20 +20,48 @@ Bin::~Bin()
 
 }
 
-void Bin::AddPeer(QString &nickname, QString &Lanip, QString &Wanip)
+void Bin::AddPeerLan()
 {
-    WriteElementsInList(listWithNickName, nickname);
-    WriteElementsInList(listWithWANIpAddress, Lanip);
-    WriteElementsInList(listWithLANIpAddress, Wanip);
+    WriteElementsInList(listWithWANIpAddress, Freechat::lanIpOfPeer);
+
+    Freechat::lanIpOfPeer.clear();
 
     return;
 }
 
-void Bin::DeletePeer()
+void Bin::AddPeerWan()
+{
+    WriteElementsInList(listWithLANIpAddress, Freechat::wanIpOfPeer);
+
+    Freechat::wanIpOfPeer.clear();
+
+    return;
+}
+
+void Bin::AddPeerNick()
+{
+    WriteElementsInList(listWithNickName, Freechat::nickNameOfPeer);
+
+    Freechat::nickNameOfPeer.clear();
+
+    return;
+}
+
+void Bin::DeleteAllPeer()
 {
     RemoveElementsFromList(listWithNickName);
     RemoveElementsFromList(listWithWANIpAddress);
     RemoveElementsFromList(listWithLANIpAddress);
+
+    return;
+}
+
+void Bin::DeleteSelectedPeer(unsigned short int peer)
+{
+    //variables peer need for select element from containers
+    //nick cont
+    //lan cont
+    //wan cont
 
     return;
 }
@@ -55,7 +76,7 @@ void Bin::GetNickname(QList<QString> &nick)
 template <typename Wcontainer>
 Wcontainer Bin::WriteElementsInList(Wcontainer &list, const QString &element)
 {
-    list << element;
+    return list << element;
 }
 
 template <typename Gcontainer>
@@ -69,6 +90,8 @@ Gcontainer Bin::GetElementsFromList(Gcontainer &list)
         qDebug() << "Element from list: " << *it << endl;
         #endif
     }
+
+    return list;
 }
 
 template <typename Rcontainer>
@@ -85,4 +108,5 @@ Rcontainer Bin::RemoveElementsFromList(Rcontainer &list)
         list.erase(it);
     }
 
+    return list;
 }

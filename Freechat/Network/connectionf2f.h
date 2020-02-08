@@ -1,5 +1,5 @@
 /*
-***Copyright (C) 2019 Softwater, Inc
+***Copyleft (C) 2020 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
@@ -10,15 +10,10 @@
 #include "Network/peerin.h"
 #include "Bin/freechat.h"
 #include <QNetworkInterface>
-#include <QAbstractSocket>
-#include <QNetworkSession>
-#include <QHostAddress>
-#include <QHostAddress>
-#include <QTimerEvent>
 #include <QTcpSocket>
-#include <QHostInfo>
 #include <QtNetwork>
 
+class QTcpSocket;
 class Freechat;
 class Peerout;
 class Peerin;
@@ -31,15 +26,11 @@ private:
     QString ip;
 
 public:
-    static QString globalNetworkBuffer;
-
-public:
-    ConnectionF2F(QObject *parent = nullptr);
+    explicit ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 
+public:
     void NetworkInfo();
-    void WriteIpAddressFromPeer();
-    void OpenConnectingToPortPeer();
-    void OpenDisconnectingFromPortPeer();
+    static int CheckConnection();
 };
 #endif
