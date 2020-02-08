@@ -1,5 +1,5 @@
 /*
-***Copyright (C) 2019 Softwater, Inc
+***Copyleft (C) 2020 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
@@ -22,11 +22,14 @@ private:
 
 public:
     ~Bin();
-    Bin(QObject *parent = nullptr);
+    explicit Bin(QObject *parent = nullptr);
 
-public:
-    void AddPeer(QString &nickname, QString &Lanip, QString &Wanip);
-    void DeletePeer();
+public slots:
+    void AddPeerLan();
+    void AddPeerWan();
+    void AddPeerNick();
+    void DeleteAllPeer();
+    void DeleteSelectedPeer(unsigned short int peer);
     void GetNickname(QList<QString> &nick);
 
 private:

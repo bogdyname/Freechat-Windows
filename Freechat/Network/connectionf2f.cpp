@@ -1,28 +1,41 @@
 /*
-***Copyright (C) 2019 Softwater, Inc
+***Copyleft (C) 2020 Softwater, Inc
 ***Contact: bogdyname@gmail.com
 */
 
 #include "Network/connectionf2f.h"
-#include "Bin/freechat.h"
-#include "Bin/bin.h"
 
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
+     /*now is empty*/
 
+    return;
 }
 
-void ConnectionF2F::OpenConnectingToPortPeer()
+ConnectionF2F::~ConnectionF2F()
 {
 
     return;
 }
 
-void ConnectionF2F::OpenDisconnectingFromPortPeer()
+int ConnectionF2F::CheckConnection()
 {
+    QNetworkAccessManager nam;
+    QNetworkRequest req(QUrl("http://www.google.com"));
+    QNetworkReply *reply = nam.get(req);
+    QEventLoop loop;
+    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
 
-    return;
+    if(reply->bytesAvailable())
+    {
+        return 101;
+    }
+    else
+    {
+        return 404;
+    }
 }
 
 void ConnectionF2F::NetworkInfo()
@@ -36,10 +49,6 @@ void ConnectionF2F::NetworkInfo()
            if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isLoopback() == false)
            {
                 localhostIP = address.toString();
-           }
-           else
-           {
-               /*clear code*/
            }
        }
 
@@ -56,10 +65,6 @@ void ConnectionF2F::NetworkInfo()
                    localNetmask = entry.netmask().toString();
                    break;
                }
-               else
-               {
-                   /*clear code*/
-               }
            }
        }
 
@@ -70,13 +75,5 @@ void ConnectionF2F::NetworkInfo()
        qDebug() << "Netmask = " << localNetmask;
        #endif
 
-       globalNetworkBuffer += localhostIP;
-}
-
-void ConnectionF2F::WriteIpAddressFromPeer()
-{
-    ip += ConnectionF2F::globalNetworkBuffer;
-    ConnectionF2F::globalNetworkBuffer.clear();
-
-    return;
+       Freechat::yourIp += localhostIP;
 }
