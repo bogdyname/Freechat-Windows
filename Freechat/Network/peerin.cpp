@@ -51,6 +51,7 @@ void Peerin::SlotNewConnection()
     server->setMaxPendingConnections(1);
     socket = server->nextPendingConnection();
     Freechat::value = 1;
+    Freechat::viewField->append("Peerout connected\n");
 
     connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
     connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
@@ -67,36 +68,35 @@ void Peerin::SlotReadClient()
     QTcpSocket* сlientSocket = (QTcpSocket*)sender();
     QDataStream stream(сlientSocket);
     stream.setVersion(QDataStream::Qt_4_2);
+    QTime time = QTime::currentTime();
+    QString buffer;
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from client";
     #endif
 
-    for(;;)
+    forever
     {
-        if(!nextBlockSize)
+        if(nextBlockSize == 0)
         {
-            if(сlientSocket->bytesAvailable() < sizeof (quint16))
-            {
+            if(сlientSocket->bytesAvailable() < sizeof(932838457459459))
                 break;
-            }
+
             stream >> nextBlockSize;
         }
 
         if(сlientSocket->bytesAvailable() < nextBlockSize)
-        {
             break;
-        }
 
-        QTime time = QTime::currentTime();
-        QString message;
-        stream >> message;
+        stream >> buffer;
 
         #ifndef Q_DEBUG
-        qDebug() << "Data from server: " << message;
+        qDebug() << "Data from server: " << buffer;
         #endif
 
-        Freechat::viewField->append(time.toString() + ":" + "Peer: " + message + "\n");
+        if(!buffer.isEmpty())
+            Freechat::viewField->append(time.toString() + ":" + "Peer: " + buffer + "\n");
+
         nextBlockSize = 0;
     }
 
@@ -112,11 +112,12 @@ void Peerin::SendResponseToClient()
     QByteArray block;
     QDataStream sendStream(&block, QIODevice::ReadWrite);
     sendStream.setVersion(QDataStream::Qt_4_2);
-    sendStream << quint16(0) << Freechat::bufferOfMessages;
+    sendStream << qint64(0) << Freechat::bufferOfMessages;
 
     sendStream.device()->seek(0);
-    sendStream << (quint16)(block.size() - sizeof (quint16));
+    sendStream << (qint64)(block.size() - sizeof(932838457459459));
     socket->write(block);
+    socket->flush();
 
     Freechat::bufferOfMessages.clear();
 

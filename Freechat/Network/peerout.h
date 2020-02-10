@@ -32,6 +32,6 @@ public slots:
 
 private:
     QTcpSocket *socket;
-    quint16 nextBlockSize;
+    qint64 nextBlockSize;
 };
 #endif
