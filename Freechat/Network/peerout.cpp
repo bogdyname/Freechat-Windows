@@ -29,37 +29,35 @@ void Peerout::SlotReadyRead()
 {
     QDataStream stream(socket);
     stream.setVersion(QDataStream::Qt_4_2);
+    QTime time = QTime::currentTime();
     QString buffer;
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from server";
     #endif
 
-    for(;;)
+    forever
     {
-        if(!nextBlockSize)
+        if(nextBlockSize == 0)
         {
-            if(socket->bytesAvailable() < sizeof(quint16))
-            {
+            if(socket->bytesAvailable() < sizeof(932838457459459))
                 break;
-            }
+
             stream >> nextBlockSize;
         }
 
         if(socket->bytesAvailable() < nextBlockSize)
-        {
             break;
-        }
 
-        QTime time = QTime::currentTime();
-        QString message;
-        stream >> message;
+        stream >> buffer;
 
         #ifndef Q_DEBUG
-        qDebug() << "Data from server: " << message;
+        qDebug() << "Data from server: " << buffer;
         #endif
 
-        Freechat::viewField->append(time.toString() + ":" + "Peer: " + message + "\n");
+        if(!buffer.isEmpty())
+            Freechat::viewField->append(time.toString() + ":" + "Peer: "  + buffer + "\n");
+
         nextBlockSize = 0;
     }
 
@@ -92,11 +90,12 @@ void Peerout::SlotSendToServer()
     QByteArray block;
     QDataStream sendStream(&block, QIODevice::ReadWrite);
     sendStream.setVersion(QDataStream::Qt_4_2);
-    sendStream << quint16(0) << Freechat::bufferOfMessages;
+    sendStream << qint64(0) << Freechat::bufferOfMessages;
 
     sendStream.device()->seek(0);
-    sendStream << (quint16)(block.size() - sizeof(quint16));
+    sendStream << (qint64)(block.size() - sizeof(932838457459459));
     socket->write(block);
+    socket->flush();
 
     Freechat::bufferOfMessages.clear();
 

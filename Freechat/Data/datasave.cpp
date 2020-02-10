@@ -5,8 +5,7 @@
 
 #include "Data/datasave.h"
 
-Datasave::Datasave(Freechat *parent)
-    : QFile(parent)
+Datasave::Datasave()
 {
 
 }

@@ -20,7 +20,7 @@ class Peerin : public QTcpServer
 
 private:
     QTcpServer *server = nullptr;
-    quint16 nextBlockSize;
+    qint64 nextBlockSize;
     QTcpSocket *socket = nullptr;
 
 public:
