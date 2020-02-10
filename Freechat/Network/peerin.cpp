@@ -11,7 +11,7 @@ Peerin::Peerin(QObject *parent)
     server = new QTcpServer(this);
 
     connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient())); //try delete this line
 
     if (server->listen(QHostAddress::Any, 6000))
     {
@@ -54,6 +54,7 @@ void Peerin::SlotNewConnection()
     Freechat::viewField->append("Peerout connected\n");
 
     connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient())); //CHECK IT OUT
     connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
 
     #ifndef Q_DEBUG
