@@ -76,4 +76,7 @@ void ConnectionF2F::NetworkInfo()
        #endif
 
        Freechat::yourIp += localhostIP;
+       Freechat::yourMAC += localMacAddress;
+       Freechat::yourNetmask += localNetmask;
+       Freechat::localHostName += localhostname;
 }

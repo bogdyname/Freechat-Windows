@@ -17,8 +17,11 @@
  QLineEdit *Freechat::writeWanIpOfPeer;
  QLineEdit *Freechat::lineForTypeText;
 
- QString Freechat::yourIp;
  QString Freechat::command;
+ QString Freechat::yourIp;
+ QString Freechat::yourMAC;
+ QString Freechat::yourNetmask;
+ QString Freechat::localHostName;
  QString Freechat::lanIpOfPeer;
  QString Freechat::wanIpOfPeer;
  QString Freechat::nickNameOfPeer;
@@ -61,10 +64,12 @@ Freechat::Freechat(QWidget *parent)
         abort();
     }
 
+    Freechat::writeWanIpOfPeer->setReadOnly(true); //TTS cos network through NAT adn WAN IP not done
+
     //first layer
     ui->horizontalLayout_1->addWidget(Freechat::writeNickOfPeer);
-    ui->horizontalLayout_2->addWidget(Freechat::writeLanIpOfPeer);
-    ui->horizontalLayout_3->addWidget(Freechat::writeWanIpOfPeer);
+    //ui->horizontalLayout_2->addWidget(Freechat::writeWanIpOfPeer);
+    ui->horizontalLayout_3->addWidget(Freechat::writeLanIpOfPeer);
 
     //second layer
     ui->HLForButtons->addWidget(Freechat::commandLine);
@@ -109,16 +114,21 @@ Freechat::Freechat(QWidget *parent)
     timer->start();
 
     //Connecting UI widgets with bin code
-    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerNick()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()),
+            Freechat::writeNickOfPeer, SLOT(writeNickOfPeer_returnPressed()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()),
+            Freechat::writeLanIpOfPeer, SLOT(writeLanIpOfPeer_returnPressed()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()),
+            Freechat::writeWanIpOfPeer, SLOT(writeWanIpOfPeer_returnPressed()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerNick()));
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerLan()));
-    connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
+
 
     //UI connection
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(lineForTypeText_returnPressed()));
     connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(writeWanIpOfPeer_returnPressed()));
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(writeLanIpOfPeer_returnPressed()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(connectionToPeerIn()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), stpeerout, SLOT(SlotConnecting()));
     connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), this, SLOT(writeNickOfPeer_returnPressed()));
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), Freechat::lineForTypeText, SLOT(clear()));
     connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(clear()));
@@ -126,7 +136,7 @@ Freechat::Freechat(QWidget *parent)
     connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
-    commandsList << "clear" << "info" << "whoami" << "shutdown";
+    commandsList << "clear" << "info" << "whoami" << "shutdown" << "con -l";
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -174,6 +184,7 @@ Freechat::Freechat(QWidget *parent)
             Freechat::writeWanIpOfPeer->setReadOnly(true);
             Freechat::writeLanIpOfPeer->setReadOnly(true);
             Freechat::lineForTypeText->setReadOnly(true);
+            Freechat::commandLine->setReadOnly(true);
         }
         break;
     }
@@ -274,6 +285,12 @@ void Freechat::CommandLineInterface()
                 #ifndef Q_DEBUG
                 qDebug() << "whoami";
                 #endif
+
+                networkdata = QString("<h1><p>IP = %1</p><p>MAC = %2</p><p>Netmask = %3</p><p>localhost = %4</p></h1>")
+                .arg(Freechat::yourIp).arg(Freechat::yourMAC).arg(Freechat::yourNetmask).arg(Freechat::localHostName);
+
+                QMessageBox::information(Freechat::commandLine, tr("Network data"),
+                                 networkdata, "ok");
         }
         break;
         case 3:
@@ -283,6 +300,22 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 close();
+        }
+        break;
+        case 4:
+        {
+            #ifndef Q_DEBUG
+            qDebug() << "con -l";
+            #endif
+
+            Freechat::connectionToPeerIn();
+            stpeerout->SlotConnecting();
+        }
+        break;
+        default:
+        {
+            QMessageBox::critical(Freechat::commandLine, tr("Command error"),
+                             tr("<h1>Command not found</h1>"), "ok");
         }
         break;
     }

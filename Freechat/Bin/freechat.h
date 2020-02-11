@@ -24,6 +24,9 @@ class Freechat : public QDialog, private Ui::Freechat
 
 public:
     static QString yourIp;
+    static QString yourMAC;
+    static QString yourNetmask;
+    static QString localHostName;
     static QString command;
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
@@ -62,6 +65,7 @@ private slots:
 
 private:
    QString status;
+   QString networkdata;
 
 private:
     Ui::Freechat *ui;
