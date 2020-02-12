@@ -6,9 +6,6 @@
 #ifndef CONNECTIONF2F_H
 #define CONNECTIONF2F_H
 
-#include "Network/peerout.h"
-#include "Network/peerin.h"
-#include "Bin/freechat.h"
 #include <QNetworkInterface>
 #include <QTcpSocket>
 #include <QtNetwork>

@@ -4,6 +4,7 @@
 */
 
 #include "peerout.h"
+#include "Bin/freechat.h"
 
 Peerout::Peerout()
     : nextBlockSize(0)

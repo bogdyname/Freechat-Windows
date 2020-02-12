@@ -7,11 +7,15 @@
 #define FREECHAT_H
 
 #include "Bin/bin.h"
-#include "ui_freechat.h"
+#include "Network/peerin.h"
+#include "Network/peerout.h"
 #include "Network/connectionf2f.h"
+#include "ui_freechat.h"
 #include <QTextTableFormat>
 #include <QMessageBox>
-#include <QtWidgets>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QListWidget>
 #include <QMetaEnum>
 #include <QString>
 #include <QDialog>

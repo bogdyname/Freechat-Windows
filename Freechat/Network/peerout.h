@@ -6,7 +6,6 @@
 #ifndef PEEROUT
 #define PEEROUT
 
-#include "Bin/freechat.h"
 #include <QHostAddress>
 #include <QTcpSocket>
 
