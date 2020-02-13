@@ -3,9 +3,7 @@
 ***Contact: bogdyname@gmail.com
 */
 
-#include "Bin/bin.h"
 #include "Bin/freechat.h"
-#include "Network/connectionf2f.h"
 #include <QTimer>
 #include <QPointer>
 
@@ -49,7 +47,7 @@ Freechat::Freechat(QWidget *parent)
         Freechat::writeWanIpOfPeer = new QLineEdit();
         Freechat::lineForTypeText = new QLineEdit();
     }
-    catch(std::bad_alloc& exp)
+    catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
         qDebug() << "Exception caught: " << exp.what();
@@ -93,7 +91,7 @@ Freechat::Freechat(QWidget *parent)
         server = new Peerin();
         stpeerout = new Peerout();
     }
-    catch(std::bad_alloc& exp)
+    catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
         qDebug() << "Exception caught: " << exp.what();
@@ -114,12 +112,6 @@ Freechat::Freechat(QWidget *parent)
     timer->start();
 
     //Connecting UI widgets with bin code
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()),
-            Freechat::writeNickOfPeer, SLOT(writeNickOfPeer_returnPressed()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()),
-            Freechat::writeLanIpOfPeer, SLOT(writeLanIpOfPeer_returnPressed()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()),
-            Freechat::writeWanIpOfPeer, SLOT(writeWanIpOfPeer_returnPressed()));
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerNick()));
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerLan()));
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan()));
@@ -273,6 +265,8 @@ void Freechat::CommandLineInterface()
                 #ifndef Q_DEBUG
                 qDebug() << "clear";
                 #endif
+
+                Freechat::viewField->clear();
         }
         break;
         case 1:

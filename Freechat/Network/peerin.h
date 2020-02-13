@@ -6,7 +6,6 @@
 #ifndef PEERIN_H
 #define PEERIN_H
 
-#include "Bin/freechat.h"
 #include <QTcpServer>
 #include <QTcpSocket>
 

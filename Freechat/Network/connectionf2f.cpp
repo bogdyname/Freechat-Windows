@@ -4,6 +4,9 @@
 */
 
 #include "Network/connectionf2f.h"
+#include "Network/peerout.h"
+#include "Network/peerin.h"
+#include "Bin/freechat.h"
 
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)

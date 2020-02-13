@@ -4,6 +4,7 @@
 */
 
 #include "peerin.h"
+#include "Bin/freechat.h"
 
 Peerin::Peerin(QObject *parent)
     : QTcpServer(parent)
@@ -11,7 +12,7 @@ Peerin::Peerin(QObject *parent)
     server = new QTcpServer(this);
 
     connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient())); //try delete this line
+    //connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient())); //try delete this line
 
     if (server->listen(QHostAddress::Any, 6000))
     {
@@ -66,8 +67,8 @@ void Peerin::SlotNewConnection()
 
 void Peerin::SlotReadClient()
 {
-    QTcpSocket* сlientSocket = (QTcpSocket*)sender();
-    QDataStream stream(сlientSocket);
+    QTcpSocket* clientSocket = (QTcpSocket*)sender();
+    QDataStream stream(clientSocket);
     stream.setVersion(QDataStream::Qt_4_2);
     QTime time = QTime::currentTime();
     QString buffer;
@@ -80,13 +81,13 @@ void Peerin::SlotReadClient()
     {
         if(nextBlockSize == 0)
         {
-            if(сlientSocket->bytesAvailable() < sizeof(932838457459459))
+            if(clientSocket->bytesAvailable() < sizeof(932838457459459))
                 break;
 
             stream >> nextBlockSize;
         }
 
-        if(сlientSocket->bytesAvailable() < nextBlockSize)
+        if(clientSocket->bytesAvailable() < nextBlockSize)
             break;
 
         stream >> buffer;
