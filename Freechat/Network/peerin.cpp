@@ -12,7 +12,6 @@ Peerin::Peerin(QObject *parent)
     server = new QTcpServer(this);
 
     connect(server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
-    //connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient())); //try delete this line
 
     if (server->listen(QHostAddress::Any, 6000))
     {
@@ -55,7 +54,7 @@ void Peerin::SlotNewConnection()
     Freechat::viewField->append("Peerout connected\n");
 
     connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient())); //CHECK IT OUT
+    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
     connect(socket, SIGNAL(disconnected()), socket, SLOT(deleteLater()));
 
     #ifndef Q_DEBUG
@@ -67,11 +66,13 @@ void Peerin::SlotNewConnection()
 
 void Peerin::SlotReadClient()
 {
-    QTcpSocket* clientSocket = (QTcpSocket*)sender();
-    QDataStream stream(clientSocket);
+    //QTcpSocket* clientSocket = (QTcpSocket*)sender();
+    socket = (QTcpSocket*)sender();
+    QDataStream stream(socket);
     stream.setVersion(QDataStream::Qt_4_2);
     QTime time = QTime::currentTime();
     QString buffer;
+    nextBlockSize = 0;
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from client";
@@ -79,21 +80,30 @@ void Peerin::SlotReadClient()
 
     forever
     {
+     qDebug() << "1";
         if(nextBlockSize == 0)
         {
-            if(clientSocket->bytesAvailable() < sizeof(932838457459459))
+            qDebug() << "2";
+            if(socket->bytesAvailable() < sizeof(932838457459459))
                 break;
 
+            qDebug() << "3";
             stream >> nextBlockSize;
         }
+        else
+        {
+            qDebug() << "ERROR";
+        }
 
-        if(clientSocket->bytesAvailable() < nextBlockSize)
+        qDebug() << "4";
+        if(socket->bytesAvailable() < nextBlockSize)
             break;
 
+        qDebug() << "5";
         stream >> buffer;
 
         #ifndef Q_DEBUG
-        qDebug() << "Data from server: " << buffer;
+        qDebug() << "Data from client: " << buffer;
         #endif
 
         if(!buffer.isEmpty())

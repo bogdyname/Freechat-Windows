@@ -298,12 +298,12 @@ void Freechat::CommandLineInterface()
         break;
         case 4:
         {
-            #ifndef Q_DEBUG
-            qDebug() << "con -l";
-            #endif
+                 #ifndef Q_DEBUG
+                 qDebug() << "con -l";
+                 #endif
 
-            Freechat::connectionToPeerIn();
-            stpeerout->SlotConnecting();
+                 Freechat::connectionToPeerIn();
+                 stpeerout->SlotConnecting();
         }
         break;
         default:
