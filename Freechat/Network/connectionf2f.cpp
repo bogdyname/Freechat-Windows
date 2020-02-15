@@ -11,7 +11,6 @@
 ConnectionF2F::ConnectionF2F(QObject *parent)
     : QTcpSocket(parent)
 {
-     /*now is empty*/
 
     return;
 }
@@ -24,10 +23,10 @@ ConnectionF2F::~ConnectionF2F()
 
 int ConnectionF2F::CheckConnection()
 {
+    QEventLoop loop;
     QNetworkAccessManager nam;
     QNetworkRequest req(QUrl("http://www.google.com"));
     QNetworkReply *reply = nam.get(req);
-    QEventLoop loop;
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
@@ -41,18 +40,16 @@ int ConnectionF2F::CheckConnection()
     }
 }
 
-void ConnectionF2F::NetworkInfo()
+void ConnectionF2F::NetworkInfo(QString &ip, QString &mac, QString &netmask, QString &hostname)
 {
-       QString localhostname =  QHostInfo::localHostName();
        QString localhostIP;
+       QString localhostname =  QHostInfo::localHostName();
        QList<QHostAddress> hostList = QHostInfo::fromName(localhostname).addresses();
 
        foreach (const QHostAddress& address, hostList)
        {
            if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isLoopback() == false)
-           {
                 localhostIP = address.toString();
-           }
        }
 
        QString localMacAddress;
@@ -78,8 +75,8 @@ void ConnectionF2F::NetworkInfo()
        qDebug() << "Netmask = " << localNetmask;
        #endif
 
-       Freechat::yourIp += localhostIP;
-       Freechat::yourMAC += localMacAddress;
-       Freechat::yourNetmask += localNetmask;
-       Freechat::localHostName += localhostname;
+       ip += localhostIP;
+       mac += localMacAddress;
+       netmask += localNetmask;
+       hostname += localhostname;
 }
