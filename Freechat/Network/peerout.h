@@ -9,7 +9,6 @@
 #include <QHostAddress>
 #include <QTcpSocket>
 
-
 class Freechat;
 class QTcpSocket;
 class ConnectionF2F;
@@ -25,7 +24,8 @@ public:
 public slots:
     void SlotReadyRead();
     void SlotConnected();
-    void SlotConnecting();
+    void SlotLanConnecting();
+    void SlotWanConnecting();
     void SlotSendToServer();
     void SlotError(QAbstractSocket::SocketError);
 

@@ -51,7 +51,7 @@ void Peerin::SlotNewConnection()
     server->setMaxPendingConnections(1);
     socket = server->nextPendingConnection();
     Freechat::value = 1;
-    Freechat::viewField->append("Peerout connected\n");
+    Freechat::viewField->insertPlainText("Peerout connected\n");
 
     connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
     connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
@@ -66,7 +66,6 @@ void Peerin::SlotNewConnection()
 
 void Peerin::SlotReadClient()
 {
-    //QTcpSocket* clientSocket = (QTcpSocket*)sender();
     socket = (QTcpSocket*)sender();
     QDataStream stream(socket);
     stream.setVersion(QDataStream::Qt_4_2);
@@ -80,26 +79,17 @@ void Peerin::SlotReadClient()
 
     forever
     {
-     qDebug() << "1";
         if(nextBlockSize == 0)
         {
-            qDebug() << "2";
             if(socket->bytesAvailable() < sizeof(932838457459459))
                 break;
 
-            qDebug() << "3";
             stream >> nextBlockSize;
         }
-        else
-        {
-            qDebug() << "ERROR";
-        }
 
-        qDebug() << "4";
         if(socket->bytesAvailable() < nextBlockSize)
             break;
 
-        qDebug() << "5";
         stream >> buffer;
 
         #ifndef Q_DEBUG
@@ -107,7 +97,10 @@ void Peerin::SlotReadClient()
         #endif
 
         if(!buffer.isEmpty())
-            Freechat::viewField->append(time.toString() + ":" + "Peer: " + buffer + "\n");
+        {
+            Freechat::viewField->setAlignment(Qt::AlignRight);
+            Freechat::viewField->insertPlainText(time.toString() + "\n" + buffer + " :Peer\n");
+        }
 
         nextBlockSize = 0;
     }

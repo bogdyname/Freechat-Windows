@@ -57,7 +57,10 @@ void Peerout::SlotReadyRead()
         #endif
 
         if(!buffer.isEmpty())
-            Freechat::viewField->append(time.toString() + ":" + "Peer: "  + buffer + "\n");
+        {
+            Freechat::viewField->setAlignment(Qt::AlignRight);
+            Freechat::viewField->insertPlainText(time.toString() + "\n" + buffer + " :Peer\n");
+        }
 
         nextBlockSize = 0;
     }
@@ -77,7 +80,8 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->errorString()));
 
     // show error in view field
-    Freechat::viewField->append(strError);
+    Freechat::viewField->setAlignment(Qt::AlignCenter);
+    Freechat::viewField->insertPlainText(strError);
 
     return;
 }
@@ -103,7 +107,7 @@ void Peerout::SlotSendToServer()
     return;
 }
 
-void Peerout::SlotConnecting()
+void Peerout::SlotLanConnecting()
 {
     #ifndef Q_DEBUG
     qDebug() << "Connecting to " << Freechat::lanIpOfPeer;
@@ -130,9 +134,18 @@ void Peerout::SlotConnecting()
     return;
 }
 
+void Peerout::SlotWanConnecting()
+{
+    /*
+    Need to make Wan connection
+    */
+
+    return;
+}
+
 void Peerout::SlotConnected()
 {
-    Freechat::viewField->append("Connected to peerin\n");
+    Freechat::viewField->insertPlainText("Connected to peerin\n");
 
     #ifndef Q_DEBUG
     qDebug() << "Connected.";

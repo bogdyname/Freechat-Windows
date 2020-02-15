@@ -19,15 +19,12 @@ class ConnectionF2F : public QTcpSocket
 {
     Q_OBJECT
 
-private:
-    QString ip;
-
 public:
     explicit ConnectionF2F(QObject *parent = nullptr);
     ~ConnectionF2F();
 
 public:
-    void NetworkInfo();
+    void NetworkInfo(QString &ip, QString &mac, QString &netmask, QString &hostname);
     static int CheckConnection();
 };
 #endif

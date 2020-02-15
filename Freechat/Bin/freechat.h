@@ -26,6 +26,7 @@ class Freechat : public QDialog, private Ui::Freechat
 {
     Q_OBJECT
 
+    //Global buffer variables
 public:
     static QString yourIp;
     static QString yourMAC;
@@ -37,16 +38,20 @@ public:
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
     static unsigned short int value;
+
+    //Command line interface
+private:
     QStringList commandsList;
 
     //UI
-    static QListWidget *listWithNickName;
+public:
     static QTextEdit *viewField;
     static QLineEdit *commandLine;
+    static QLineEdit *lineForTypeText;
     static QLineEdit *writeNickOfPeer;
     static QLineEdit *writeLanIpOfPeer;
     static QLineEdit *writeWanIpOfPeer;
-    static QLineEdit *lineForTypeText;
+    static QListWidget *listWithNickName;
 
 private:
     int (*checkNetworkConnection)() = nullptr;
@@ -62,10 +67,12 @@ private slots:
     void writeLanIpOfPeer_returnPressed();
     void writeNickOfPeer_returnPressed();
     void CommandLineInterface();
-    void networkInformation();
-    void connectionToPeerIn();
+    void ServerStillWorking();//Debug code
 
-    void ServerStillWorking();// test code
+private:
+    void networkLanIp();
+    void networkFullInformation();
+    void connectionToPeerInLan();
 
 private:
    QString status;
