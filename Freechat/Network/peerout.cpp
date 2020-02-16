@@ -77,7 +77,7 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          "The remote host is closed.\n" :
                          err == QAbstractSocket::ConnectionRefusedError ?
                          "The connection was refused.\n" :
-                         QString(socket->errorString()));
+                         QString(socket->errorString() + "\n"));
 
     // show error in view field
     Freechat::viewField->setAlignment(Qt::AlignCenter);
@@ -145,6 +145,7 @@ void Peerout::SlotWanConnecting()
 
 void Peerout::SlotConnected()
 {
+    Freechat::viewField->setAlignment(Qt::AlignCenter);
     Freechat::viewField->insertPlainText("Connected to peerin\n");
 
     #ifndef Q_DEBUG

@@ -7,6 +7,10 @@
 #define CONNECTIONF2F_H
 
 #include <QNetworkInterface>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QHostAddress>
+#include <QJsonObject>
 #include <QTcpSocket>
 #include <QtNetwork>
 
@@ -24,7 +28,7 @@ public:
     ~ConnectionF2F();
 
 public:
-    void NetworkInfo(QString &ip, QString &mac, QString &netmask, QString &hostname);
-    static int CheckConnection();
+    void LanNetwork(QString &ip, QString &mac, QString &netmask, QString &hostname);
+    static int CheckNetworkAccess();
 };
 #endif
