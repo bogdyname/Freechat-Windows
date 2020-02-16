@@ -28,7 +28,7 @@ class Freechat : public QDialog, private Ui::Freechat
 
     //Global buffer variables
 public:
-    static QString yourIp;
+    static QString yourLanIp;
     static QString yourMAC;
     static QString yourNetmask;
     static QString localHostName;

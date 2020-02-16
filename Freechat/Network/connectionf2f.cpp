@@ -21,7 +21,7 @@ ConnectionF2F::~ConnectionF2F()
     return;
 }
 
-int ConnectionF2F::CheckConnection()
+int ConnectionF2F::CheckNetworkAccess()
 {
     QEventLoop loop;
     QNetworkAccessManager nam;
@@ -40,7 +40,7 @@ int ConnectionF2F::CheckConnection()
     }
 }
 
-void ConnectionF2F::NetworkInfo(QString &ip, QString &mac, QString &netmask, QString &hostname)
+void ConnectionF2F::LanNetwork(QString &ip, QString &mac, QString &netmask, QString &hostname)
 {
        QString localhostIP;
        QString localhostname =  QHostInfo::localHostName();
@@ -79,4 +79,6 @@ void ConnectionF2F::NetworkInfo(QString &ip, QString &mac, QString &netmask, QSt
        mac += localMacAddress;
        netmask += localNetmask;
        hostname += localhostname;
+
+       return;
 }

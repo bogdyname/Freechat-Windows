@@ -51,6 +51,8 @@ void Peerin::SlotNewConnection()
     server->setMaxPendingConnections(1);
     socket = server->nextPendingConnection();
     Freechat::value = 1;
+
+    Freechat::viewField->setAlignment(Qt::AlignCenter);
     Freechat::viewField->insertPlainText("Peerout connected\n");
 
     connect(socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
