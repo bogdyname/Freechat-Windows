@@ -26,6 +26,29 @@ class Freechat : public QDialog, private Ui::Freechat
 {
     Q_OBJECT
 
+    //COLORS
+    //System out color  | Errors color    | Peerin data       | Peerout data
+    //color(255, 153, 0)| color(156, 0, 0)| color(255, 255, 0)| color(0, 255, 255)
+
+    //COMMANDS
+    /* 1) clear
+       -- clear all data in view field
+       2) ip -l
+       -- show message box with LAN ip
+       3) ifconfig
+       -- Show message box with all data of peer LAN network
+       4) shutdown
+       -- close programm
+       5) con -l
+       -- connecting via LAN network
+       6) man
+       -- data about all commands and about one specific command
+       7) con -w
+       -- connecting via WAN network
+    */
+
+
+
     //Global buffer variables
 public:
     static QString yourLanIp;

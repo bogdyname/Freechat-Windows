@@ -9,7 +9,24 @@
 Peerout::Peerout()
     : nextBlockSize(0)
 {
-    socket = new QTcpSocket(this);
+    try
+    {
+        socket = new QTcpSocket(this);
+    }
+    catch(std::bad_alloc &exp)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Exception caught: " << exp.what();
+        #endif
+        abort();
+    }
+    catch(...)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Some exception caught";
+        #endif
+        abort();
+    }
 
     #ifndef Q_DEBUG
     qDebug() << "A new socket created.";
@@ -31,7 +48,11 @@ void Peerout::SlotReadyRead()
     QDataStream stream(socket);
     stream.setVersion(QDataStream::Qt_4_2);
     QTime time = QTime::currentTime();
+    QColor color(0, 255, 255);
     QString buffer;
+
+    Freechat::viewField->setTextColor(color);
+    Freechat::viewField->setAlignment(Qt::AlignRight);
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from server";
@@ -57,10 +78,7 @@ void Peerout::SlotReadyRead()
         #endif
 
         if(!buffer.isEmpty())
-        {
-            Freechat::viewField->setAlignment(Qt::AlignRight);
-            Freechat::viewField->insertPlainText(time.toString() + "\n" + buffer + " :Peer\n");
-        }
+            Freechat::viewField->insertPlainText(time.toString() + "\n" + buffer + "\n");
 
         nextBlockSize = 0;
     }
@@ -80,6 +98,8 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->errorString() + "\n"));
 
     // show error in view field
+    QColor color(156, 0, 0);
+    Freechat::viewField->setTextColor(color);
     Freechat::viewField->setAlignment(Qt::AlignCenter);
     Freechat::viewField->insertPlainText(strError);
 
@@ -145,6 +165,8 @@ void Peerout::SlotWanConnecting()
 
 void Peerout::SlotConnected()
 {
+    QColor color(255, 153, 0);
+    Freechat::viewField->setTextColor(color);
     Freechat::viewField->setAlignment(Qt::AlignCenter);
     Freechat::viewField->insertPlainText("Connected to peerin\n");
 

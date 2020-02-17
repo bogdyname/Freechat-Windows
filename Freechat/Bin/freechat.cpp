@@ -28,6 +28,7 @@
 
  static QPointer<Peerin> server = nullptr;
  static QPointer<Peerout> stpeerout = nullptr;
+ static QPointer<ConnectionF2F> netManager = nullptr;
 
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
@@ -83,15 +84,9 @@ Freechat::Freechat(QWidget *parent)
     Bin bin;
 
     //Network data of peer (LAN data)
-
-    ConnectionF2F netManager;
-    netManager.LanNetwork(Freechat::yourLanIp,
-                           Freechat::yourMAC,
-                           Freechat::yourNetmask,
-                           Freechat::localHostName);
-
     try
     {
+        netManager = new ConnectionF2F();
         server = new Peerin();
         stpeerout = new Peerout();
     }
@@ -109,6 +104,11 @@ Freechat::Freechat(QWidget *parent)
         #endif
         abort();
     }
+
+    netManager->LanNetwork(Freechat::yourLanIp,
+                           Freechat::yourMAC,
+                           Freechat::yourNetmask,
+                           Freechat::localHostName);
 
     QTimer *timer = new QTimer;
     timer->setInterval(10000);
@@ -131,7 +131,8 @@ Freechat::Freechat(QWidget *parent)
     connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
-    commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown" << "con -l" << "man";
+    commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
+                 << "con -l" << "man" << "con -w";
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -278,6 +279,9 @@ void Freechat::connectionToPeerInLan()
 
 void Freechat::CommandLineInterface()
 {
+    if(Freechat::commandLine->text() == "")
+        return;
+
     Freechat::command += Freechat::commandLine->text();
 
     #ifndef Q_DEBUG
@@ -341,6 +345,15 @@ void Freechat::CommandLineInterface()
                  /*write hear all command and etc*/
         }
         break;
+        case 6:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "con -w";
+                #endif
+
+                /*write hear method for connecting via WAN network*/
+        }
+        break;
         default:
         {
                  QMessageBox::critical(Freechat::commandLine, tr("Command error"),
@@ -360,9 +373,11 @@ void Freechat::lineForTypeText_returnPressed()
         return;
 
     QTime time = QTime::currentTime();
+    QColor color(255, 255, 0);
+    Freechat::viewField->setTextColor(color);
     Freechat::bufferOfMessages += Freechat::lineForTypeText->text();
     Freechat::viewField->setAlignment(Qt::AlignLeft);
-    Freechat::viewField->insertPlainText(time.toString() + "\n" + "Me: " + Freechat::bufferOfMessages + "\n");
+    Freechat::viewField->insertPlainText(time.toString() + "\n" + Freechat::bufferOfMessages + "\n");
 
     switch(Freechat::value)
     {
