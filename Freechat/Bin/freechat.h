@@ -12,10 +12,11 @@
 #include "Network/connectionf2f.h"
 #include "ui_freechat.h"
 #include <QTextTableFormat>
+#include <QFontDatabase>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QTextEdit>
 #include <QLineEdit>
-#include <QListWidget>
 #include <QMetaEnum>
 #include <QString>
 #include <QDialog>
@@ -28,7 +29,7 @@ class Freechat : public QDialog, private Ui::Freechat
 
     //COLORS
     //System out color  | Errors color    | Peerin data       | Peerout data
-    //color(255, 153, 0)| color(156, 0, 0)| color(255, 255, 0)| color(0, 255, 255)
+    //color(255, 153, 0)| color(156, 0, 0)| color(255, 215, 0)| color(0, 255, 255)
 
     //COMMANDS
     /* 1) clear
@@ -85,21 +86,21 @@ public:
     ~Freechat();
 
 private slots:
-    void lineForTypeText_returnPressed();
-    void writeWanIpOfPeer_returnPressed();
-    void writeLanIpOfPeer_returnPressed();
-    void writeNickOfPeer_returnPressed();
+    void LineForTypeText_returnPressed();
+    void WriteWanIpOfPeer_returnPressed();
+    void WriteLanIpOfPeer_returnPressed();
+    void WriteNickOfPeer_returnPressed();
     void CommandLineInterface();
     void ServerStillWorking();//Debug code
 
 private:
-    void networkLanIp();
-    void networkFullInformation();
-    void connectionToPeerInLan();
+    void NetworkLanIp();
+    void NetworkFullInformation();
+    void ConnectionToPeerInLan();
 
 private:
-   QString status;
-   QString networkdata;
+    QString status;
+    QString networkdata;
 
 private:
     Ui::Freechat *ui;

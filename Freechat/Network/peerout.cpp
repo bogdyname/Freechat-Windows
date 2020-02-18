@@ -78,7 +78,7 @@ void Peerout::SlotReadyRead()
         #endif
 
         if(!buffer.isEmpty())
-            Freechat::viewField->insertPlainText(time.toString() + "\n" + buffer + "\n");
+            Freechat::viewField->insertPlainText(time.toString() + "\n" + "Peer:\n" + buffer + "\n");
 
         nextBlockSize = 0;
     }

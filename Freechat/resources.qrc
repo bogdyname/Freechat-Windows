@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/source">
+        <file>source/LetterGothicStd.otf</file>
         <file>source/style.css</file>
     </qresource>
 </RCC>

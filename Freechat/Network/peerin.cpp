@@ -91,7 +91,7 @@ void Peerin::SlotReadClient()
     QDataStream stream(socket);
     stream.setVersion(QDataStream::Qt_4_2);
     QTime time = QTime::currentTime();
-    QColor color(0, 255, 255);
+    QColor color(0, 255, 255); //234, 0, 217
     QString buffer;
     nextBlockSize = 0;
 
@@ -122,7 +122,7 @@ void Peerin::SlotReadClient()
         #endif
 
         if(!buffer.isEmpty())
-            Freechat::viewField->insertPlainText(time.toString() + "\n" + buffer + "\n");
+            Freechat::viewField->insertPlainText(time.toString() + "\n" + "Peer:\n" + buffer + "\n");
 
         nextBlockSize = 0;
     }
