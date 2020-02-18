@@ -24,10 +24,6 @@
  QString Freechat::wanIpOfPeer;
  QString Freechat::nickNameOfPeer;
  QString Freechat::bufferOfMessages;
- QFile Freechat::checkoutStyleDark;
- QFile Freechat::checkoutStyleNight;
- QFile Freechat::checkoutStyleDay;
- QFile Freechat::checkoutStyle;
  unsigned short int Freechat::value;
 
  static QPointer<Peerin> server = nullptr;
@@ -136,8 +132,7 @@ Freechat::Freechat(QWidget *parent)
 
     //Command line interface
     commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
-                 << "con -l" << "man" << "con -w" << "style checkout dark"
-                 << "style checkout night" << "style checkout day";
+                 << "con -l" << "man" << "con -w";
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -282,13 +277,6 @@ void Freechat::ConnectionToPeerInLan()
     return;
 }
 
-void Freechat::CheckoutStyle()
-{
-    Freechat::checkoutStyleDark.link(":/source/source/style.css");
-
-    return;
-}
-
 void Freechat::CommandLineInterface()
 {
     if(Freechat::commandLine->text() == "")
@@ -364,33 +352,6 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 /*write hear method for connecting via WAN network*/
-        }
-        break;
-        case 7:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "style checkout dark";
-                #endif
-
-                Freechat::checkoutStyleDark.setFileName(":/source/source/styledark.css");
-        }
-        break;
-        case 8:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "style checkout night";
-                #endif
-
-                Freechat::checkoutStyleNight.setFileName(":/source/source/stylenight.css");
-        }
-        break;
-        case 9:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "style checkout day";
-                #endif
-
-                Freechat::checkoutStyleDay.setFileName(":/source/source/styleday.css");
         }
         break;
         default:

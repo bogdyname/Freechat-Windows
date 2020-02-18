@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QFile *file = new QFile(":/source/source/styledark.css");
+    QFile *file = new QFile(":/source/source/style.css");
     file->open(QFile::ReadOnly);
     app.setStyleSheet(file->readAll());
 

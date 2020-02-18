@@ -62,10 +62,6 @@ public:
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
     static unsigned short int value;
-    static QFile checkoutStyle;
-    static QFile checkoutStyleDark;
-    static QFile checkoutStyleNight;
-    static QFile checkoutStyleDay;
 
     //Command line interface
 private:
@@ -96,9 +92,6 @@ private slots:
     void WriteNickOfPeer_returnPressed();
     void CommandLineInterface();
     void ServerStillWorking();//Debug code
-
-public:
-    void CheckoutStyle();
 
 private:
     void NetworkLanIp();
