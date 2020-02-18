@@ -1,22 +1,25 @@
 QWidget
 {
-    font: 8pt "Letter Gothic Std", white;
-    background-color: black;
+    background-color: #FFE4E1;
+    color: #FFD700;
+}
+
+QDialog
+{
+    /*border: 1px solid #00FFFF;*/
+}
+
+QListWidget
+{
+    border: 1px solid #00FFFF;
+    border-radius: 2.5px;
     color: #FFD700;
 }
 
 QTextEdit
 {
     border: 1px solid #00FFFF;
-    background-color: black;
-    color: #FFD700;
-}
-
-QListWidget
-{
-    border: 1px solid #00FFFF;
-    background-color: black;
-    color: #FFD700;
+    border-radius: 2.5px;
 }
 
 
@@ -33,7 +36,6 @@ QLabel
     border-radius: 5px;
     padding: 2px;
     color: #FFD700;
-    font: 8pt "Letter Gothic Std";
 }
 
 QPushButton

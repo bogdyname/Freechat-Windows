@@ -1,5 +1,8 @@
 <RCC>
-    <qresource prefix="/">
-        <file>source/style.css</file>
+    <qresource prefix="/source">
+        <file>source/LetterGothicStd.otf</file>
+        <file>source/styledark.css</file>
+        <file>source/styleday.css</file>
+        <file>source/stylenight.css</file>
     </qresource>
 </RCC>
