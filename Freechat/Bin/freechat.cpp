@@ -35,7 +35,6 @@ Freechat::Freechat(QWidget *parent)
       ui(new Ui::Freechat)
 {
     ui->setupUi(this);
-    //this->setWindowFlags(Qt::FramelessWindowHint);
 
     //new UI
     try
@@ -132,7 +131,7 @@ Freechat::Freechat(QWidget *parent)
 
     //Command line interface
     commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
-                 << "con -l" << "man" << "con -w";
+                 << "con -l" << "man" << "con -w" << "disconnect";
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -352,6 +351,15 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 /*write hear method for connecting via WAN network*/
+        }
+        break;
+        case 7:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "disconnect";
+                #endif
+
+                stpeerout->disconnectFromHost();
         }
         break;
         default:

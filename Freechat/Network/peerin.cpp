@@ -65,7 +65,6 @@ void Peerin::clearValue()
 
 void Peerin::SlotNewConnection()
 {
-    server->setMaxPendingConnections(1);
     socket = server->nextPendingConnection();
     Freechat::value = 1;
 
