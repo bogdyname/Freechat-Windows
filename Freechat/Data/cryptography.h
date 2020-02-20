@@ -6,9 +6,9 @@
 #ifndef CRYPTOGRAPHY_H
 #define CRYPTOGRAPHY_H
 
-class cryptography
+class Cryptography
 {
 public:
-    cryptography();
+    Cryptography();
 };
 #endif

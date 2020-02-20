@@ -5,7 +5,7 @@
 
 #include "Data/cryptography.h"
 
-cryptography::cryptography()
+Cryptography::Cryptography()
 {
 
 }

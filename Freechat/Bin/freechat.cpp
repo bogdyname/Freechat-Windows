@@ -4,8 +4,6 @@
 */
 
 #include "Bin/freechat.h"
-#include <QTimer>
-#include <QPointer>
 
  QTextEdit *Freechat::viewField;
  QLineEdit *Freechat::commandLine;
