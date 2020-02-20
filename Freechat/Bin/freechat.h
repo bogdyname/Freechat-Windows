@@ -18,8 +18,10 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QMetaEnum>
+#include <QPointer>
 #include <QString>
 #include <QDialog>
+#include <QTimer>
 
 using namespace Qt;
 
@@ -30,6 +32,10 @@ class Freechat : public QDialog, private Ui::Freechat
     //COLORS
     //System out color  | Errors color    | Peerin data       | Peerout data
     //color(255, 153, 0)| color(156, 0, 0)| color(255, 215, 0)| color(0, 255, 255)
+
+    //Command line interface
+private:
+    QStringList commandsList;
 
     //COMMANDS
     /* 1) clear
@@ -46,6 +52,8 @@ class Freechat : public QDialog, private Ui::Freechat
        -- data about all commands and about one specific command
        7) con -w
        -- connecting via WAN network
+       8) disconnect
+       -- disconnect from host
     */
 
 
@@ -61,11 +69,7 @@ public:
     static QString wanIpOfPeer;
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
-    static unsigned short int value;
-
-    //Command line interface
-private:
-    QStringList commandsList;
+    static unsigned short int value; //for netwrok code (about server)
 
     //UI
 public:
