@@ -29,6 +29,7 @@ public slots:
     void AddPeerWan();
     void AddPeerNick();
     void DeleteAllPeer();
+    void SavingDataAboutPeers(QList<QString> &list);
     void DeleteSelectedPeer(unsigned short int peer);
     void GetNickname(QList<QString> &nick);
 

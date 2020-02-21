@@ -16,7 +16,18 @@ class Datasave : public QFile
     Q_OBJECT
 
 public:
+    static QFile mainFile;
+
+public:
     Datasave();
     ~Datasave();
+
+public:
+    void DataSavingIntoFile(QFile &file);
+
+public slots:
+    void CheckoutFile();
+    void DataSavingViaTimer();
+    void CreatFileForNewPeer();
 };
 #endif
