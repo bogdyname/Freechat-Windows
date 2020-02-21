@@ -13,11 +13,13 @@ Bin::Bin(QObject *parent)
     : QObject(parent)
 {
 
+    return;
 }
 
 Bin::~Bin()
 {
 
+    return;
 }
 
 void Bin::AddPeerLan()
@@ -52,6 +54,13 @@ void Bin::DeleteAllPeer()
     RemoveElementsFromList(listWithNickName);
     RemoveElementsFromList(listWithWANIpAddress);
     RemoveElementsFromList(listWithLANIpAddress);
+
+    return;
+}
+
+void Bin::SavingDataAboutPeers(QList<QString> &list)
+{
+    QFile file;
 
     return;
 }

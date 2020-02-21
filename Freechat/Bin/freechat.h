@@ -7,6 +7,7 @@
 #define FREECHAT_H
 
 #include "Bin/bin.h"
+#include "Data/datasave.h"
 #include "Network/peerin.h"
 #include "Network/peerout.h"
 #include "Network/connectionf2f.h"
@@ -54,6 +55,8 @@ private:
        -- connecting via WAN network
        8) disconnect
        -- disconnect from host
+       9) save
+       -- saving all data from viewFieldEdit into file
     */
 
 
@@ -69,7 +72,7 @@ public:
     static QString wanIpOfPeer;
     static QString nickNameOfPeer;
     static QString bufferOfMessages;
-    static unsigned short int value; //for netwrok code (about server)
+    static unsigned short int value; //for network code (about server)
 
     //UI
 public:

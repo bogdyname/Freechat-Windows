@@ -26,7 +26,9 @@
 
  static QPointer<Peerin> server = nullptr;
  static QPointer<Peerout> stpeerout = nullptr;
- static QPointer<ConnectionF2F> netManager = nullptr;
+ static QPointer<ConnectionF2F> netmanager = nullptr;
+ static QPointer<Datasave> datamanager = nullptr;
+ static QPointer<Bin> binmanager = nullptr;
 
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
@@ -77,15 +79,14 @@ Freechat::Freechat(QWidget *parent)
     //fourth layer
     ui->horizontalLayout_6->addWidget(Freechat::lineForTypeText);
 
-    //Bin
-    Bin bin;
-
     //Network data of peer (LAN data)
     try
     {
-        netManager = new ConnectionF2F();
+        netmanager = new ConnectionF2F();
         server = new Peerin();
         stpeerout = new Peerout();
+        datamanager = new Datasave();
+        binmanager = new Bin();
     }
     catch(std::bad_alloc &exp)
     {
@@ -102,19 +103,25 @@ Freechat::Freechat(QWidget *parent)
         abort();
     }
 
-    netManager->LanNetwork(Freechat::yourLanIp,
+    netmanager->LanNetwork(Freechat::yourLanIp,
                            Freechat::yourMAC,
                            Freechat::yourNetmask,
                            Freechat::localHostName);
 
-    QTimer *timer = new QTimer;
-    timer->setInterval(10000);
-    connect(timer, SIGNAL(timeout()), this, SLOT(ServerStillWorking()));
-    timer->start();
+    //Timer for Debug server (check server status)
+    QTimer *timerOfServer = new QTimer;
+    timerOfServer->setInterval(10000);
+    connect(timerOfServer, SIGNAL(timeout()), this, SLOT(ServerStillWorking()));
+    timerOfServer->start();
+
+    QTimer *timerOfAutoDataSaving = new QTimer;
+    timerOfAutoDataSaving->setInterval(500000);
+    connect(timerOfAutoDataSaving, SIGNAL(timeout()), datamanager, SLOT(DataSavingViaTimer()));
+    timerOfAutoDataSaving->start();
 
     //Connecting UI widgets with bin code
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerNick()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerLan()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
+    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
     //connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
 
     //UI connection
@@ -125,11 +132,12 @@ Freechat::Freechat(QWidget *parent)
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), Freechat::lineForTypeText, SLOT(clear()));
     //connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(clear())); //TTS cos network through NAT adn WAN IP not done
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeLanIpOfPeer, SLOT(clear()));
-    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
+    connect(Freechat::writeNickOfPeer, SIGNAL(returnPresdatamanegersed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
     commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
-                 << "con -l" << "man" << "con -w" << "disconnect";
+                 << "con -l" << "man" << "con -w" << "disconnect"
+                 << "save";
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -358,6 +366,15 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 stpeerout->disconnectFromHost();
+        }
+        break;
+        case 8:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "save";
+                #endif
+
+                datamanager->DataSavingIntoFile(Datasave::mainFile);
         }
         break;
         default:
