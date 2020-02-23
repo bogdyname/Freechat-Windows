@@ -50,7 +50,7 @@ private:
        5) con -l
        -- connecting via LAN network
        6) man
-       -- data about all commands and about one specific command
+       -- data about all commands
        7) con -w
        -- connecting via WAN network
        8) disconnect
@@ -58,8 +58,6 @@ private:
        9) save
        -- saving all data from viewFieldEdit into file
     */
-
-
 
     //Global buffer variables
 public:
