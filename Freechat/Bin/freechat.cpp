@@ -132,12 +132,13 @@ Freechat::Freechat(QWidget *parent)
     connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), Freechat::lineForTypeText, SLOT(clear()));
     //connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(clear())); //TTS cos network through NAT adn WAN IP not done
     connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeLanIpOfPeer, SLOT(clear()));
-    connect(Freechat::writeNickOfPeer, SIGNAL(returnPresdatamanegersed()), Freechat::writeNickOfPeer, SLOT(clear()));
+    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
     commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
                  << "con -l" << "man" << "con -w" << "disconnect"
                  << "save";
+
     connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -162,6 +163,8 @@ Freechat::Freechat(QWidget *parent)
     Freechat::lineForTypeText->setFocusPolicy(WheelFocus);
     Freechat::viewField->setFocusPolicy(NoFocus);
     Freechat::viewField->setReadOnly(true);
+
+    datamanager->ReadDataFromFile();// NEED TO TEST IT
 
     //variables for pointer of function from ConnectionF2F
     checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
@@ -347,7 +350,16 @@ void Freechat::CommandLineInterface()
                  qDebug() << "man";
                  #endif
 
-                 /*write hear all command and etc*/
+                 QMessageBox::information(Freechat::commandLine, tr("Connecting"),
+                 tr("<h1><p>ifconfig = show all your network data</p>"
+                 "<p>clear = clear all data in view field</p>"
+                 "<p>con -l = connecting via LAN network</p>"
+                 "<p>con -w = connecting via WAN network</p>"
+                 "<p>disconnect = disconnect from host</p>"
+                 "<p>man = data about all commands</p>"
+                 "<p>save = saving all messages</p>"
+                 "<p>ip -l = show your LAN ip</p>"
+                 "<p>shutdown = close programm</p></h1>"), "ok");
         }
         break;
         case 6:

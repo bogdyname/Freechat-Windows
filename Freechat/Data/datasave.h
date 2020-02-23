@@ -27,6 +27,7 @@ public:
 
 public slots:
     void CheckoutFile();
+    void ReadDataFromFile();
     void DataSavingViaTimer();
     void CreatFileForNewPeer();
 };
