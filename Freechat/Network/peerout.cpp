@@ -16,7 +16,7 @@ Peerout::Peerout()
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.what();
+        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
@@ -32,9 +32,9 @@ Peerout::Peerout()
     qDebug() << "A new socket created.";
     #endif
 
-    connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
-    connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+    QObject::connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
+    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
+    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(SlotError(QAbstractSocket::SocketError)));
 }
 
@@ -46,13 +46,13 @@ Peerout::~Peerout()
 void Peerout::SlotReadyRead()
 {
     QDataStream stream(socket);
-    stream.setVersion(QDataStream::Qt_4_2);
+    stream.QDataStream::setVersion(QDataStream::Qt_4_2);
     QTime time = QTime::currentTime();
     QColor color(0, 255, 255);
     QString buffer;
 
-    Freechat::viewField->setTextColor(color);
-    Freechat::viewField->setAlignment(Qt::AlignRight);
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignRight);
 
     #ifndef Q_DEBUG
     qDebug() << "Read data from server";
@@ -78,7 +78,7 @@ void Peerout::SlotReadyRead()
         #endif
 
         if(!buffer.isEmpty())
-            Freechat::viewField->insertPlainText(time.toString() + "\n" + "Peer:\n" + buffer + "\n");
+            Freechat::viewField->QTextEdit::insertPlainText(time.QTime::toString() + "\n" + "Peer:\n" + buffer + "\n");
 
         nextBlockSize = 0;
     }
@@ -95,13 +95,13 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          "The remote host is closed.\n" :
                          err == QAbstractSocket::ConnectionRefusedError ?
                          "The connection was refused.\n" :
-                         QString(socket->errorString() + "\n"));
+                         QString(socket->QIODevice::errorString() + "\n"));
 
     // show error in view field
     QColor color(156, 0, 0);
-    Freechat::viewField->setTextColor(color);
-    Freechat::viewField->setAlignment(Qt::AlignCenter);
-    Freechat::viewField->insertPlainText(strError);
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+    Freechat::viewField->QTextEdit::insertPlainText(strError);
 
     return;
 }
@@ -114,15 +114,15 @@ void Peerout::SlotSendToServer()
 
     QByteArray block;
     QDataStream sendStream(&block, QIODevice::ReadWrite);
-    sendStream.setVersion(QDataStream::Qt_4_2);
+    sendStream.QDataStream::setVersion(QDataStream::Qt_4_2);
     sendStream << qint64(0) << Freechat::bufferOfMessages;
 
-    sendStream.device()->seek(0);
+    sendStream.QDataStream::device()->QIODevice::seek(0);
     sendStream << (qint64)(block.size() - sizeof(932838457459459));
-    socket->write(block);
-    socket->flush();
+    socket->QIODevice::write(block);
+    socket->QAbstractSocket::flush();
 
-    Freechat::bufferOfMessages.clear();
+    Freechat::bufferOfMessages.QString::clear();
 
     return;
 }
@@ -134,9 +134,9 @@ void Peerout::SlotLanConnecting()
     #endif
 
     QHostAddress hostAddress(Freechat::lanIpOfPeer);
-    socket->connectToHost(hostAddress, 6000);
+    socket->QAbstractSocket::connectToHost(hostAddress, 6000);
 
-    if(socket->waitForConnected(2000))
+    if(socket->QAbstractSocket::waitForConnected(2000))
     {
         #ifndef Q_DEBUG
         qDebug() << "Connected.";
@@ -149,7 +149,7 @@ void Peerout::SlotLanConnecting()
         #endif
     }
 
-    Freechat::lanIpOfPeer.clear();
+    Freechat::lanIpOfPeer.QString::clear();
 
     return;
 }
@@ -166,9 +166,9 @@ void Peerout::SlotWanConnecting()
 void Peerout::SlotConnected()
 {
     QColor color(255, 153, 0);
-    Freechat::viewField->setTextColor(color);
-    Freechat::viewField->setAlignment(Qt::AlignCenter);
-    Freechat::viewField->insertPlainText("Connected to peerin\n");
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+    Freechat::viewField->QTextEdit::insertPlainText("Connected to peerin\n");
 
     #ifndef Q_DEBUG
     qDebug() << "Connected.";

@@ -26,9 +26,9 @@ int ConnectionF2F::CheckNetworkAccess()
     QEventLoop loop;
     QNetworkAccessManager nam;
     QNetworkRequest req(QUrl("http://www.google.com"));
-    QNetworkReply *reply = nam.get(req);
+    QNetworkReply *reply = nam.QNetworkAccessManager::get(req);
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.exec();
+    loop.QEventLoop::exec();
 
     if(reply->bytesAvailable())
     {
@@ -44,12 +44,12 @@ void ConnectionF2F::LanNetwork(QString &ip, QString &mac, QString &netmask, QStr
 {
        QString localhostIP;
        QString localhostname =  QHostInfo::localHostName();
-       QList<QHostAddress> hostList = QHostInfo::fromName(localhostname).addresses();
+       QList<QHostAddress> hostList = QHostInfo::fromName(localhostname).QHostInfo::addresses();
 
        foreach (const QHostAddress& address, hostList)
        {
-           if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isLoopback() == false)
-                localhostIP = address.toString();
+           if (address.QHostAddress::protocol() == QAbstractSocket::IPv4Protocol && address.QHostAddress::isLoopback() == false)
+                localhostIP = address.QHostAddress::toString();
        }
 
        QString localMacAddress;
@@ -57,12 +57,12 @@ void ConnectionF2F::LanNetwork(QString &ip, QString &mac, QString &netmask, QStr
 
        foreach (const QNetworkInterface& networkInterface, QNetworkInterface::allInterfaces())
        {
-           foreach (const QNetworkAddressEntry& entry, networkInterface.addressEntries())
+           foreach (const QNetworkAddressEntry& entry, networkInterface.QNetworkInterface::addressEntries())
            {
-               if (entry.ip().toString() == localhostIP)
+               if (entry.QNetworkAddressEntry::ip().QHostAddress::toString() == localhostIP)
                {
-                   localMacAddress = networkInterface.hardwareAddress();
-                   localNetmask = entry.netmask().toString();
+                   localMacAddress = networkInterface.QNetworkInterface::hardwareAddress();
+                   localNetmask = entry.QNetworkAddressEntry::netmask().QHostAddress::toString();
                    break;
                }
            }
