@@ -10,6 +10,7 @@
 #include <QString>
 #include <iostream>
 #include <algorithm>
+#include <QListWidgetItem>
 
 class Bin : public QObject
 {
@@ -19,18 +20,20 @@ private:
     QList<QString> listWithNickName;
     QList<QString> listWithWANIpAddress;
     QList<QString> listWithLANIpAddress;
+    QFile fileForSavingIPAndNick;
 
 public:
     ~Bin();
     explicit Bin(QObject *parent = nullptr);
 
 public slots:
-    void AddPeerLan();
-    void AddPeerWan();
-    void AddPeerNick();
-    void DeleteAllPeer();
+    inline void AddPeerLan();
+    inline void AddPeerWan();
+    inline void AddPeerNick();
+    inline void DeleteAllPeer();
     void SavingDataAboutPeers(QList<QString> &list);
-    void DeleteSelectedPeer(unsigned short int peer);
+    void ReadDataAboutPeers();
+    void DeleteSelectedPeer();
     void GetNickname(QList<QString> &nick);
 
 private:

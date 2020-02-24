@@ -50,7 +50,7 @@ Freechat::Freechat(QWidget *parent)
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.what();
+        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
@@ -62,22 +62,22 @@ Freechat::Freechat(QWidget *parent)
         abort();
     }
 
-    Freechat::writeWanIpOfPeer->setReadOnly(true);//TTS cos network through NAT adn WAN IP not done
+    //Freechat::writeWanIpOfPeer->QLineEdit::setReadOnly(true);//TTS cos network through NAT adn WAN IP not done
 
     //first layer
-    ui->horizontalLayout_1->addWidget(Freechat::writeNickOfPeer);
-    //ui->horizontalLayout_2->addWidget(Freechat::writeWanIpOfPeer); //TTS cos network through NAT adn WAN IP not done
-    ui->horizontalLayout_3->addWidget(Freechat::writeLanIpOfPeer);
+    ui->horizontalLayout_1->QBoxLayout::addWidget(Freechat::writeNickOfPeer);
+    //ui->horizontalLayout_2->QBoxLayout::addWidget(Freechat::writeWanIpOfPeer); //TTS cos network through NAT adn WAN IP not done
+    ui->horizontalLayout_3->QBoxLayout::addWidget(Freechat::writeLanIpOfPeer);
 
     //second layer
-    ui->HLForButtons->addWidget(Freechat::commandLine);
+    ui->HLForButtons->QBoxLayout::addWidget(Freechat::commandLine);
 
     //third layer
-    ui->horizontalLayout_5->addWidget(Freechat::listWithNickName);
-    ui->horizontalLayout_5->addWidget(Freechat::viewField);
+    ui->horizontalLayout_5->QBoxLayout::addWidget(Freechat::listWithNickName);
+    ui->horizontalLayout_5->QBoxLayout::addWidget(Freechat::viewField);
 
     //fourth layer
-    ui->horizontalLayout_6->addWidget(Freechat::lineForTypeText);
+    ui->horizontalLayout_6->QBoxLayout::addWidget(Freechat::lineForTypeText);
 
     //Network data of peer (LAN data)
     try
@@ -91,7 +91,7 @@ Freechat::Freechat(QWidget *parent)
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.what();
+        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
@@ -110,68 +110,74 @@ Freechat::Freechat(QWidget *parent)
 
     //Timer for Debug server (check server status)
     QTimer *timerOfServer = new QTimer;
-    timerOfServer->setInterval(10000);
-    connect(timerOfServer, SIGNAL(timeout()), this, SLOT(ServerStillWorking()));
-    timerOfServer->start();
+    timerOfServer->QTimer::setInterval(10000);
+    QObject::connect(timerOfServer, SIGNAL(timeout()), this, SLOT(ServerStillWorking()));
+    timerOfServer->QTimer::start();
 
     QTimer *timerOfAutoDataSaving = new QTimer;
-    timerOfAutoDataSaving->setInterval(500000);
-    connect(timerOfAutoDataSaving, SIGNAL(timeout()), datamanager, SLOT(DataSavingViaTimer()));
-    timerOfAutoDataSaving->start();
+    timerOfAutoDataSaving->QTimer::setInterval(500000);
+    QObject::connect(timerOfAutoDataSaving, SIGNAL(timeout()), datamanager, SLOT(DataSavingViaTimer()));
+    timerOfAutoDataSaving->QTimer::start();
 
     //Connecting UI widgets with bin code
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
-    //connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
+    QTimer *timerOfBin = new QTimer;
+    timerOfServer->QTimer::setInterval(500);
+    timerOfServer->QTimer::start();
+
+    QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeers())); //data showing after 0.5 sec
+    QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
+    QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
+    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem)), binmanager, SLOT(DeleteSelectedPeer(QListWidgetItem)));
+    //QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
 
     //UI connection
-    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(LineForTypeText_returnPressed()));
-    //connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(writeWanIpOfPeer_returnPressed())); //TTS cos network through NAT adn WAN IP not done
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteLanIpOfPeer_returnPressed()));
-    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteNickOfPeer_returnPressed()));
-    connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), Freechat::lineForTypeText, SLOT(clear()));
-    //connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(clear())); //TTS cos network through NAT adn WAN IP not done
-    connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeLanIpOfPeer, SLOT(clear()));
-    connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
+    QObject::connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(LineForTypeText_returnPressed()));
+    //QObject::connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(writeWanIpOfPeer_returnPressed())); //TTS cos network through NAT adn WAN IP not done
+    QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteLanIpOfPeer_returnPressed()));
+    QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteNickOfPeer_returnPressed()));
+    QObject::connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), Freechat::lineForTypeText, SLOT(clear()));
+    //QObject::connect(Freechat::writeWanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeWanIpOfPeer, SLOT(clear())); //TTS cos network through NAT adn WAN IP not done
+    QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), Freechat::writeLanIpOfPeer, SLOT(clear()));
+    QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
-    commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
-                 << "con -l" << "man" << "con -w" << "disconnect"
-                 << "save";
+    Freechat::commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
+                           << "con -l" << "man" << "con -w" << "disconnect"
+                           << "save" << "clear -a nick";
 
-    connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
-    connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
+    QObject::connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
+    QObject::connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
     //UI style and focus
-    Freechat::commandLine->setPlaceholderText("Command line");
-    Freechat::lineForTypeText->setPlaceholderText("Type here");
-    Freechat::writeNickOfPeer->setPlaceholderText("Write here nickname of peer");
-    Freechat::writeWanIpOfPeer->setPlaceholderText("Write here WAN IP of peer");
-    Freechat::writeLanIpOfPeer->setPlaceholderText("Write here LAN IP of peer");
+    Freechat::commandLine->QLineEdit::setPlaceholderText("Command line");
+    Freechat::lineForTypeText->QLineEdit::setPlaceholderText("Type here");
+    Freechat::writeNickOfPeer->QLineEdit::setPlaceholderText("Write here nickname of peer");
+    Freechat::writeWanIpOfPeer->QLineEdit::setPlaceholderText("Write here WAN IP of peer");
+    Freechat::writeLanIpOfPeer->QLineEdit::setPlaceholderText("Write here LAN IP of peer");
 
-    Freechat::writeNickOfPeer->setMaxLength(15);
-    Freechat::writeWanIpOfPeer->setMaxLength(15);
-    Freechat::writeLanIpOfPeer->setMaxLength(15);
-    Freechat::lineForTypeText->setMaxLength(1500);
+    Freechat::writeNickOfPeer->QLineEdit::setMaxLength(15);
+    Freechat::writeWanIpOfPeer->QLineEdit::setMaxLength(15);
+    Freechat::writeLanIpOfPeer->QLineEdit::setMaxLength(15);
+    Freechat::lineForTypeText->QLineEdit::setMaxLength(1500);
 
-    Freechat::listWithNickName->setMaximumHeight(500);
-    Freechat::listWithNickName->setMaximumWidth(225);
-    Freechat::listWithNickName->setFocusPolicy(ClickFocus);
-    Freechat::writeNickOfPeer->setFocusPolicy(WheelFocus);
-    Freechat::writeWanIpOfPeer->setFocusPolicy(WheelFocus);
-    Freechat::writeLanIpOfPeer->setFocusPolicy(WheelFocus);
-    Freechat::lineForTypeText->setFocusPolicy(WheelFocus);
-    Freechat::viewField->setFocusPolicy(NoFocus);
-    Freechat::viewField->setReadOnly(true);
+    Freechat::listWithNickName->QListWidget::setMaximumHeight(500);
+    Freechat::listWithNickName->QListWidget::setMaximumWidth(225);
+    Freechat::listWithNickName->QListWidget::setFocusPolicy(ClickFocus);
+    Freechat::writeNickOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
+    Freechat::writeWanIpOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
+    Freechat::writeLanIpOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
+    Freechat::lineForTypeText->QLineEdit::setFocusPolicy(WheelFocus);
+    Freechat::viewField->QTextEdit::setFocusPolicy(NoFocus);
+    Freechat::viewField->QTextEdit::setReadOnly(true);
 
     datamanager->ReadDataFromFile();// NEED TO TEST IT
 
     //variables for pointer of function from ConnectionF2F
-    checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
+    Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
     Freechat::value = 0;
 
     //close all QLineEdit if network shutdown
-    switch((*checkNetworkConnection)())
+    switch((*Freechat::checkNetworkConnection)())
     {
         case 101:
         {
@@ -183,11 +189,11 @@ Freechat::Freechat(QWidget *parent)
         case 404:
         {
             //block all field without network access
-            Freechat::writeNickOfPeer->setReadOnly(true);
-            Freechat::writeWanIpOfPeer->setReadOnly(true);
-            Freechat::writeLanIpOfPeer->setReadOnly(true);
-            Freechat::lineForTypeText->setReadOnly(true);
-            Freechat::commandLine->setReadOnly(true);
+            Freechat::writeNickOfPeer->QLineEdit::setReadOnly(true);
+            Freechat::writeWanIpOfPeer->QLineEdit::setReadOnly(true);
+            Freechat::writeLanIpOfPeer->QLineEdit::setReadOnly(true);
+            Freechat::lineForTypeText->QLineEdit::setReadOnly(true);
+            Freechat::commandLine->QLineEdit::setReadOnly(true);
         }
         break;
     }
@@ -225,13 +231,13 @@ void Freechat::ServerStillWorking()
 
 void Freechat::NetworkLanIp()
 {
-    switch((*checkNetworkConnection)())
+    switch((*Freechat::checkNetworkConnection)())
     {
         case 101:
         {
-            status = QString("<h1>Your LAN IP address: %1</h1>").arg(Freechat::yourLanIp);
+            Freechat::status = QString("<h1>Your LAN IP address: %1</h1>").QString::arg(Freechat::yourLanIp);
             QMessageBox::information(Freechat::commandLine, tr("Network Info"),
-                             status, "ok");
+                             Freechat::status, "ok");
         }
         break;
         case 404:
@@ -247,15 +253,15 @@ void Freechat::NetworkLanIp()
 
 void Freechat::NetworkFullInformation()
 {
-    switch((*checkNetworkConnection)())
+    switch((*Freechat::checkNetworkConnection)())
     {
         case 101:
         {
-            networkdata = QString("<h1><p>IP = %1</p><p>MAC = %2</p><p>Netmask = %3</p><p>localhost = %4</p></h1>")
-            .arg(Freechat::yourLanIp).arg(Freechat::yourMAC).arg(Freechat::yourNetmask).arg(Freechat::localHostName);
+            Freechat::networkdata = QString("<h1><p>IP = %1</p><p>MAC = %2</p><p>Netmask = %3</p><p>localhost = %4</p></h1>")
+            .QString::arg(Freechat::yourLanIp).QString::arg(Freechat::yourMAC).QString::arg(Freechat::yourNetmask).QString::arg(Freechat::localHostName);
 
             QMessageBox::information(Freechat::commandLine, tr("Network data"),
-                            networkdata, "ok");
+                            Freechat::networkdata, "ok");
         }
         break;
         case 404:
@@ -287,16 +293,16 @@ void Freechat::ConnectionToPeerInLan()
 
 void Freechat::CommandLineInterface()
 {
-    if(Freechat::commandLine->text() == "")
+    if(Freechat::commandLine->QLineEdit::text() == "")
         return;
 
-    Freechat::command += Freechat::commandLine->text();
+    Freechat::command += Freechat::commandLine->QLineEdit::text();
 
     #ifndef Q_DEBUG
-    qDebug() << command;
+    qDebug() << Freechat::command;
     #endif
 
-    switch(commandsList.indexOf(command))
+    switch(Freechat::commandsList.QStringList::indexOf(Freechat::command))
     {
         case 0:
         {
@@ -304,7 +310,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "clear";
                 #endif
 
-                Freechat::viewField->clear();
+                Freechat::viewField->QTextEdit::clear();
         }
         break;
         case 1:
@@ -322,7 +328,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "ifconfig";
                 #endif
 
-                NetworkFullInformation();
+                Freechat::NetworkFullInformation();
         }
         break;
         case 3:
@@ -331,7 +337,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "shutdown";
                 #endif
 
-                close();
+                QWidget::close();
         }
         break;
         case 4:
@@ -341,7 +347,7 @@ void Freechat::CommandLineInterface()
                  #endif
 
                  Freechat::ConnectionToPeerInLan();
-                 stpeerout->SlotLanConnecting();
+                 stpeerout->Peerout::SlotLanConnecting();
         }
         break;
         case 5:
@@ -377,7 +383,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "disconnect";
                 #endif
 
-                stpeerout->disconnectFromHost();
+                stpeerout->QAbstractSocket::disconnectFromHost();
         }
         break;
         case 8:
@@ -386,7 +392,16 @@ void Freechat::CommandLineInterface()
                 qDebug() << "save";
                 #endif
 
-                datamanager->DataSavingIntoFile(Datasave::mainFile);
+                datamanager->Datasave::DataSavingIntoFile(Datasave::mainFile);
+        }
+        break;
+        case 9:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "clear -a nick";
+                #endif
+
+                binmanager->Bin::DeleteAllPeer();
         }
         break;
         default:
@@ -397,28 +412,28 @@ void Freechat::CommandLineInterface()
         break;
     }
 
-    Freechat::command.clear();
+    Freechat::command.QString::clear();
 
     return;
 }
 
 void Freechat::LineForTypeText_returnPressed()
 {
-    if(Freechat::lineForTypeText->text() == "")
+    if(Freechat::lineForTypeText->QLineEdit::text() == "")
         return;
 
     QTime time = QTime::currentTime();
     QColor color(255, 215, 0);
-    Freechat::viewField->setTextColor(color);
-    Freechat::viewField->setAlignment(Qt::AlignLeft);
-    Freechat::bufferOfMessages += Freechat::lineForTypeText->text();
-    Freechat::viewField->insertPlainText(time.toString() + "\n" + "Me:\n" + Freechat::bufferOfMessages + "\n");
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignLeft);
+    Freechat::bufferOfMessages += Freechat::lineForTypeText->QLineEdit::text();
+    Freechat::viewField->QTextEdit::insertPlainText(time.QTime::toString() + "\n" + "Me:\n" + Freechat::bufferOfMessages + "\n");
 
     switch(Freechat::value)
     {
         case 1:
         {
-            connect(Freechat::lineForTypeText, SIGNAL(editingFinished()), server, SLOT(SendResponseToClient()));
+            QObject::connect(Freechat::lineForTypeText, SIGNAL(editingFinished()), server, SLOT(SendResponseToClient()));
 
             #ifndef Q_DEBUG
             qDebug() << "Send this data to client: " << Freechat::bufferOfMessages;
@@ -427,7 +442,7 @@ void Freechat::LineForTypeText_returnPressed()
         break;
         case 0:
         {
-            connect(Freechat::lineForTypeText, SIGNAL(editingFinished()), stpeerout, SLOT(SlotSendToServer()));
+            QObject::connect(Freechat::lineForTypeText, SIGNAL(editingFinished()), stpeerout, SLOT(SlotSendToServer()));
 
             #ifndef Q_DEBUG
             qDebug() << "Send this data to server: " << Freechat::bufferOfMessages;
@@ -441,10 +456,10 @@ void Freechat::LineForTypeText_returnPressed()
 
 void Freechat::WriteWanIpOfPeer_returnPressed()
 {
-    if(Freechat::writeWanIpOfPeer->text() == "")
+    if(Freechat::writeWanIpOfPeer->QLineEdit::text() == "")
         return;
 
-    Freechat::wanIpOfPeer += Freechat::writeWanIpOfPeer->text();
+    Freechat::wanIpOfPeer += Freechat::writeWanIpOfPeer->QLineEdit::text();
 
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::wanIpOfPeer;
@@ -455,10 +470,10 @@ void Freechat::WriteWanIpOfPeer_returnPressed()
 
 void Freechat::WriteLanIpOfPeer_returnPressed()
 {
-    if(Freechat::writeLanIpOfPeer->text() == "")
+    if(Freechat::writeLanIpOfPeer->QLineEdit::text() == "")
         return;
 
-    Freechat::lanIpOfPeer += Freechat::writeLanIpOfPeer->text();
+    Freechat::lanIpOfPeer += Freechat::writeLanIpOfPeer->QLineEdit::text();
 
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::lanIpOfPeer;
@@ -469,10 +484,10 @@ void Freechat::WriteLanIpOfPeer_returnPressed()
 
 void Freechat::WriteNickOfPeer_returnPressed()
 {
-    if(Freechat::writeNickOfPeer->text() == "")
+    if(Freechat::writeNickOfPeer->QLineEdit::text() == "")
         return;
 
-    Freechat::nickNameOfPeer += Freechat::writeNickOfPeer->text();
+    Freechat::nickNameOfPeer += Freechat::writeNickOfPeer->QLineEdit::text();
 
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::nickNameOfPeer;

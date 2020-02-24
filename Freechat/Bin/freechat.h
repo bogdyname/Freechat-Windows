@@ -57,6 +57,8 @@ private:
        -- disconnect from host
        9) save
        -- saving all data from viewFieldEdit into file
+       10) clear -a nick
+       -- clear all contacts
     */
 
     //Global buffer variables

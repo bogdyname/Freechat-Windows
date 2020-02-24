@@ -26,16 +26,16 @@ void Datasave::DataSavingIntoFile(QFile &file)
 {
     QTextStream out(&file);
 
-    if(!file.exists())
+    if(!file.QFile::exists())
     {
-        file.link(Freechat::nickNameOfPeer + "ßß");
+        file.QFile::link(Freechat::nickNameOfPeer + "ßß");
     }
-    else if (file.open(QIODevice::WriteOnly))
+    else if (file.QIODevice::open(QIODevice::WriteOnly))
     {
         while(Freechat::viewField)
         {
-            file.write("");
-            file.close();
+            file.QIODevice::write("");
+            file.QFileDevice::close();
         }
     }
 
@@ -65,17 +65,17 @@ void Datasave::ReadDataFromFile()
     QFile file("ßß");
     //file.link(Freechat::nickNameOfPeer + "ßß");
 
-    if ((file.exists())&&(file.open(QIODevice::ReadOnly)))
+    if ((file.QFile::exists())&&(file.QIODevice::open(QIODevice::ReadOnly)))
     {
         QString str = "";
 
-        while(!file.atEnd())
+        while(!file.QFileDevice::atEnd())
         {
-            str += file.readLine();
-            Freechat::viewField->setText(str);
+            str += file.QIODevice::readLine();
+            Freechat::viewField->QTextEdit::setText(str);
         }
 
-        file.close();
+        file.QFileDevice::close();
     }
 
     return;

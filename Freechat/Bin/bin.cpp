@@ -12,6 +12,7 @@ using namespace std;
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
+    Bin::fileForSavingIPAndNick.QFile::link("contacts");
 
     return;
 }
@@ -24,60 +25,76 @@ Bin::~Bin()
 
 void Bin::AddPeerLan()
 {
-    WriteElementsInList(listWithWANIpAddress, Freechat::lanIpOfPeer);
-
-    Freechat::lanIpOfPeer.clear();
+    Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::lanIpOfPeer);
 
     return;
 }
 
 void Bin::AddPeerWan()
 {
-    WriteElementsInList(listWithLANIpAddress, Freechat::wanIpOfPeer);
-
-    Freechat::wanIpOfPeer.clear();
+    Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::wanIpOfPeer);
 
     return;
 }
 
 void Bin::AddPeerNick()
 {
-    WriteElementsInList(listWithNickName, Freechat::nickNameOfPeer);
-
-    Freechat::nickNameOfPeer.clear();
+    Bin::WriteElementsInList(Bin::listWithNickName, Freechat::nickNameOfPeer);
 
     return;
 }
 
 void Bin::DeleteAllPeer()
 {
-    RemoveElementsFromList(listWithNickName);
-    RemoveElementsFromList(listWithWANIpAddress);
-    RemoveElementsFromList(listWithLANIpAddress);
+    Bin::RemoveElementsFromList(Bin::listWithNickName);
+    Bin::RemoveElementsFromList(Bin::listWithWANIpAddress);
+    Bin::RemoveElementsFromList(Bin::listWithLANIpAddress);
+
+    qDeleteAll(Freechat::listWithNickName->QListWidget::selectedItems());
+    Freechat::listWithNickName->QListWidget::clear();
 
     return;
 }
 
 void Bin::SavingDataAboutPeers(QList<QString> &list)
 {
-    QFile file;
 
     return;
 }
 
-void Bin::DeleteSelectedPeer(unsigned short int peer)
+void Bin::ReadDataAboutPeers()
 {
-    //variables peer need for select element from containers
-    //nick cont
-    //lan cont
-    //wan cont
+    if ((Bin::fileForSavingIPAndNick.QFile::exists()) && (Bin::fileForSavingIPAndNick.QIODevice::open(QIODevice::ReadOnly)))
+    {
+        QString str = "";
+
+        while(!Bin::fileForSavingIPAndNick.QFileDevice::atEnd())
+        {
+            str += Bin::fileForSavingIPAndNick.QIODevice::readLine();
+        }
+
+        Freechat::listWithNickName->QListWidget::addItem(str);
+        Bin::fileForSavingIPAndNick.QFileDevice::close();
+    }
+
+    return;
+}
+
+void Bin::DeleteSelectedPeer()
+{
+    QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
+
+    foreach(QListWidgetItem * item, items)
+    {
+        delete Freechat::listWithNickName->QListWidget::takeItem(Freechat::listWithNickName->QListWidget::row(item));
+    }
 
     return;
 }
 
 void Bin::GetNickname(QList<QString> &nick)
 {
-    nick = GetElementsFromList(listWithNickName);
+    nick = Bin::GetElementsFromList(Bin::listWithNickName);
 
     return;
 }
