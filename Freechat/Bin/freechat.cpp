@@ -62,8 +62,6 @@ Freechat::Freechat(QWidget *parent)
         abort();
     }
 
-    //Freechat::writeWanIpOfPeer->QLineEdit::setReadOnly(true);//TTS cos network through NAT adn WAN IP not done
-
     //first layer
     ui->horizontalLayout_1->QBoxLayout::addWidget(Freechat::writeNickOfPeer);
     //ui->horizontalLayout_2->QBoxLayout::addWidget(Freechat::writeWanIpOfPeer); //TTS cos network through NAT adn WAN IP not done

@@ -16,6 +16,7 @@ class QTcpServer;
 class Peerin : public QTcpServer
 {
     Q_OBJECT
+    Q_CLASSINFO("Version", "0.5")
 
 private:
     QTcpServer *server = nullptr;
