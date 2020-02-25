@@ -16,6 +16,7 @@ class ConnectionF2F;
 class Peerout : public QTcpSocket
 {
     Q_OBJECT
+    Q_CLASSINFO("Version", "0.5")
 
 public:
     explicit Peerout();

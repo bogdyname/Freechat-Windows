@@ -1,47 +1,82 @@
 QWidget
 {
-    background-color: black; /*#091833*/
+    background-color: black;
     color: #FFD700;
 }
 
 QDialog
 {
-    /*border: 1px solid #00FFFF;*/
+    background-color: black;
+    color: #FFD700;
 }
 
 QListWidget
 {
-    border: 1px solid #00FFFF;
+    border: 1.2px;
+    border-color: #00FFFF;
+    border-style: outset;
+    border-radius: 2.5px;
+    color: #FFD700;
+}
+
+QListWidget:hover
+{
+    border: 1.5px;
+    border-color: #8A2BE2;
+    border-style: outset;
     border-radius: 2.5px;
     color: #FFD700;
 }
 
 QTextEdit
 {
-    border: 1px solid #00FFFF;
+    border: 1.2px;
+    border-color: #00FFFF;
+    border-style: outset;
     border-radius: 2.5px;
 }
 
-
 QLineEdit
 {
-    border: 1px solid #00FFFF;
-    border-radius: 5px;
+    border: 1.2px;
+    border-color: #00FFFF;
+    border-style: outset;
+    border-radius: 2.5px;
+    padding: 0 8px;
+}
+
+QLineEdit:read-only
+{
+    border: 1.2px;
+    border-color: #DC143C;
+    border-style: outset;
+    border-radius: 2.5px;
+    padding: 0 8px;
+}
+
+QLineEdit:focus
+{
+    border: 1.5px;
+    border-color: #8A2BE2;
+    border-style: outset;
+    border-radius: 2.5px;
+    padding: 0 8px;
+}
+
+QLineEdit:hover
+{
+    border: 1.5px;
+    border-color: #008B8B;
+    border-style: outset;
+    border-radius: 2.5px;
     padding: 0 8px;
 }
 
 QLabel
 {
-    border: 1px solid #00FFFF;
-    border-radius: 5px;
-    padding: 2px;
+    border: 1.2px;
+    border-color: #00FFFF;
+    border-style: outset;
+    border-radius: 2.5px;
     color: #FFD700;
-}
-
-QPushButton
-{
-    border: 1.5px solid #00FFFF;
-    border-radius: 5px;
-    color: #FFD700;
-    padding: 0 8px;
 }

@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
-    <height>484</height>
+    <width>584</width>
+    <height>435</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>320</width>
+    <height>320</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>700</width>
+    <height>550</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Freechat</string>

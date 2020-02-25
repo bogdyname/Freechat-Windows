@@ -15,6 +15,7 @@
 class Bin : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("Version", "0.5")
 
 private:
     QList<QString> listWithNickName;
@@ -27,10 +28,10 @@ public:
     explicit Bin(QObject *parent = nullptr);
 
 public slots:
-    inline void AddPeerLan();
-    inline void AddPeerWan();
-    inline void AddPeerNick();
-    inline void DeleteAllPeer();
+    void AddPeerLan();
+    void AddPeerWan();
+    void AddPeerNick();
+    void DeleteAllPeer();
     void SavingDataAboutPeers(QList<QString> &list);
     void ReadDataAboutPeers();
     void DeleteSelectedPeer();

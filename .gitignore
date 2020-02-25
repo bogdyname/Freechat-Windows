@@ -59,3 +59,13 @@ build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Release/release/peerout.obj
 build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Release/release/qrc_resources.cpp
 build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Release/release/qrc_resources.obj
 build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Release/ui_freechat.h
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/cryptography.obj
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/datasave.obj
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/moc_cryptography.cpp
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/moc_cryptography.obj
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/moc_datasave.cpp
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/moc_datasave.obj
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/qrc_resources.cpp
+build-test-Desktop_Qt_5_12_0_MSVC2017_64bit2-Debug/debug/qrc_resources.obj
+Freechat/test.pro.user.0f00567.4.10-pre1
+Freechat/test.pro.user

@@ -14,6 +14,7 @@
 class Datasave : public QFile
 {
     Q_OBJECT
+    Q_CLASSINFO("Version", "0.5")
 
 public:
     static QFile mainFile;
