@@ -112,6 +112,7 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(timerOfServer, SIGNAL(timeout()), this, SLOT(ServerStillWorking()));
     timerOfServer->QTimer::start();
 
+    //The timer saves all data every 500000 msec (5 min)
     QTimer *timerOfAutoDataSaving = new QTimer;
     timerOfAutoDataSaving->QTimer::setInterval(500000);
     QObject::connect(timerOfAutoDataSaving, SIGNAL(timeout()), datamanager, SLOT(DataSavingViaTimer()));
@@ -119,8 +120,8 @@ Freechat::Freechat(QWidget *parent)
 
     //Connecting UI widgets with bin code
     QTimer *timerOfBin = new QTimer;
-    timerOfServer->QTimer::setInterval(500);
-    timerOfServer->QTimer::start();
+    timerOfBin->QTimer::setInterval(500);
+    timerOfBin->QTimer::start();
 
     QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeers())); //data showing after 0.5 sec
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));

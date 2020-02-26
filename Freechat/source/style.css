@@ -80,3 +80,12 @@ QLabel
     border-radius: 2.5px;
     color: #FFD700;
 }
+
+QLabel:hover
+{
+    border: 1.2px;
+    border-color: #00FFFF;
+    border-style: outset;
+    border-radius: 2.5px;
+    color: #FFD700;
+}
