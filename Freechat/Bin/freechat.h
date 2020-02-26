@@ -17,6 +17,7 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <QTextEdit>
+#include <QJSEngine>
 #include <QLineEdit>
 #include <QMetaEnum>
 #include <QPointer>

@@ -187,6 +187,9 @@ Freechat::Freechat(QWidget *parent)
         break;
         case 404:
         {
+            QMessageBox::critical(Freechat::commandLine, tr("Network is down"),
+                            tr("<h3>Check your network connection.</h3>"), "ok");
+
             //block all field without network access
             Freechat::writeNickOfPeer->QLineEdit::setReadOnly(true);
             Freechat::writeWanIpOfPeer->QLineEdit::setReadOnly(true);
@@ -234,7 +237,7 @@ void Freechat::NetworkLanIp()
     {
         case 101:
         {
-            Freechat::status = QString("<h1>Your LAN IP address: %1</h1>").QString::arg(Freechat::yourLanIp);
+            Freechat::status = QString("<h3>Your LAN IP address: %1</h3>").QString::arg(Freechat::yourLanIp);
             QMessageBox::information(Freechat::commandLine, tr("Network Info"),
                              Freechat::status, "ok");
         }
@@ -242,7 +245,7 @@ void Freechat::NetworkLanIp()
         case 404:
         {
             QMessageBox::critical(Freechat::commandLine, tr("Error"),
-                             tr("<h1>Check your network connection.</h1>"), "ok");
+                             tr("<h3>Check your network connection.</h3>"), "ok");
         }
         break;
     }
@@ -256,7 +259,7 @@ void Freechat::NetworkFullInformation()
     {
         case 101:
         {
-            Freechat::networkdata = QString("<h1><p>IP = %1</p><p>MAC = %2</p><p>Netmask = %3</p><p>localhost = %4</p></h1>")
+            Freechat::networkdata = QString("<h3><p>IP = %1</p><p>MAC = %2</p><p>Netmask = %3</p><p>localhost = %4</p></h3>")
             .QString::arg(Freechat::yourLanIp).QString::arg(Freechat::yourMAC).QString::arg(Freechat::yourNetmask).QString::arg(Freechat::localHostName);
 
             QMessageBox::information(Freechat::commandLine, tr("Network data"),
@@ -266,7 +269,7 @@ void Freechat::NetworkFullInformation()
         case 404:
         {
             QMessageBox::critical(Freechat::commandLine, tr("Error"),
-                             tr("<h1>Check your network connection.</h1>"), "ok");
+                             tr("<h3><p>Check your network connection.</p></h3>"), "ok");
         }
         break;
     }
@@ -279,12 +282,12 @@ void Freechat::ConnectionToPeerInLan()
     if(Freechat::lanIpOfPeer != "")
     {
         QMessageBox::information(Freechat::commandLine, tr("Connecting"),
-                         tr("<h1>Connecting to peer.</h1>"), "ok");
+                         tr("<h3><p>Connecting to peer.</h3>"), "ok");
     }
     else
     {
         QMessageBox::critical(Freechat::commandLine, tr("Connecting error"),
-                         tr("<h1>Check IP of peer.</h1>"), "ok");
+                         tr("<h3>Check IP of peer.</h3>"), "ok");
     }
 
     return;
@@ -356,7 +359,7 @@ void Freechat::CommandLineInterface()
                  #endif
 
                  QMessageBox::information(Freechat::commandLine, tr("Connecting"),
-                 tr("<h1><p>ifconfig = show all your network data</p>"
+                 tr("<h6><p>ifconfig = show all your network data</p>"
                  "<p>clear = clear all data in view field</p>"
                  "<p>con -l = connecting via LAN network</p>"
                  "<p>con -w = connecting via WAN network</p>"
@@ -364,7 +367,7 @@ void Freechat::CommandLineInterface()
                  "<p>man = data about all commands</p>"
                  "<p>save = saving all messages</p>"
                  "<p>ip -l = show your LAN ip</p>"
-                 "<p>shutdown = close programm</p></h1>"), "ok");
+                 "<p>shutdown = close programm</p></h6>"), "ok");
         }
         break;
         case 6:
@@ -406,7 +409,7 @@ void Freechat::CommandLineInterface()
         default:
         {
                  QMessageBox::critical(Freechat::commandLine, tr("Command error"),
-                                tr("<h1>Command not found</h1>"), "ok");
+                                tr("<h3>Command not found</h3>"), "ok");
         }
         break;
     }
