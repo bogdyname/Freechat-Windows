@@ -1,4 +1,5 @@
 QT       += gui
+QT       += qml
 QT       += network
 QT       += widgets
 QT       += core gui
