@@ -25,34 +25,24 @@ Bin::~Bin()
     return;
 }
 
-inline bool Bin::CheckMaxLengthOfString(const QString &string)
-{
-    if(string.QString::length() == 15)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void Bin::AddPeerLan()
 {
-    if(Bin::CheckMaxLengthOfString(Freechat::lanIpOfPeer) == true)
+    if(Freechat::lanIpOfPeerBinmanager == "")
         return;
 
-    Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::lanIpOfPeer);
+    Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::lanIpOfPeerBinmanager);
+    Freechat::lanIpOfPeerBinmanager.QString::clear();
 
     return;
 }
 
 void Bin::AddPeerWan()
 {
-    if(Bin::CheckMaxLengthOfString(Freechat::wanIpOfPeer) == true)
+    if(Freechat::wanIpOfPeerBinmanager == "")
         return;
 
-    Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::wanIpOfPeer);
+    Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::wanIpOfPeerBinmanager);
+    Freechat::wanIpOfPeerBinmanager.QString::clear();
 
     return;
 }
@@ -80,20 +70,6 @@ void Bin::DeleteAllPeer()
     return;
 }
 
-void Bin::SavingDataAboutPeer(QList<QString> &list)
-{
-    if ((Bin::fileForSavingNick.QFile::exists()) &&
-       (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
-    {
-        while(!Bin::fileForSavingNick.QFileDevice::atEnd())
-        {
-            Bin::fileForSavingNick.QIODevice::write("");
-        }
-    }
-
-    return;
-}
-
 void Bin::ReadDataAboutPeer()
 {
     if ((Bin::fileForSavingNick.QFile::exists()) && (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
@@ -116,17 +92,34 @@ void Bin::DeleteSelectedPeer()
 {
     QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
 
-    foreach(QListWidgetItem * item, items)
+    foreach(QListWidgetItem *item, items)
     {
         delete Freechat::listWithNickName->QListWidget::takeItem(Freechat::listWithNickName->QListWidget::row(item));
+        //Bin::listWithNickName.erase(item);
+        //Bin::listWithWANIpAddress;
+        //Bin::listWithLANIpAddress;
     }
 
     return;
 }
 
-void Bin::GetNickname(QList<QString> &nick)
+void Bin::GetNickname(QStringList &nick)
 {
     nick = Bin::GetElementsFromList(Bin::listWithNickName);
+
+    return;
+}
+
+void Bin::SavingDataAboutPeer(QStringList &list)
+{
+    if ((Bin::fileForSavingNick.QFile::exists()) &&
+       (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
+    {
+        while(!Bin::fileForSavingNick.QFileDevice::atEnd())
+        {
+            Bin::fileForSavingNick.QIODevice::write("");
+        }
+    }
 
     return;
 }

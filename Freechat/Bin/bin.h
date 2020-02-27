@@ -30,17 +30,14 @@ public:
     explicit Bin(QObject *parent = nullptr);
 
 public slots:
-    void AddPeerLan();
-    void AddPeerWan();
-    void AddPeerNick();
-    void DeleteAllPeer();
-    void ReadDataAboutPeer();
-    void DeleteSelectedPeer();
-    void GetNickname(QList<QString> &nick);
-    void SavingDataAboutPeer(QList<QString> &list);
-
-private:
-    inline bool CheckMaxLengthOfString(const QString &string);
+    void AddPeerLan();//DONE
+    void AddPeerWan();//DONE
+    void AddPeerNick();//DONE
+    void DeleteAllPeer();//not done (without delete from lists by row)
+    void ReadDataAboutPeer();//CHECK IT OUT
+    void DeleteSelectedPeer();//DONE
+    void GetNickname(QStringList &nick);//CHECK IT OUT
+    void SavingDataAboutPeer(QStringList &list);//CHECK IT OUT
 
 private:
     template <typename Wcontainer>
