@@ -38,7 +38,10 @@ class Freechat : public QDialog, private Ui::Freechat
 
     //Command line interface
 private:
-    QStringList commandsList;
+    QStringList commandsList = { "clear",       "ip -l",    "ifconfig",
+                                 "shutdown",    "con -l",     "man",
+                                 "con -w",    "disconnect",   "save",
+                                 "clear -n" };
 
     //COMMANDS
     /* 1) clear
@@ -65,16 +68,25 @@ private:
 
     //Global buffer variables
 public:
+    //Network
     static QString yourLanIp;
     static QString yourMAC;
     static QString yourNetmask;
     static QString localHostName;
-    static QString command;
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
-    static QString nickNameOfPeer;
-    static QString bufferOfMessages;
     static unsigned short int value; //for network code (about server)
+
+    //CLI
+    static QString command;
+
+    //Bin code
+    static QString nickNameOfPeer;
+    static QString lanIpOfPeerBinmanager;
+    static QString wanIpOfPeerBinmanager;
+
+    //Global variable
+    static QString bufferOfMessages;
 
     //UI
 public:

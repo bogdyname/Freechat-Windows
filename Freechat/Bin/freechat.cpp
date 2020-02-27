@@ -5,6 +5,7 @@
 
 #include "Bin/freechat.h"
 
+ //UI
  QTextEdit *Freechat::viewField;
  QLineEdit *Freechat::commandLine;
  QLineEdit *Freechat::writeNickOfPeer;
@@ -13,17 +14,27 @@
  QLineEdit *Freechat::lineForTypeText;
  QListWidget *Freechat::listWithNickName;
 
+ //Global variable
+ QString Freechat::bufferOfMessages;
+
+ //CLI
  QString Freechat::command;
+
+ //Network
  QString Freechat::yourLanIp;
  QString Freechat::yourMAC;
  QString Freechat::yourNetmask;
  QString Freechat::localHostName;
  QString Freechat::lanIpOfPeer;
  QString Freechat::wanIpOfPeer;
- QString Freechat::nickNameOfPeer;
- QString Freechat::bufferOfMessages;
  unsigned short int Freechat::value;
 
+ //Bin
+ QString Freechat::nickNameOfPeer;
+ QString Freechat::lanIpOfPeerBinmanager;
+ QString Freechat::wanIpOfPeerBinmanager;
+
+ //Menagers
  static QPointer<Peerin> server = nullptr;
  static QPointer<Peerout> stpeerout = nullptr;
  static QPointer<ConnectionF2F> netmanager = nullptr;
@@ -126,7 +137,7 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeer())); //data showing after 0.5 sec
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
     QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
-    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem *item)), binmanager, SLOT(DeleteSelectedPeer(QListWidgetItem)));
+    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem *)), binmanager, SLOT(DeleteSelectedPeer()));
     //QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
 
     //UI connection
@@ -140,10 +151,6 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), Freechat::writeNickOfPeer, SLOT(clear()));
 
     //Command line interface
-    Freechat::commandsList << "clear" << "ip -l" << "ifconfig" << "shutdown"
-                           << "con -l" << "man" << "con -w" << "disconnect"
-                           << "save" << "clear -a nick";
-
     QObject::connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
     QObject::connect(Freechat::commandLine, SIGNAL(returnPressed()), Freechat::commandLine, SLOT(clear()));
 
@@ -400,7 +407,7 @@ void Freechat::CommandLineInterface()
         case 9:
         {
                 #ifndef Q_DEBUG
-                qDebug() << "clear -a nick";
+                qDebug() << "clear -n";
                 #endif
 
                 binmanager->Bin::DeleteAllPeer();
@@ -462,6 +469,7 @@ void Freechat::WriteWanIpOfPeer_returnPressed()
         return;
 
     Freechat::wanIpOfPeer += Freechat::writeWanIpOfPeer->QLineEdit::text();
+    Freechat::wanIpOfPeerBinmanager += Freechat::writeWanIpOfPeer->QLineEdit::text();
 
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::wanIpOfPeer;
@@ -476,6 +484,7 @@ void Freechat::WriteLanIpOfPeer_returnPressed()
         return;
 
     Freechat::lanIpOfPeer += Freechat::writeLanIpOfPeer->QLineEdit::text();
+    Freechat::lanIpOfPeerBinmanager += Freechat::writeLanIpOfPeer->QLineEdit::text();
 
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::lanIpOfPeer;
