@@ -18,10 +18,12 @@ class Bin : public QObject
     Q_CLASSINFO("Version", "0.5")
 
 private:
-    QList<QString> listWithNickName;
-    QList<QString> listWithWANIpAddress;
-    QList<QString> listWithLANIpAddress;
-    QFile fileForSavingIPAndNick;
+    QStringList listWithNickName;
+    QStringList listWithWANIpAddress;
+    QStringList listWithLANIpAddress;
+    QFile fileForSavingNick;
+    QFile fileForSavingWANip;
+    QFile fileForSavingLANip;
 
 public:
     ~Bin();
@@ -32,10 +34,13 @@ public slots:
     void AddPeerWan();
     void AddPeerNick();
     void DeleteAllPeer();
-    void SavingDataAboutPeers(QList<QString> &list);
-    void ReadDataAboutPeers();
+    void ReadDataAboutPeer();
     void DeleteSelectedPeer();
     void GetNickname(QList<QString> &nick);
+    void SavingDataAboutPeer(QList<QString> &list);
+
+private:
+    inline bool CheckMaxLengthOfString(const QString &string);
 
 private:
     template <typename Wcontainer>

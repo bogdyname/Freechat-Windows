@@ -12,7 +12,9 @@ using namespace std;
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
-    Bin::fileForSavingIPAndNick.QFile::link("contacts");
+    Bin::fileForSavingNick.QFile::link("nicks");
+    Bin::fileForSavingWANip.QFile::link("wi");
+    Bin::fileForSavingLANip.QFile::link("li");
 
     return;
 }
@@ -23,8 +25,23 @@ Bin::~Bin()
     return;
 }
 
+inline bool Bin::CheckMaxLengthOfString(const QString &string)
+{
+    if(string.QString::length() == 15)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void Bin::AddPeerLan()
 {
+    if(Bin::CheckMaxLengthOfString(Freechat::lanIpOfPeer) == true)
+        return;
+
     Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::lanIpOfPeer);
 
     return;
@@ -32,6 +49,9 @@ void Bin::AddPeerLan()
 
 void Bin::AddPeerWan()
 {
+    if(Bin::CheckMaxLengthOfString(Freechat::wanIpOfPeer) == true)
+        return;
+
     Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::wanIpOfPeer);
 
     return;
@@ -39,7 +59,11 @@ void Bin::AddPeerWan()
 
 void Bin::AddPeerNick()
 {
+    if(Freechat::nickNameOfPeer == "")
+        return;
+
     Bin::WriteElementsInList(Bin::listWithNickName, Freechat::nickNameOfPeer);
+    Freechat::nickNameOfPeer.QString::clear();
 
     return;
 }
@@ -56,25 +80,33 @@ void Bin::DeleteAllPeer()
     return;
 }
 
-void Bin::SavingDataAboutPeers(QList<QString> &list)
+void Bin::SavingDataAboutPeer(QList<QString> &list)
 {
+    if ((Bin::fileForSavingNick.QFile::exists()) &&
+       (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
+    {
+        while(!Bin::fileForSavingNick.QFileDevice::atEnd())
+        {
+            Bin::fileForSavingNick.QIODevice::write("");
+        }
+    }
 
     return;
 }
 
-void Bin::ReadDataAboutPeers()
+void Bin::ReadDataAboutPeer()
 {
-    if ((Bin::fileForSavingIPAndNick.QFile::exists()) && (Bin::fileForSavingIPAndNick.QIODevice::open(QIODevice::ReadOnly)))
+    if ((Bin::fileForSavingNick.QFile::exists()) && (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
     {
         QString str = "";
 
-        while(!Bin::fileForSavingIPAndNick.QFileDevice::atEnd())
+        while(!Bin::fileForSavingNick.QFileDevice::atEnd())
         {
-            str += Bin::fileForSavingIPAndNick.QIODevice::readLine();
+            str += Bin::fileForSavingNick.QIODevice::readLine();
         }
 
         Freechat::listWithNickName->QListWidget::addItem(str);
-        Bin::fileForSavingIPAndNick.QFileDevice::close();
+        Bin::fileForSavingNick.QFileDevice::close();
     }
 
     return;

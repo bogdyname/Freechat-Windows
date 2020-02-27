@@ -123,10 +123,10 @@ Freechat::Freechat(QWidget *parent)
     timerOfBin->QTimer::setInterval(500);
     timerOfBin->QTimer::start();
 
-    QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeers())); //data showing after 0.5 sec
+    QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeer())); //data showing after 0.5 sec
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
     QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
-    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem)), binmanager, SLOT(DeleteSelectedPeer(QListWidgetItem)));
+    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem *item)), binmanager, SLOT(DeleteSelectedPeer(QListWidgetItem)));
     //QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
 
     //UI connection
@@ -490,6 +490,7 @@ void Freechat::WriteNickOfPeer_returnPressed()
         return;
 
     Freechat::nickNameOfPeer += Freechat::writeNickOfPeer->QLineEdit::text();
+    Freechat::listWithNickName->QListWidget::addItem(Freechat::writeNickOfPeer->QLineEdit::text());
 
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::nickNameOfPeer;
