@@ -33,12 +33,13 @@ public slots:
     void AddPeerLan();//DONE
     void AddPeerWan();//DONE
     void AddPeerNick();//DONE
-    void DeleteAllPeer();//not done (without delete from lists by row)
+    void DeleteAllPeer();//DONE
     void ReadDataAboutPeer();//CHECK IT OUT
     void DeleteSelectedPeer();//DONE
     void GetNickname(QStringList &nick);//CHECK IT OUT
     void SavingDataAboutPeer(QStringList &list);//CHECK IT OUT
 
+//ALL DONE
 private:
     template <typename Wcontainer>
     Wcontainer WriteElementsInList(Wcontainer &list, const QString &element);

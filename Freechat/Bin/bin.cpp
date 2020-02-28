@@ -8,6 +8,7 @@
 #include "Network/connectionf2f.h"
 
 using namespace std;
+using namespace Qt;
 
 Bin::Bin(QObject *parent)
     : QObject(parent)
@@ -55,6 +56,13 @@ void Bin::AddPeerNick()
     Bin::WriteElementsInList(Bin::listWithNickName, Freechat::nickNameOfPeer);
     Freechat::nickNameOfPeer.QString::clear();
 
+    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    {
+            #ifndef Q_DEBUG
+            qDebug() << "Data from LIST with Nickname: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+            #endif
+    }
+
     return;
 }
 
@@ -63,6 +71,13 @@ void Bin::DeleteAllPeer()
     Bin::RemoveElementsFromList(Bin::listWithNickName);
     Bin::RemoveElementsFromList(Bin::listWithWANIpAddress);
     Bin::RemoveElementsFromList(Bin::listWithLANIpAddress);
+
+    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    {
+            #ifndef Q_DEBUG
+            qDebug() << "check list: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+            #endif
+    }
 
     qDeleteAll(Freechat::listWithNickName->QListWidget::selectedItems());
     Freechat::listWithNickName->QListWidget::clear();
@@ -94,10 +109,23 @@ void Bin::DeleteSelectedPeer()
 
     foreach(QListWidgetItem *item, items)
     {
+        int number = Freechat::listWithNickName->QListWidget::row(item);
+
         delete Freechat::listWithNickName->QListWidget::takeItem(Freechat::listWithNickName->QListWidget::row(item));
-        //Bin::listWithNickName.erase(item);
-        //Bin::listWithWANIpAddress;
-        //Bin::listWithLANIpAddress;
+        Bin::listWithNickName.removeAt(number);
+        Bin::listWithWANIpAddress.removeAt(number);
+        Bin::listWithLANIpAddress.removeAt(number);
+
+        #ifndef Q_DEBUG
+        qDebug() << "number from bin for delete selected peer: " << number;
+        #endif
+    }
+
+    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    {
+            #ifndef Q_DEBUG
+            qDebug() << "check list: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+            #endif
     }
 
     return;
