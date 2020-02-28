@@ -62,7 +62,7 @@ private:
        -- disconnect from host
        9) save
        -- saving all data from viewFieldEdit into file
-       10) clear -a nick
+       10) clear -n
        -- clear all contacts
     */
 
