@@ -144,8 +144,8 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeer())); //data showing after 0.5 sec
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
     QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
-    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem *)), binmanager, SLOT(DeleteSelectedPeer()));
     //QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
+    QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem *)), binmanager, SLOT(DeleteSelectedPeer()));
 
     //Command line interface
     QObject::connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
@@ -430,6 +430,15 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 binmanager->Bin::DeleteAllPeer();
+        }
+        break;
+        case 10:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "save -n";
+                #endif
+
+                binmanager->Bin::SavingPeers();
         }
         break;
         default:

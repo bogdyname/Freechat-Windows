@@ -34,10 +34,12 @@ public slots:
     void AddPeerWan();//DONE
     void AddPeerNick();//DONE
     void DeleteAllPeer();//DONE
-    void ReadDataAboutPeer();//CHECK IT OUT
+    void ReadDataAboutPeer();//CHECK IT OUT!!!!!
     void DeleteSelectedPeer();//DONE
-    void GetNickname(QStringList &nick);//CHECK IT OUT
-    void SavingDataAboutPeer(QStringList &list);//CHECK IT OUT
+    void SavingPeers();//CHECK IT OUT!!!!!
+
+private:
+    void SavingDataAboutPeer(QStringList &nick);//CHECK IT OUT!!!!!
 
 //ALL DONE
 private:
