@@ -41,7 +41,7 @@ private:
     QStringList commandsList = { "clear",       "ip -l",    "ifconfig",
                                  "shutdown",    "con -l",     "man",
                                  "con -w",    "disconnect",   "save",
-                                 "clear -n" };
+                                 "clear -n",   "save -n" };
 
     //COMMANDS
     /* 1) clear
@@ -64,6 +64,8 @@ private:
        -- saving all data from viewFieldEdit into file
        10) clear -n
        -- clear all contacts
+       11) save -n
+       -- save all contact into file
     */
 
     //Global buffer variables

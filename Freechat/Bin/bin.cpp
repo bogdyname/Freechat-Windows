@@ -13,9 +13,9 @@ using namespace Qt;
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
-    Bin::fileForSavingNick.QFile::link("nicks");
-    Bin::fileForSavingWANip.QFile::link("wi");
-    Bin::fileForSavingLANip.QFile::link("li");
+    Bin::fileForSavingNick.QFile::link("nicks.txt");
+    Bin::fileForSavingWANip.QFile::link("wi.txt");
+    Bin::fileForSavingLANip.QFile::link("li.txt");
 
     return;
 }
@@ -131,21 +131,27 @@ void Bin::DeleteSelectedPeer()
     return;
 }
 
-void Bin::GetNickname(QStringList &nick)
+void Bin::SavingPeers()
 {
-    nick = Bin::GetElementsFromList(Bin::listWithNickName);
+    SavingDataAboutPeer(Bin::listWithNickName);
+    SavingDataAboutPeer(Bin::listWithLANIpAddress);
+    SavingDataAboutPeer(Bin::listWithWANIpAddress);
 
     return;
 }
 
 void Bin::SavingDataAboutPeer(QStringList &list)
 {
-    if ((Bin::fileForSavingNick.QFile::exists()) &&
-       (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
+    if ((Bin::fileForSavingNick.QFile::exists()) && (Bin::fileForSavingNick.QIODevice::open(QIODevice::WriteOnly)))
     {
-        while(!Bin::fileForSavingNick.QFileDevice::atEnd())
+        for(unsigned short row = 0; row < Freechat::listWithNickName->count(); ++row)
         {
-            Bin::fileForSavingNick.QIODevice::write("");
+            QByteArray block;
+            QDataStream stream(&block, QIODevice::ReadWrite);
+            stream.QDataStream::setVersion(QDataStream::Qt_4_2);
+            stream << qint64(0) << Freechat::listWithNickName->takeItem(row);
+            Bin::fileForSavingNick.QIODevice::write(block);
+            Bin::fileForSavingNick.QFileDevice::close();
         }
     }
 
