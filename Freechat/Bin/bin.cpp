@@ -13,9 +13,9 @@ using namespace Qt;
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
-    Bin::fileForSavingNick.QFile::link("nicks.txt");
-    Bin::fileForSavingWANip.QFile::link("wi.txt");
-    Bin::fileForSavingLANip.QFile::link("li.txt");
+    Bin::fileForSavingNick.setFileName("/root/Freechat/Freechat/Bin/nicks.txt");
+    Bin::fileForSavingWANip.setFileName("/root/Freechat/Freechat/Bin/li.txt");
+    Bin::fileForSavingLANip.setFileName("/root/Freechat/Freechat/Bin/wi.txt");
 
     return;
 }
@@ -85,20 +85,53 @@ void Bin::DeleteAllPeer()
     return;
 }
 
-void Bin::ReadDataAboutPeer()
+void Bin::ReadDataAboutPeer(QFile &pointerOnFile)
 {
-    if ((Bin::fileForSavingNick.QFile::exists()) && (Bin::fileForSavingNick.QIODevice::open(QIODevice::ReadOnly)))
+    if (!pointerOnFile.QFile::open(QFile::ReadOnly))
     {
-        QString str = "";
-
-        while(!Bin::fileForSavingNick.QFileDevice::atEnd())
-        {
-            str += Bin::fileForSavingNick.QIODevice::readLine();
-        }
-
-        Freechat::listWithNickName->QListWidget::addItem(str);
-        Bin::fileForSavingNick.QFileDevice::close();
+      #ifndef Q_DEBUG
+      qDebug() << "error opening output file";
+      #endif
     }
+    else
+    {
+      QTextStream stream(&pointerOnFile);
+
+      #ifndef Q_DEBUG
+      qDebug() << "Bin: file is opened";
+      #endif
+
+      while(!stream.QTextStream::atEnd())
+        Bin::listWithNickName += stream.QTextStream::readLine();
+    }
+
+    pointerOnFile.close();
+    Freechat::listWithNickName->QListWidget::addItems(Bin::listWithNickName);
+
+    return;
+}
+
+void Bin::ReadDataAboutPeer(QStringList &list, QFile &pointerOnFile)
+{
+      if (!pointerOnFile.QFile::open(QFile::ReadOnly))
+      {
+        #ifndef Q_DEBUG
+        qDebug() << "error opening output file";
+        #endif
+      }
+      else
+      {
+        QTextStream stream(&pointerOnFile);
+
+        #ifndef Q_DEBUG
+        qDebug() << "Bin: file is opened";
+        #endif
+
+        while(!stream.QTextStream::atEnd())
+          list += stream.QTextStream::readLine();
+      }
+
+      pointerOnFile.close();
 
     return;
 }
@@ -123,9 +156,9 @@ void Bin::DeleteSelectedPeer()
 
     for (int i = 0; i < Bin::listWithNickName.size(); ++i)
     {
-            #ifndef Q_DEBUG
-            qDebug() << "check list: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
-            #endif
+        #ifndef Q_DEBUG
+        qDebug() << "check list: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+        #endif
     }
 
     return;
@@ -133,27 +166,43 @@ void Bin::DeleteSelectedPeer()
 
 void Bin::SavingPeers()
 {
-    SavingDataAboutPeer(Bin::listWithNickName);
-    SavingDataAboutPeer(Bin::listWithLANIpAddress);
-    SavingDataAboutPeer(Bin::listWithWANIpAddress);
+    Bin::SavingDataAboutPeer(Bin::listWithNickName, Bin::fileForSavingNick);
+    Bin::SavingDataAboutPeer(Bin::listWithLANIpAddress, Bin::fileForSavingLANip);
+    Bin::SavingDataAboutPeer(Bin::listWithWANIpAddress, Bin::fileForSavingWANip);
 
     return;
 }
 
-void Bin::SavingDataAboutPeer(QStringList &list)
+void Bin::ReadPeers()
 {
-    if ((Bin::fileForSavingNick.QFile::exists()) && (Bin::fileForSavingNick.QIODevice::open(QIODevice::WriteOnly)))
+    Bin::ReadDataAboutPeer(Bin::fileForSavingNick);
+    Bin::ReadDataAboutPeer(Bin::listWithLANIpAddress, Bin::fileForSavingLANip);
+    Bin::ReadDataAboutPeer(Bin::listWithWANIpAddress, Bin::fileForSavingWANip);
+
+    return;
+}
+
+void Bin::SavingDataAboutPeer(QStringList &list, QFile &pointerOnFile)
+{
+    if (!pointerOnFile.QFile::open(QFile::WriteOnly))
     {
-        for(unsigned short row = 0; row < Freechat::listWithNickName->count(); ++row)
-        {
-            QByteArray block;
-            QDataStream stream(&block, QIODevice::ReadWrite);
-            stream.QDataStream::setVersion(QDataStream::Qt_4_2);
-            stream << qint64(0) << Freechat::listWithNickName->takeItem(row);
-            Bin::fileForSavingNick.QIODevice::write(block);
-            Bin::fileForSavingNick.QFileDevice::close();
-        }
+        #ifndef Q_DEBUG
+        qDebug() << "error opening output file!";
+        #endif
     }
+    else
+    {
+        QTextStream stream(&pointerOnFile);
+
+        #ifndef Q_DEBUG
+        qDebug() << "Bin: file is opened";
+        #endif
+
+        for (unsigned short row = 0; row < list.QList::size(); ++row)
+          stream << list.QList::at(row) << '\n';
+    }
+
+    pointerOnFile.QFileDevice::flush();
 
     return;
 }

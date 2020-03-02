@@ -10,6 +10,7 @@
 #include <QString>
 #include <iostream>
 #include <algorithm>
+#include <QListWidget>
 #include <QListWidgetItem>
 
 class Bin : public QObject
@@ -34,12 +35,14 @@ public slots:
     void AddPeerWan();//DONE
     void AddPeerNick();//DONE
     void DeleteAllPeer();//DONE
-    void ReadDataAboutPeer();//CHECK IT OUT!!!!!
     void DeleteSelectedPeer();//DONE
-    void SavingPeers();//CHECK IT OUT!!!!!
+    void SavingPeers();//DONE
+    void ReadPeers();//DONE
 
 private:
-    void SavingDataAboutPeer(QStringList &nick);//CHECK IT OUT!!!!!
+    void ReadDataAboutPeer(QFile &pointerOnFile);//DONE
+    void ReadDataAboutPeer(QStringList &list, QFile &pointerOnFile);//DONE
+    void SavingDataAboutPeer(QStringList &list, QFile &pointerOnFile);//DONE
 
 //ALL DONE
 private:

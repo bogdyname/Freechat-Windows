@@ -141,7 +141,8 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteNickOfPeer_returnPressed()));
 
     //Connecting UI widgets with bin code
-    QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadDataAboutPeer())); //data showing after 0.5 sec
+    QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadPeers())); //data showing after 0.5 sec
+    QObject::connect(timerOfBin, SIGNAL(timeout()), timerOfBin, SLOT(stop())); //close timer
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerNick()));
     QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
     //QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
