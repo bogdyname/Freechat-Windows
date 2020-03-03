@@ -26,6 +26,47 @@ Bin::~Bin()
     return;
 }
 
+void Bin::GetSelectedPeer()
+{
+    if(!(Freechat::writeNickOfPeer->QLineEdit::text() == ""))
+    {
+        Freechat::writeNickOfPeer->QLineEdit::clear();
+        Freechat::writeLanIpOfPeer->QLineEdit::clear();
+        Freechat::writeWanIpOfPeer->QLineEdit::clear();
+    }
+
+    QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
+
+    foreach(QListWidgetItem *item, items)
+    {
+        int number = Freechat::listWithNickName->QListWidget::row(item);
+        QString nick = "";
+        QString lIP = "";
+        QString wIP = "";
+
+        nick += Bin::listWithNickName.QList::value(number);
+        lIP += Bin::listWithWANIpAddress.QList::value(number);
+        wIP += Bin::listWithLANIpAddress.QList::value(number);
+
+        Freechat::writeNickOfPeer->setText(nick);
+        Freechat::writeLanIpOfPeer->setText(lIP);
+        //Freechat::writeWanIpOfPeer->setText(wIP); //TTS cos network through NAT adn WAN IP not done
+
+        #ifndef Q_DEBUG
+        qDebug() << "number from bin for auto past code: " << number << ": " << nick << ": " << lIP;
+        #endif
+    }
+
+    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "check list for auto past code: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+        #endif
+    }
+
+    return;
+}
+
 void Bin::AddPeerLan()
 {
     if(Freechat::lanIpOfPeerBinmanager == "")
@@ -145,9 +186,9 @@ void Bin::DeleteSelectedPeer()
         int number = Freechat::listWithNickName->QListWidget::row(item);
 
         delete Freechat::listWithNickName->QListWidget::takeItem(Freechat::listWithNickName->QListWidget::row(item));
-        Bin::listWithNickName.removeAt(number);
-        Bin::listWithWANIpAddress.removeAt(number);
-        Bin::listWithLANIpAddress.removeAt(number);
+        Bin::listWithNickName.QList::removeAt(number);
+        Bin::listWithWANIpAddress.QList::removeAt(number);
+        Bin::listWithLANIpAddress.QList::removeAt(number);
 
         #ifndef Q_DEBUG
         qDebug() << "number from bin for delete selected peer: " << number;

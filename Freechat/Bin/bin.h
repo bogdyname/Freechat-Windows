@@ -38,6 +38,7 @@ public slots:
     void DeleteSelectedPeer();//DONE
     void SavingPeers();//DONE
     void ReadPeers();//DONE
+    void GetSelectedPeer();
 
 private:
     void ReadDataAboutPeer(QFile &pointerOnFile);//DONE
