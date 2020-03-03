@@ -16,6 +16,7 @@
 #include <QFontDatabase>
 #include <QListWidget>
 #include <QMessageBox>
+#include <QStatusBar>
 #include <QTextEdit>
 #include <QJSEngine>
 #include <QLineEdit>
@@ -41,7 +42,9 @@ private:
     QStringList commandsList = { "clear",       "ip -l",    "ifconfig",
                                  "shutdown",    "con -l",     "man",
                                  "con -w",    "disconnect",   "save",
-                                 "clear -n",   "save -n" };
+                                 "clear -n",   "save -n",    "hide -n",
+                                 "show -n",     "hide -a",   "show -a",
+                                 "hide -i",     "show -i" };
 
     //COMMANDS
     /* 1) clear
@@ -66,7 +69,27 @@ private:
        -- clear all contacts
        11) save -n
        -- save all contact into file
+       12) hide -n
+       -- hide list with Nicks
+       13) show -n
+       -- show list with Nicks
+       14) hide -a
+       -- hide all but without main field
+       15) show -a
+       -- show all field
+       16) hide -i
+       -- hide interface
+       17) show -i
+       -- show interface
     */
+
+public:
+    //Menagers
+    static QPointer<Peerin> server;
+    static QPointer<Peerout> stpeerout;
+    static QPointer<ConnectionF2F> netmanager;
+    static QPointer<Datasave> datamanager;
+    static QPointer<Bin> binmanager;
 
     //Global buffer variables
 public:

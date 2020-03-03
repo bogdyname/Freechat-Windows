@@ -35,11 +35,11 @@
  QString Freechat::wanIpOfPeerBinmanager;
 
  //Menagers
- static QPointer<Peerin> server = nullptr;
- static QPointer<Peerout> stpeerout = nullptr;
- static QPointer<ConnectionF2F> netmanager = nullptr;
- static QPointer<Datasave> datamanager = nullptr;
- static QPointer<Bin> binmanager = nullptr;
+ QPointer<Peerin> Freechat::server = nullptr;
+ QPointer<Peerout> Freechat::stpeerout = nullptr;
+ QPointer<ConnectionF2F> Freechat::netmanager = nullptr;
+ QPointer<Datasave> Freechat::datamanager = nullptr;
+ QPointer<Bin> Freechat::binmanager = nullptr;
 
 Freechat::Freechat(QWidget *parent)
     : QDialog(parent),
@@ -147,6 +147,7 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), binmanager, SLOT(AddPeerLan()));
     //QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), &bin, SLOT(AddPeerWan())); //TTS cos network through NAT adn WAN IP not done
     QObject::connect(Freechat::listWithNickName, SIGNAL(itemDoubleClicked(QListWidgetItem *)), binmanager, SLOT(DeleteSelectedPeer()));
+    QObject::connect(Freechat::listWithNickName, SIGNAL(itemClicked(QListWidgetItem *)), binmanager, SLOT(GetSelectedPeer()));
 
     //Command line interface
     QObject::connect(Freechat::commandLine, SIGNAL(returnPressed()), this, SLOT(CommandLineInterface()));
@@ -320,141 +321,6 @@ void Freechat::ConnectionToPeerInLan()
     return;
 }
 
-void Freechat::CommandLineInterface()
-{
-    if(Freechat::commandLine->QLineEdit::text() == "")
-        return;
-
-    Freechat::command += Freechat::commandLine->QLineEdit::text();
-
-    #ifndef Q_DEBUG
-    qDebug() << Freechat::command;
-    #endif
-
-    switch(Freechat::commandsList.QStringList::indexOf(Freechat::command))
-    {
-        case 0:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "clear";
-                #endif
-
-                Freechat::viewField->QTextEdit::clear();
-        }
-        break;
-        case 1:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "ip -l";
-                #endif
-
-                Freechat::NetworkLanIp();
-        }
-        break;
-        case 2:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "ifconfig";
-                #endif
-
-                Freechat::NetworkFullInformation();
-        }
-        break;
-        case 3:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "shutdown";
-                #endif
-
-                QWidget::close();
-        }
-        break;
-        case 4:
-        {
-                 #ifndef Q_DEBUG
-                 qDebug() << "con -l";
-                 #endif
-
-                 Freechat::ConnectionToPeerInLan();
-                 stpeerout->Peerout::SlotLanConnecting();
-        }
-        break;
-        case 5:
-        {
-                 #ifndef Q_DEBUG
-                 qDebug() << "man";
-                 #endif
-
-                 QMessageBox::information(Freechat::commandLine, tr("Connecting"),
-                 tr("<h6><p>ifconfig = show all your network data</p>"
-                 "<p>clear = clear all data in view field</p>"
-                 "<p>con -l = connecting via LAN network</p>"
-                 "<p>con -w = connecting via WAN network</p>"
-                 "<p>disconnect = disconnect from host</p>"
-                 "<p>man = data about all commands</p>"
-                 "<p>save = saving all messages</p>"
-                 "<p>ip -l = show your LAN ip</p>"
-                 "<p>shutdown = close programm</p></h6>"), "ok");
-        }
-        break;
-        case 6:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "con -w";
-                #endif
-
-                /*write hear method for connecting via WAN network*/
-        }
-        break;
-        case 7:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "disconnect";
-                #endif
-
-                stpeerout->QAbstractSocket::disconnectFromHost();
-        }
-        break;
-        case 8:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "save";
-                #endif
-
-                datamanager->Datasave::DataSavingIntoFile(Datasave::mainFile);
-        }
-        break;
-        case 9:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "clear -n";
-                #endif
-
-                binmanager->Bin::DeleteAllPeer();
-        }
-        break;
-        case 10:
-        {
-                #ifndef Q_DEBUG
-                qDebug() << "save -n";
-                #endif
-
-                binmanager->Bin::SavingPeers();
-        }
-        break;
-        default:
-        {
-                 QMessageBox::critical(Freechat::commandLine, tr("Command error"),
-                                tr("<h3>Command not found</h3>"), "ok");
-        }
-        break;
-    }
-
-    Freechat::command.QString::clear();
-
-    return;
-}
-
 void Freechat::LineForTypeText_returnPressed()
 {
     if(Freechat::lineForTypeText->QLineEdit::text() == "")
@@ -533,6 +399,205 @@ void Freechat::WriteNickOfPeer_returnPressed()
     #ifndef Q_DEBUG
     qDebug() << "Freechat class: " << Freechat::nickNameOfPeer;
     #endif
+
+    return;
+}
+
+void Freechat::CommandLineInterface()
+{
+    if(Freechat::commandLine->QLineEdit::text() == "")
+        return;
+
+    Freechat::command += Freechat::commandLine->QLineEdit::text();
+
+    #ifndef Q_DEBUG
+    qDebug() << Freechat::command;
+    #endif
+
+    switch(Freechat::commandsList.QStringList::indexOf(Freechat::command))
+    {
+        case 0:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "clear";
+                #endif
+
+                Freechat::viewField->QTextEdit::clear();
+        }
+        break;
+        case 1:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "ip -l";
+                #endif
+
+                Freechat::NetworkLanIp();
+        }
+        break;
+        case 2:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "ifconfig";
+                #endif
+
+                Freechat::NetworkFullInformation();
+        }
+        break;
+        case 3:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "shutdown";
+                #endif
+
+                QWidget::close();
+        }
+        break;
+        case 4:
+        {
+                 #ifndef Q_DEBUG
+                 qDebug() << "con -l";
+                 #endif
+
+                 Freechat::ConnectionToPeerInLan();
+                 Freechat::stpeerout->Peerout::SlotLanConnecting();
+        }
+        break;
+        case 5:
+        {
+                 #ifndef Q_DEBUG
+                 qDebug() << "man";
+                 #endif
+
+                 QMessageBox::information(Freechat::commandLine, tr("Connecting"),
+                 tr("<h6><p>ifconfig = show all your network data</p>"
+                 "<p>clear = clear all data in view field</p>"
+                 "<p>con -l = connecting via LAN network</p>"
+                 "<p>con -w = connecting via WAN network</p>"
+                 "<p>disconnect = disconnect from host</p>"
+                 "<p>man = data about all commands</p>"
+                 "<p>save = saving all messages</p>"
+                 "<p>ip -l = show your LAN ip</p>"
+                 "<p>shutdown = close programm</p></h6>"), "ok");
+        }
+        break;
+        case 6:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "con -w";
+                #endif
+
+                /*write hear method for connecting via WAN network*/
+        }
+        break;
+        case 7:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "disconnect";
+                #endif
+
+                Freechat::stpeerout->QAbstractSocket::disconnectFromHost();
+        }
+        break;
+        case 8:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "save";
+                #endif
+
+                Freechat::datamanager->Datasave::DataSavingIntoFile(Datasave::mainFile);
+        }
+        break;
+        case 9:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "clear -n";
+                #endif
+
+                Freechat::binmanager->Bin::DeleteAllPeer();
+        }
+        break;
+        case 10:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "save -n";
+                #endif
+
+                Freechat::binmanager->Bin::SavingPeers();
+        }
+        break;
+        case 11:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "hide -n";
+                #endif
+
+                Freechat::listWithNickName->QWidget::hide();
+        }
+        break;
+        case 12:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "show -n";
+                #endif
+
+                Freechat::listWithNickName->QWidget::show();
+        }
+        break;
+        case 13:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "hide -a";
+                #endif
+
+                Freechat::listWithNickName->QWidget::hide();
+                Freechat::writeNickOfPeer->QWidget::hide();
+                Freechat::writeLanIpOfPeer->QWidget::hide();
+                //Freechat::writeWanIpOfPeer->QWidget::hide();
+        }
+        break;
+        case 14:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "show -a";
+                #endif
+
+                Freechat::listWithNickName->QWidget::show();
+                Freechat::writeNickOfPeer->QWidget::show();
+                Freechat::writeLanIpOfPeer->QWidget::show();
+                //Freechat::writeWanIpOfPeer->QWidget::show();
+        }
+        break;
+        case 15:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "hide -i";
+                #endif
+
+                Freechat::writeNickOfPeer->QWidget::hide();
+                Freechat::writeLanIpOfPeer->QWidget::hide();
+                //Freechat::writeWanIpOfPeer->QWidget::hide();
+        }
+        break;
+        case 16:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "show -i";
+                #endif
+
+                Freechat::writeNickOfPeer->QWidget::show();
+                Freechat::writeLanIpOfPeer->QWidget::show();
+                //Freechat::writeWanIpOfPeer->QWidget::show();
+        }
+        break;
+        default:
+        {
+                 QMessageBox::critical(Freechat::commandLine, tr("Command error"),
+                                tr("<h3>Command not found</h3>"), "ok");
+        }
+        break;
+    }
+
+    Freechat::command.QString::clear();
 
     return;
 }
