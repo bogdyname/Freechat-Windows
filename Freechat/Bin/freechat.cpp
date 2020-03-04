@@ -14,6 +14,10 @@
  QLineEdit *Freechat::lineForTypeText;
  QListWidget *Freechat::listWithNickName;
 
+ //For scrollbar
+ bool Freechat::scrollbarAtBottom = true;
+ int Freechat::scrollbarPrevValue = 0;
+
  //Global variable
  QString Freechat::bufferOfMessages;
 
@@ -117,6 +121,14 @@ Freechat::Freechat(QWidget *parent)
                            Freechat::yourNetmask,
                            Freechat::localHostName);
 
+    //Custom scroll bar for view field
+    QScrollBar *bar = Freechat::viewField->verticalScrollBar();
+    bar->QAbstractSlider::setValue(bar->QScrollBar::maximum());
+    scrollbarAtBottom  = (bar->value() >= (bar->maximum() - 4));
+    scrollbarPrevValue = bar->value();
+
+    QObject::connect(Freechat::viewField, SIGNAL(textChanged()), this, SLOT(ScrollToEnd()));
+
     //Timer for Debug server (check server status)
     QTimer *timerOfServer = new QTimer;
     timerOfServer->QTimer::setInterval(10000);
@@ -181,6 +193,8 @@ Freechat::Freechat(QWidget *parent)
     Freechat::writeWanIpOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
     Freechat::writeLanIpOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
     Freechat::lineForTypeText->QLineEdit::setFocusPolicy(WheelFocus);
+    Freechat::viewField->setPlaceholderText("Use command 'about' or 'man'");
+    Freechat::viewField->setAutoFormatting(QTextEdit::AutoAll);
     Freechat::viewField->QTextEdit::setFocusPolicy(NoFocus);
     Freechat::viewField->QTextEdit::setReadOnly(true);
 
@@ -256,6 +270,16 @@ void Freechat::ServerStillWorking()
         qDebug() << "Server stoped!" ;
         #endif
     }
+
+    return;
+}
+
+void Freechat::ScrollToEnd()
+{
+    if(Freechat::scrollbarAtBottom)
+        Freechat::viewField->QTextEdit::ensureCursorVisible();
+    else
+        Freechat::viewField->QTextEdit::verticalScrollBar()->QAbstractSlider::setValue(Freechat::scrollbarPrevValue);
 
     return;
 }
@@ -478,7 +502,16 @@ void Freechat::CommandLineInterface()
                  "<p>man = data about all commands</p>"
                  "<p>save = saving all messages</p>"
                  "<p>ip -l = show your LAN ip</p>"
-                 "<p>shutdown = close programm</p></h6>"), "ok");
+                 "<p>shutdown = close programm</p>"
+                 "<p>clear -n = clear all contacts</p>"
+                 "<p>save -n = save all contact into file</p>"
+                 "<p>hide -n = hide list contacts</p>"
+                 "<p>show -n = show list contacts</p>"
+                 "<p>hide -a = hide all but without main fields</p>"
+                 "<p>show -a = show all fields</p>"
+                 "<p>hide -i = hide interface</p>"
+                 "<p>show -i = show interface</p>"
+                 "<p>about = started</p></h6>"), "ok");
         }
         break;
         case 6:
@@ -597,7 +630,7 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 QMessageBox::information(Freechat::commandLine, tr("About programm"),
-                               tr("<h3>...</h3>"), "ok");
+                               tr("<h3>Hi. Just write command man and let's start chat! Remember, your data in your hands</h3>"), "ok");
 
         }
         break;
