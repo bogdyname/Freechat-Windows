@@ -6,6 +6,7 @@
 #ifndef BIN_H
 #define BIN_H
 
+#include <QDir>
 #include <QList>
 #include <QString>
 #include <iostream>
@@ -18,13 +19,15 @@ class Bin : public QObject
     Q_OBJECT
     Q_CLASSINFO("Version", "0.5")
 
+public:
+    static QStringList listWithNickName;
+    static QStringList listWithWANIpAddress;
+    static QStringList listWithLANIpAddress;
+
 private:
-    QStringList listWithNickName;
-    QStringList listWithWANIpAddress;
-    QStringList listWithLANIpAddress;
-    QFile fileForSavingNick;
-    QFile fileForSavingWANip;
-    QFile fileForSavingLANip;
+    QFile *fileForSavingNick = new QFile("nicks.bin");
+    QFile *fileForSavingLANip = new QFile("li.bin");
+    QFile *fileForSavingWANip = new QFile("wi.bin");
 
 public:
     ~Bin();
@@ -41,9 +44,9 @@ public slots:
     void GetSelectedPeer();
 
 private:
-    void ReadDataAboutPeer(QFile &pointerOnFile);//DONE
-    void ReadDataAboutPeer(QStringList &list, QFile &pointerOnFile);//DONE
-    void SavingDataAboutPeer(QStringList &list, QFile &pointerOnFile);//DONE
+    void ReadDataAboutPeer(QFile *pointerOnFile);//DONE
+    void ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile);//DONE
+    void SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile);//DONE
 
 //ALL DONE
 private:

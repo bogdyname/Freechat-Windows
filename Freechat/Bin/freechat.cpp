@@ -140,6 +140,9 @@ Freechat::Freechat(QWidget *parent)
     QObject::connect(Freechat::writeLanIpOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteLanIpOfPeer_returnPressed()));
     QObject::connect(Freechat::writeNickOfPeer, SIGNAL(returnPressed()), this, SLOT(WriteNickOfPeer_returnPressed()));
 
+    //Connecting UI widgets with datasave code
+    QObject::connect(Freechat::listWithNickName, SIGNAL(itemClicked(QListWidgetItem *)), datamanager, SLOT(CheckoutFile()));
+
     //Connecting UI widgets with bin code
     QObject::connect(timerOfBin, SIGNAL(timeout()), binmanager, SLOT(ReadPeers())); //data showing after 0.5 sec
     QObject::connect(timerOfBin, SIGNAL(timeout()), timerOfBin, SLOT(stop())); //close timer
@@ -180,8 +183,6 @@ Freechat::Freechat(QWidget *parent)
     Freechat::lineForTypeText->QLineEdit::setFocusPolicy(WheelFocus);
     Freechat::viewField->QTextEdit::setFocusPolicy(NoFocus);
     Freechat::viewField->QTextEdit::setReadOnly(true);
-
-    datamanager->ReadDataFromFile();// NEED TO TEST IT
 
     //variables for pointer of function from ConnectionF2F
     Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
@@ -504,7 +505,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "save";
                 #endif
 
-                Freechat::datamanager->Datasave::DataSavingIntoFile(Datasave::mainFile);
+                Freechat::datamanager->Datasave::SavingData();
         }
         break;
         case 9:
@@ -587,6 +588,17 @@ void Freechat::CommandLineInterface()
                 Freechat::writeNickOfPeer->QWidget::show();
                 Freechat::writeLanIpOfPeer->QWidget::show();
                 //Freechat::writeWanIpOfPeer->QWidget::show();
+        }
+        break;
+        case 17:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "about";
+                #endif
+
+                QMessageBox::information(Freechat::commandLine, tr("About programm"),
+                               tr("<h3>...</h3>"), "ok");
+
         }
         break;
         default:

@@ -16,20 +16,24 @@ class Datasave : public QFile
     Q_OBJECT
     Q_CLASSINFO("Version", "0.5")
 
-public:
-    static QFile mainFile;
+private:
+    static QString nameOfDatasaveFile;
+    static QString nicknameForDatasave;
+    QFile *datasave;
 
 public:
     Datasave();
     ~Datasave();
 
 public:
-    void DataSavingIntoFile(QFile &file);
+    void SavingData();
+
+private:
+    void DataSavingIntoFile(QFile *pointerOnFile);
 
 public slots:
     void CheckoutFile();
     void ReadDataFromFile();
     void DataSavingViaTimer();
-    void CreatFileForNewPeer();
 };
 #endif

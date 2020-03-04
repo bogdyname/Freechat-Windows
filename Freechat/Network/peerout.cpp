@@ -152,7 +152,7 @@ void Peerout::SlotLanConnecting()
         QColor color(156, 0, 0);
         Freechat::viewField->QTextEdit::setTextColor(color);
         Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
-        Freechat::viewField->QTextEdit::insertPlainText("Error: can not connecting to peer, check IP.");
+        Freechat::viewField->QTextEdit::insertPlainText("Error: can not connecting to peer, check IP.\n");
     }
 
     Freechat::lanIpOfPeer.QString::clear();
