@@ -10,12 +10,13 @@
 using namespace std;
 using namespace Qt;
 
+ QStringList Bin::listWithNickName;
+ QStringList Bin::listWithWANIpAddress;
+ QStringList Bin::listWithLANIpAddress;
+
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
-    Bin::fileForSavingNick.setFileName("/root/Freechat/Freechat/Bin/nicks.txt");
-    Bin::fileForSavingWANip.setFileName("/root/Freechat/Freechat/Bin/li.txt");
-    Bin::fileForSavingLANip.setFileName("/root/Freechat/Freechat/Bin/wi.txt");
 
     return;
 }
@@ -28,6 +29,10 @@ Bin::~Bin()
 
 void Bin::GetSelectedPeer()
 {
+    Freechat::nickNameOfPeer.QString::clear();
+    Freechat::lanIpOfPeer.QString::clear();
+    Freechat::wanIpOfPeer.QString::clear();
+
     if(!(Freechat::writeNickOfPeer->QLineEdit::text() == ""))
     {
         Freechat::writeNickOfPeer->QLineEdit::clear();
@@ -48,19 +53,23 @@ void Bin::GetSelectedPeer()
         lIP += Bin::listWithWANIpAddress.QList::value(number);
         wIP += Bin::listWithLANIpAddress.QList::value(number);
 
-        Freechat::writeNickOfPeer->setText(nick);
-        Freechat::writeLanIpOfPeer->setText(lIP);
-        //Freechat::writeWanIpOfPeer->setText(wIP); //TTS cos network through NAT adn WAN IP not done
+        Freechat::writeNickOfPeer->QLineEdit::setText(nick);
+        Freechat::writeLanIpOfPeer->QLineEdit::setText(lIP);
+        //Freechat::writeWanIpOfPeer->QLineEdit::setText(wIP); //TTS cos network through NAT adn WAN IP not done
+
+        Freechat::nickNameOfPeer += nick;
+        Freechat::lanIpOfPeer += lIP;
+        Freechat::wanIpOfPeer += wIP;
 
         #ifndef Q_DEBUG
         qDebug() << "number from bin for auto past code: " << number << ": " << nick << ": " << lIP;
         #endif
     }
 
-    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    for (unsigned short i = 0; i < Bin::listWithNickName.QList::size(); ++i)
     {
         #ifndef Q_DEBUG
-        qDebug() << "check list for auto past code: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+        qDebug() << "check list for auto past code: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
         #endif
     }
 
@@ -97,10 +106,10 @@ void Bin::AddPeerNick()
     Bin::WriteElementsInList(Bin::listWithNickName, Freechat::nickNameOfPeer);
     Freechat::nickNameOfPeer.QString::clear();
 
-    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    for (unsigned short i = 0; i < Bin::listWithNickName.QList::size(); ++i)
     {
             #ifndef Q_DEBUG
-            qDebug() << "Data from LIST with Nickname: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+            qDebug() << "Data from LIST with Nickname: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
             #endif
     }
 
@@ -113,10 +122,10 @@ void Bin::DeleteAllPeer()
     Bin::RemoveElementsFromList(Bin::listWithWANIpAddress);
     Bin::RemoveElementsFromList(Bin::listWithLANIpAddress);
 
-    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    for (unsigned short i = 0; i < Bin::listWithNickName.QList::size(); ++i)
     {
             #ifndef Q_DEBUG
-            qDebug() << "check list: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+            qDebug() << "check list: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
             #endif
     }
 
@@ -126,9 +135,9 @@ void Bin::DeleteAllPeer()
     return;
 }
 
-void Bin::ReadDataAboutPeer(QFile &pointerOnFile)
+void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
 {
-    if (!pointerOnFile.QFile::open(QFile::ReadOnly))
+    if (!pointerOnFile->QFile::open(QFile::ReadOnly))
     {
       #ifndef Q_DEBUG
       qDebug() << "error opening output file";
@@ -136,7 +145,7 @@ void Bin::ReadDataAboutPeer(QFile &pointerOnFile)
     }
     else
     {
-      QTextStream stream(&pointerOnFile);
+      QTextStream stream(pointerOnFile);
 
       #ifndef Q_DEBUG
       qDebug() << "Bin: file is opened";
@@ -146,15 +155,15 @@ void Bin::ReadDataAboutPeer(QFile &pointerOnFile)
         Bin::listWithNickName += stream.QTextStream::readLine();
     }
 
-    pointerOnFile.close();
+    pointerOnFile->close();
     Freechat::listWithNickName->QListWidget::addItems(Bin::listWithNickName);
 
     return;
 }
 
-void Bin::ReadDataAboutPeer(QStringList &list, QFile &pointerOnFile)
+void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
 {
-      if (!pointerOnFile.QFile::open(QFile::ReadOnly))
+      if (!pointerOnFile->QFile::open(QFile::ReadOnly))
       {
         #ifndef Q_DEBUG
         qDebug() << "error opening output file";
@@ -162,7 +171,7 @@ void Bin::ReadDataAboutPeer(QStringList &list, QFile &pointerOnFile)
       }
       else
       {
-        QTextStream stream(&pointerOnFile);
+        QTextStream stream(pointerOnFile);
 
         #ifndef Q_DEBUG
         qDebug() << "Bin: file is opened";
@@ -172,7 +181,7 @@ void Bin::ReadDataAboutPeer(QStringList &list, QFile &pointerOnFile)
           list += stream.QTextStream::readLine();
       }
 
-      pointerOnFile.close();
+      pointerOnFile->QFileDevice::close();
 
     return;
 }
@@ -195,10 +204,10 @@ void Bin::DeleteSelectedPeer()
         #endif
     }
 
-    for (int i = 0; i < Bin::listWithNickName.size(); ++i)
+    for (int i = 0; i < Bin::listWithNickName.QList::size(); ++i)
     {
         #ifndef Q_DEBUG
-        qDebug() << "check list: " << Bin::listWithNickName.at(i).toLocal8Bit().constData();
+        qDebug() << "check list: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
         #endif
     }
 
@@ -207,25 +216,25 @@ void Bin::DeleteSelectedPeer()
 
 void Bin::SavingPeers()
 {
-    Bin::SavingDataAboutPeer(Bin::listWithNickName, Bin::fileForSavingNick);
-    Bin::SavingDataAboutPeer(Bin::listWithLANIpAddress, Bin::fileForSavingLANip);
-    Bin::SavingDataAboutPeer(Bin::listWithWANIpAddress, Bin::fileForSavingWANip);
+    Bin::SavingDataAboutPeer(Bin::listWithNickName, fileForSavingNick);
+    Bin::SavingDataAboutPeer(Bin::listWithLANIpAddress, fileForSavingLANip);
+    Bin::SavingDataAboutPeer(Bin::listWithWANIpAddress, fileForSavingWANip);
 
     return;
 }
 
 void Bin::ReadPeers()
 {
-    Bin::ReadDataAboutPeer(Bin::fileForSavingNick);
-    Bin::ReadDataAboutPeer(Bin::listWithLANIpAddress, Bin::fileForSavingLANip);
-    Bin::ReadDataAboutPeer(Bin::listWithWANIpAddress, Bin::fileForSavingWANip);
+    Bin::ReadDataAboutPeer(fileForSavingNick);
+    Bin::ReadDataAboutPeer(Bin::listWithLANIpAddress, fileForSavingLANip);
+    Bin::ReadDataAboutPeer(Bin::listWithWANIpAddress, fileForSavingWANip);
 
     return;
 }
 
-void Bin::SavingDataAboutPeer(QStringList &list, QFile &pointerOnFile)
+void Bin::SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile)
 {
-    if (!pointerOnFile.QFile::open(QFile::WriteOnly))
+    if (!pointerOnFile->QFile::open(QFile::WriteOnly))
     {
         #ifndef Q_DEBUG
         qDebug() << "error opening output file!";
@@ -233,7 +242,7 @@ void Bin::SavingDataAboutPeer(QStringList &list, QFile &pointerOnFile)
     }
     else
     {
-        QTextStream stream(&pointerOnFile);
+        QTextStream stream(pointerOnFile);
 
         #ifndef Q_DEBUG
         qDebug() << "Bin: file is opened";
@@ -243,7 +252,7 @@ void Bin::SavingDataAboutPeer(QStringList &list, QFile &pointerOnFile)
           stream << list.QList::at(row) << '\n';
     }
 
-    pointerOnFile.QFileDevice::flush();
+    pointerOnFile->QFileDevice::close();
 
     return;
 }

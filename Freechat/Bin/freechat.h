@@ -44,7 +44,7 @@ private:
                                  "con -w",    "disconnect",   "save",
                                  "clear -n",   "save -n",    "hide -n",
                                  "show -n",     "hide -a",   "show -a",
-                                 "hide -i",     "show -i" };
+                                 "hide -i",     "show -i",    "about" };
 
     //COMMANDS
     /* 1) clear

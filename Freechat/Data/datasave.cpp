@@ -6,11 +6,14 @@
 #include "Data/datasave.h"
 #include "Bin/freechat.h"
 
-QFile Datasave::mainFile;
+ QString Datasave::nameOfDatasaveFile;
+ QString Datasave::nicknameForDatasave;
 
 Datasave::Datasave()
 {
-
+    Datasave::nameOfDatasaveFile = "";
+    Datasave::nicknameForDatasave = "";
+    Datasave::datasave = nullptr;
 
     return;
 }
@@ -21,29 +24,77 @@ Datasave::~Datasave()
     return;
 }
 
-
-void Datasave::DataSavingIntoFile(QFile &file)
+void Datasave::SavingData()
 {
-    QTextStream out(&file);
+    Datasave::DataSavingIntoFile(Datasave::datasave);
+    Datasave::datasave = nullptr;
 
-    if(!file.QFile::exists())
+    #ifndef Q_DEBUG
+    qDebug() << "Data had saved!";
+    #endif
+
+    return;
+}
+
+void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
+{
+    if((Datasave::nameOfDatasaveFile) == "" && (Datasave::nicknameForDatasave == ""))
     {
-        file.QFile::link(Freechat::nickNameOfPeer + "ßß");
+        #ifndef Q_DEBUG
+        qDebug() << "Can not save file";
+        #endif
+
+        return;
     }
-    else if (file.QIODevice::open(QIODevice::WriteOnly))
+
+    QString str = pointerOnFile->QFile::fileName();
+
+    if(pointerOnFile->QFile::open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        while(Freechat::viewField)
-        {
-            file.QIODevice::write("");
-            file.QFileDevice::close();
-        }
+        #ifndef Q_DEBUG
+        qDebug() << "Datasave: file is opened";
+        #endif
+
+        QTextStream stream(pointerOnFile);
+        stream << Freechat::viewField->toHtml() << '\n';
     }
+    else
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "error opening output file!";
+        #endif
+    }
+
+    Datasave::nameOfDatasaveFile.QString::clear();
+    Datasave::nicknameForDatasave.QString::clear();
+    pointerOnFile->QFileDevice::close();
 
     return;
 }
 
 void Datasave::CheckoutFile()
-{
+{   
+    Datasave::nameOfDatasaveFile.QString::clear();
+    Datasave::nicknameForDatasave.QString::clear();
+    QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
+
+    foreach(QListWidgetItem *item, items)
+    {
+        int number = Freechat::listWithNickName->QListWidget::row(item);
+
+        Datasave::nicknameForDatasave += Bin::listWithNickName.QList::value(number);
+        Datasave::nameOfDatasaveFile += Bin::listWithNickName.QList::value(number) + ".bin";
+    }
+
+    Datasave::datasave = new QFile(Datasave::nicknameForDatasave + ".bin");
+    Datasave::datasave->QFileDevice::close();
+
+    Datasave::ReadDataFromFile();
+
+    #ifndef Q_DEBUG
+    qDebug() << "Data save name: " << Datasave::nameOfDatasaveFile;
+    qDebug() << "Nickname for data save name: " << Datasave::nicknameForDatasave;
+    #endif
 
     return;
 }
@@ -54,29 +105,31 @@ void Datasave::DataSavingViaTimer()
     return;
 }
 
-void Datasave::CreatFileForNewPeer()
-{
-
-    return;
-}
-
 void Datasave::ReadDataFromFile()
 {
-    QFile file("ßß");
-    //file.link(Freechat::nickNameOfPeer + "ßß");
+    QFile file(Datasave::nicknameForDatasave + ".bin");
 
-    if ((file.QFile::exists())&&(file.QIODevice::open(QIODevice::ReadOnly)))
+    if (!Datasave::datasave->QFile::open(QFile::ReadOnly))
     {
-        QString str = "";
-
-        while(!file.QFileDevice::atEnd())
-        {
-            str += file.QIODevice::readLine();
-            Freechat::viewField->QTextEdit::setText(str);
-        }
-
-        file.QFileDevice::close();
+      #ifndef Q_DEBUG
+      qDebug() << "error opening output file";
+      #endif
     }
+    else
+    {
+      QString messages = "";
+      QTextStream stream(Datasave::datasave);
+      messages += stream.readAll();
+
+      #ifndef Q_DEBUG
+      qDebug() << "Bin: file is opened";
+      #endif
+
+      Freechat::viewField->setHtml(messages + "\n");
+    }
+
+    Datasave::datasave->QFileDevice::close();
+
 
     return;
 }

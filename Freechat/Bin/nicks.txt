@@ -1,3 +1,0 @@
-localhost
-Kali/Windows
-iMac first IP
