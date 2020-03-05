@@ -17,6 +17,7 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QScrollBar>
 #include <QTextEdit>
 #include <QJSEngine>
 #include <QLineEdit>
@@ -74,13 +75,15 @@ private:
        13) show -n
        -- show list with Nicks
        14) hide -a
-       -- hide all but without main field
+       -- hide all but without main fields
        15) show -a
-       -- show all field
+       -- show all fields
        16) hide -i
        -- hide interface
        17) show -i
        -- show interface
+       18) about
+       -- started
     */
 
 public:
@@ -126,6 +129,8 @@ public:
 private:
     int (*checkNetworkConnection)() = nullptr;
     bool (*checkConnection)() = nullptr;
+    static bool scrollbarAtBottom;
+    static int scrollbarPrevValue;
 
 public:
     explicit Freechat(QWidget *parent = nullptr);
@@ -137,6 +142,7 @@ private slots:
     void WriteLanIpOfPeer_returnPressed();
     void WriteNickOfPeer_returnPressed();
     void CommandLineInterface();
+    void ScrollToEnd();
     void ServerStillWorking();//Debug code
 
 private:

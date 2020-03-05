@@ -38,7 +38,7 @@ void Datasave::SavingData()
 
 void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
 {
-    if((Datasave::nameOfDatasaveFile) == "" && (Datasave::nicknameForDatasave == ""))
+    if((Datasave::nameOfDatasaveFile == "") && (Datasave::nicknameForDatasave == ""))
     {
         #ifndef Q_DEBUG
         qDebug() << "Can not save file";
@@ -48,6 +48,13 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
     }
 
     QString str = pointerOnFile->QFile::fileName();
+
+    QDateTime correntdate = QDateTime::currentDateTime();
+
+    QColor color(255, 153, 0);
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+    Freechat::viewField->QTextEdit::insertPlainText(correntdate.QDateTime::toString("ddd MMMM d yy") + "\n");
 
     if(pointerOnFile->QFile::open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -107,6 +114,8 @@ void Datasave::DataSavingViaTimer()
 
 void Datasave::ReadDataFromFile()
 {
+    Freechat::viewField->QTextEdit::clear();
+
     QFile file(Datasave::nicknameForDatasave + ".bin");
 
     if (!Datasave::datasave->QFile::open(QFile::ReadOnly))
@@ -125,7 +134,7 @@ void Datasave::ReadDataFromFile()
       qDebug() << "Bin: file is opened";
       #endif
 
-      Freechat::viewField->setHtml(messages + "\n");
+      Freechat::viewField->insertHtml(messages + "\n");
     }
 
     Datasave::datasave->QFileDevice::close();
