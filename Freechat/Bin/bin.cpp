@@ -14,6 +14,8 @@ using namespace Qt;
  QStringList Bin::listWithWANIpAddress;
  QStringList Bin::listWithLANIpAddress;
 
+ static Cryptography cryptomanager(Q_UINT64_C(0x0c2ad4a5acb9f012));
+
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
@@ -33,36 +35,18 @@ void Bin::GetSelectedPeer()
     Freechat::lanIpOfPeer.QString::clear();
     Freechat::wanIpOfPeer.QString::clear();
 
-    if(!(Freechat::writeNickOfPeer->QLineEdit::text() == ""))
-    {
-        Freechat::writeNickOfPeer->QLineEdit::clear();
-        Freechat::writeLanIpOfPeer->QLineEdit::clear();
-        Freechat::writeWanIpOfPeer->QLineEdit::clear();
-    }
-
     QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
 
     foreach(QListWidgetItem *item, items)
     {
         int number = Freechat::listWithNickName->QListWidget::row(item);
-        QString nick = "";
-        QString lIP = "";
-        QString wIP = "";
 
-        nick += Bin::listWithNickName.QList::value(number);
-        lIP += Bin::listWithWANIpAddress.QList::value(number);
-        wIP += Bin::listWithLANIpAddress.QList::value(number);
-
-        Freechat::writeNickOfPeer->QLineEdit::setText(nick);
-        Freechat::writeLanIpOfPeer->QLineEdit::setText(lIP);
-        //Freechat::writeWanIpOfPeer->QLineEdit::setText(wIP); //TTS cos network through NAT adn WAN IP not done
-
-        Freechat::nickNameOfPeer += nick;
-        Freechat::lanIpOfPeer += lIP;
-        Freechat::wanIpOfPeer += wIP;
+        Freechat::nickNameOfPeer += Bin::listWithNickName.QList::value(number);
+        Freechat::lanIpOfPeer += Bin::listWithLANIpAddress.QList::value(number);
+        Freechat::wanIpOfPeer += Bin::listWithWANIpAddress.QList::value(number);
 
         #ifndef Q_DEBUG
-        qDebug() << "number from bin for auto past code: " << number << ": " << nick << ": " << lIP;
+        qDebug() << "number from bin for auto past code: " << number << ": " << Freechat::nickNameOfPeer << ": " << Freechat::lanIpOfPeer;
         #endif
     }
 
@@ -81,8 +65,15 @@ void Bin::AddPeerLan()
     if(Freechat::lanIpOfPeerBinmanager == "")
         return;
 
-    Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::lanIpOfPeerBinmanager);
+    Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::lanIpOfPeerBinmanager);
     Freechat::lanIpOfPeerBinmanager.QString::clear();
+
+    for (unsigned short i = 0; i < Bin::listWithLANIpAddress.QList::size(); ++i)
+    {
+            #ifndef Q_DEBUG
+            qDebug() << "Data from LIST with LAN: " << Bin::listWithLANIpAddress.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+            #endif
+    }
 
     return;
 }
@@ -92,8 +83,15 @@ void Bin::AddPeerWan()
     if(Freechat::wanIpOfPeerBinmanager == "")
         return;
 
-    Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::wanIpOfPeerBinmanager);
+    Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::wanIpOfPeerBinmanager);
     Freechat::wanIpOfPeerBinmanager.QString::clear();
+
+    for (unsigned short i = 0; i < Bin::listWithWANIpAddress.QList::size(); ++i)
+    {
+            #ifndef Q_DEBUG
+            qDebug() << "Data from LIST with WAN: " << Bin::listWithWANIpAddress.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+            #endif
+    }
 
     return;
 }
@@ -137,6 +135,9 @@ void Bin::DeleteAllPeer()
 
 void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
 {
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
     if (!pointerOnFile->QFile::open(QFile::ReadOnly))
     {
       #ifndef Q_DEBUG
@@ -152,7 +153,29 @@ void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
       #endif
 
       while(!stream.QTextStream::atEnd())
-        Bin::listWithNickName += stream.QTextStream::readLine();
+      {
+        QString cypherText = stream.QTextStream::readLine();
+        QString nick = cryptomanager.Cryptography::decryptToString(cypherText);
+
+        #ifndef Q_DEBUG
+        qDebug() << "TEXT: " << cypherText;
+        qDebug() << "nick: " << nick;
+        #endif
+
+        if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
+        {
+            #ifndef Q_DEBUG
+            qDebug() << "error decrypt nick file";
+            #endif
+
+            return;
+        }
+
+        Bin::listWithNickName += nick;
+
+        cypherText.QString::clear();
+        nick.QString::clear();
+      }
     }
 
     pointerOnFile->close();
@@ -163,6 +186,9 @@ void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
 
 void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
 {
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
       if (!pointerOnFile->QFile::open(QFile::ReadOnly))
       {
         #ifndef Q_DEBUG
@@ -178,7 +204,29 @@ void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
         #endif
 
         while(!stream.QTextStream::atEnd())
-          list += stream.QTextStream::readLine();
+        {
+          QString cypherText = stream.QTextStream::readLine();
+          QString ip = cryptomanager.Cryptography::decryptToString(cypherText);
+
+          #ifndef Q_DEBUG
+          qDebug() << "TEXT: " << cypherText;
+          qDebug() << "ip: " << ip;
+          #endif
+
+          if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
+          {
+              #ifndef Q_DEBUG
+              qDebug() << "error decrypt ip file";
+              #endif
+
+              return;
+          }
+
+          list += ip;
+
+          cypherText.QString::clear();
+          ip.QString::clear();
+        }
       }
 
       pointerOnFile->QFileDevice::close();
@@ -234,6 +282,9 @@ void Bin::ReadPeers()
 
 void Bin::SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile)
 {
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
     if (!pointerOnFile->QFile::open(QFile::WriteOnly))
     {
         #ifndef Q_DEBUG
@@ -249,7 +300,14 @@ void Bin::SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile)
         #endif
 
         for (unsigned short row = 0; row < list.QList::size(); ++row)
-          stream << list.QList::at(row) << '\n';
+        {
+          QString nick = list.QList::at(row);
+          QString cypherText = cryptomanager.Cryptography::encryptToString(nick);
+          stream << cypherText << '\n';
+
+          cypherText.QString::clear();
+          nick.QString::clear();
+        }
     }
 
     pointerOnFile->QFileDevice::close();

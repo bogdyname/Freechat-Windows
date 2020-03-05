@@ -9,6 +9,8 @@
  QString Datasave::nameOfDatasaveFile;
  QString Datasave::nicknameForDatasave;
 
+ static Cryptography cryptomanager(Q_UINT64_C(0x0c2ad4a4acb9f023));
+
 Datasave::Datasave()
 {
     Datasave::nameOfDatasaveFile = "";
@@ -47,9 +49,14 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
         return;
     }
 
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
     QString str = pointerOnFile->QFile::fileName();
 
     QDateTime correntdate = QDateTime::currentDateTime();
+
+    QTextStream stream(pointerOnFile);
 
     QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
@@ -62,8 +69,11 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
         qDebug() << "Datasave: file is opened";
         #endif
 
-        QTextStream stream(pointerOnFile);
-        stream << Freechat::viewField->toHtml() << '\n';
+        QString messages = Freechat::viewField->QTextEdit::toHtml() + '\n';
+        QString cypherText = cryptomanager.Cryptography::encryptToString(messages);
+
+        if (cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError)
+            stream << cypherText;
     }
     else
     {
@@ -118,6 +128,9 @@ void Datasave::ReadDataFromFile()
 
     QFile file(Datasave::nicknameForDatasave + ".bin");
 
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
     if (!Datasave::datasave->QFile::open(QFile::ReadOnly))
     {
       #ifndef Q_DEBUG
@@ -126,19 +139,33 @@ void Datasave::ReadDataFromFile()
     }
     else
     {
-      QString messages = "";
       QTextStream stream(Datasave::datasave);
-      messages += stream.readAll();
+      QString cryptomessages = "";
+      cryptomessages = stream.QTextStream::readAll();
+      QString messages = cryptomanager.Cryptography::decryptToString(cryptomessages);
+
+      if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
+      {
+          #ifndef Q_DEBUG
+          qDebug() << "error decrypt output file";
+          #endif
+
+          QColor color(156, 0, 0);
+          Freechat::viewField->QTextEdit::setTextColor(color);
+          Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+          Freechat::viewField->QTextEdit::insertPlainText("error decrypt output file \n");
+
+          return;
+      }
 
       #ifndef Q_DEBUG
       qDebug() << "Bin: file is opened";
       #endif
 
-      Freechat::viewField->insertHtml(messages + "\n");
+      Freechat::viewField->QTextEdit::insertHtml(messages + "\n");
     }
 
     Datasave::datasave->QFileDevice::close();
-
 
     return;
 }
