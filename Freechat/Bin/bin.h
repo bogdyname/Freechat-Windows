@@ -34,19 +34,19 @@ public:
     explicit Bin(QObject *parent = nullptr);
 
 public slots:
-    void AddPeerLan();//DONE
-    void AddPeerWan();//DONE
-    void AddPeerNick();//DONE
-    void DeleteAllPeer();//DONE
-    void DeleteSelectedPeer();//DONE
-    void SavingPeers();//DONE
-    void ReadPeers();//DONE
+    void AddPeerLan();
+    void AddPeerWan();
+    void AddPeerNick();
+    void DeleteAllPeer();
+    void DeleteSelectedPeer();
+    void SavingPeers();
+    void ReadPeers();
     void GetSelectedPeer();
 
 private:
-    void ReadDataAboutPeer(QFile *pointerOnFile);//DONE
-    void ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile);//DONE
-    void SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile);//DONE
+    void ReadDataAboutPeer(QFile *pointerOnFile);
+    void ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile);
+    void SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile);
 
 //ALL DONE
 private:

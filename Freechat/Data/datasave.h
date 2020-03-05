@@ -6,6 +6,7 @@
 #ifndef DATASAVE_H
 #define DATASAVE_H
 
+#include "Data/cryptography.h"
 #include <QStorageInfo>
 #include <QDateTime>
 #include <QTimer>
