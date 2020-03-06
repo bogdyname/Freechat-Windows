@@ -97,7 +97,7 @@ void Datasave::CheckoutFile()
 
     foreach(QListWidgetItem *item, items)
     {
-        int number = Freechat::listWithNickName->QListWidget::row(item);
+        unsigned short number = Freechat::listWithNickName->QListWidget::row(item);
 
         Datasave::nicknameForDatasave += Bin::listWithNickName.QList::value(number);
         Datasave::nameOfDatasaveFile += Bin::listWithNickName.QList::value(number) + ".bin";

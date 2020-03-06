@@ -7,6 +7,20 @@ QWidget
 QDialog
 {
     background-color: black;
+    border: 1.2px;
+    border-color: #00FFFF;
+    border-style: outset;
+    border-radius: 2.5px;
+    color: #FFD700;
+}
+
+QDialog:hover
+{
+    background-color: black;
+    border: 1.5px;
+    border-color: #8A2BE2;
+    border-style: outset;
+    border-radius: 2.5px;
     color: #FFD700;
 }
 
@@ -45,7 +59,7 @@ QLineEdit
     padding: 0 8px;
 }
 
-QLineEdit:read-only
+QLineEdit[readOnly="true"]
 {
     border: 1.2px;
     border-color: #DC143C;
