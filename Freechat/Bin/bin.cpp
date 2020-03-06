@@ -39,7 +39,7 @@ void Bin::GetSelectedPeer()
 
     foreach(QListWidgetItem *item, items)
     {
-        int number = Freechat::listWithNickName->QListWidget::row(item);
+        unsigned short number = Freechat::listWithNickName->QListWidget::row(item);
 
         Freechat::nickNameOfPeer += Bin::listWithNickName.QList::value(number);
         Freechat::lanIpOfPeer += Bin::listWithLANIpAddress.QList::value(number);
@@ -50,10 +50,10 @@ void Bin::GetSelectedPeer()
         #endif
     }
 
-    for (unsigned short i = 0; i < Bin::listWithNickName.QList::size(); ++i)
+    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
     {
         #ifndef Q_DEBUG
-        qDebug() << "check list for auto past code: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+        qDebug() << "check list for auto past code: " << Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
         #endif
     }
 
@@ -68,10 +68,10 @@ void Bin::AddPeerLan()
     Bin::WriteElementsInList(Bin::listWithLANIpAddress, Freechat::lanIpOfPeerBinmanager);
     Freechat::lanIpOfPeerBinmanager.QString::clear();
 
-    for (unsigned short i = 0; i < Bin::listWithLANIpAddress.QList::size(); ++i)
+    for (unsigned short row = 0; row < Bin::listWithLANIpAddress.QList::size(); ++row)
     {
             #ifndef Q_DEBUG
-            qDebug() << "Data from LIST with LAN: " << Bin::listWithLANIpAddress.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+            qDebug() << "Data from LIST with LAN: " << Bin::listWithLANIpAddress.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
             #endif
     }
 
@@ -86,10 +86,10 @@ void Bin::AddPeerWan()
     Bin::WriteElementsInList(Bin::listWithWANIpAddress, Freechat::wanIpOfPeerBinmanager);
     Freechat::wanIpOfPeerBinmanager.QString::clear();
 
-    for (unsigned short i = 0; i < Bin::listWithWANIpAddress.QList::size(); ++i)
+    for (unsigned short row = 0; row < Bin::listWithWANIpAddress.QList::size(); ++row)
     {
             #ifndef Q_DEBUG
-            qDebug() << "Data from LIST with WAN: " << Bin::listWithWANIpAddress.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+            qDebug() << "Data from LIST with WAN: " << Bin::listWithWANIpAddress.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
             #endif
     }
 
@@ -104,10 +104,10 @@ void Bin::AddPeerNick()
     Bin::WriteElementsInList(Bin::listWithNickName, Freechat::nickNameOfPeer);
     Freechat::nickNameOfPeer.QString::clear();
 
-    for (unsigned short i = 0; i < Bin::listWithNickName.QList::size(); ++i)
+    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
     {
             #ifndef Q_DEBUG
-            qDebug() << "Data from LIST with Nickname: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+            qDebug() << "Data from LIST with Nickname: " << Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
             #endif
     }
 
@@ -120,10 +120,10 @@ void Bin::DeleteAllPeer()
     Bin::RemoveElementsFromList(Bin::listWithWANIpAddress);
     Bin::RemoveElementsFromList(Bin::listWithLANIpAddress);
 
-    for (unsigned short i = 0; i < Bin::listWithNickName.QList::size(); ++i)
+    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
     {
             #ifndef Q_DEBUG
-            qDebug() << "check list: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+            qDebug() << "check list: " << Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
             #endif
     }
 
@@ -240,7 +240,7 @@ void Bin::DeleteSelectedPeer()
 
     foreach(QListWidgetItem *item, items)
     {
-        int number = Freechat::listWithNickName->QListWidget::row(item);
+        unsigned short number = Freechat::listWithNickName->QListWidget::row(item);
 
         delete Freechat::listWithNickName->QListWidget::takeItem(Freechat::listWithNickName->QListWidget::row(item));
         Bin::listWithNickName.QList::removeAt(number);
@@ -252,10 +252,10 @@ void Bin::DeleteSelectedPeer()
         #endif
     }
 
-    for (int i = 0; i < Bin::listWithNickName.QList::size(); ++i)
+    for (int row = 0; row < Bin::listWithNickName.QList::size(); ++row)
     {
         #ifndef Q_DEBUG
-        qDebug() << "check list: " << Bin::listWithNickName.QList::at(i).QString::toLocal8Bit().QByteArray::constData();
+        qDebug() << "check list: " << Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
         #endif
     }
 

@@ -122,10 +122,10 @@ Freechat::Freechat(QWidget *parent)
                            Freechat::localHostName);
 
     //Custom scroll bar for view field
-    QScrollBar *bar = Freechat::viewField->verticalScrollBar();
+    QScrollBar *bar = Freechat::viewField->QAbstractScrollArea::verticalScrollBar();
     bar->QAbstractSlider::setValue(bar->QScrollBar::maximum());
-    scrollbarAtBottom  = (bar->value() >= (bar->maximum() - 4));
-    scrollbarPrevValue = bar->value();
+    scrollbarAtBottom  = (bar->QAbstractSlider::value() >= (bar->QAbstractSlider::maximum() - 4));
+    scrollbarPrevValue = bar->QAbstractSlider::value();
 
     QObject::connect(Freechat::viewField, SIGNAL(textChanged()), this, SLOT(ScrollToEnd()));
 
@@ -181,7 +181,7 @@ Freechat::Freechat(QWidget *parent)
     Freechat::writeWanIpOfPeer->QLineEdit::setPlaceholderText("Write here WAN IP of peer");
     Freechat::writeLanIpOfPeer->QLineEdit::setPlaceholderText("Write here LAN IP of peer");
 
-    Freechat::writeNickOfPeer->QLineEdit::setMaxLength(25);
+    Freechat::writeNickOfPeer->QLineEdit::setMaxLength(14);
     Freechat::writeWanIpOfPeer->QLineEdit::setMaxLength(15);
     Freechat::writeLanIpOfPeer->QLineEdit::setMaxLength(15);
     Freechat::lineForTypeText->QLineEdit::setMaxLength(1500);
@@ -630,7 +630,7 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 QMessageBox::information(Freechat::commandLine, tr("About programm"),
-                               tr("<h3>Hi. Just write command man and let's start chat! Remember, your data in your hands</h3>"), "ok");
+                               tr("<h3>Hi. Just write command 'man' and let's start chat! Remember, your data in your hands.</h3>"), "ok");
 
         }
         break;
