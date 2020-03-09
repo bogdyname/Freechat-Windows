@@ -26,15 +26,12 @@ public:
     Datasave();
     ~Datasave();
 
-public:
-    void SavingData();
-
 private:
     void DataSavingIntoFile(QFile *pointerOnFile);
 
 public slots:
+    void SavingData();
     void CheckoutFile();
     void ReadDataFromFile();
-    void DataSavingViaTimer();
 };
 #endif

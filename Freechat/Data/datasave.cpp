@@ -116,12 +116,6 @@ void Datasave::CheckoutFile()
     return;
 }
 
-void Datasave::DataSavingViaTimer()
-{
-
-    return;
-}
-
 void Datasave::ReadDataFromFile()
 {
     Freechat::viewField->QTextEdit::clear();
