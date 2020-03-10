@@ -180,6 +180,81 @@ QScrollBar::sub-line:vertical:hover
    subcontrol-origin: margin;
 }
 
+QScrollBar:horizontal
+{
+    border: 1px outset;
+    border-color: #8A2BE2;
+    border-radius: 2.5px;
+    background: black;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:horizontal
+{
+    border-radius: 2.5px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+    stop: 0 rgb(0,255,255), stop: 0.5 rgb(0,255,255), stop:1 rgb(0,255,255));
+    min-height: 0px;
+}
+
+QScrollBar::add-line:horizontal
+{
+   border-radius: 2.5px;
+   background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+   stop: 0 rgb(0,255,255), stop: 0.5 rgb(0,255,255),  stop:1 rgb(0,255,255));
+   height: 0px;
+   subcontrol-position: bottom;
+   subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal
+{
+   border-radius: 2.5px;
+   background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+   stop: 0  rgb(0,255,255), stop: 0.5 rgb(0,255,255),  stop:1 rgb(0,255,255));
+   height: 0 px;
+   subcontrol-position: top;
+   subcontrol-origin: margin;
+}
+
+QScrollBar:horizontal:hover
+{
+    border-radius: 2.5px;
+    border: 1px outset;
+    border-color: #00FFFF;
+    background: black;
+    width:10px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:horizontal:hover
+{
+    border-radius: 2.5px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+    stop: 0 rgb(138,43,226), stop: 0.5 rgb(138,43,226), stop:1 rgb(138,43,226));
+    min-height: 0px;
+}
+
+QScrollBar::add-line:horizontal:hover
+{
+   border-radius: 2.5px;
+   background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+   stop: 0 rgb(138,43,226), stop: 0.5 rgb(138,43,226),  stop:1 rgb(138,43,226));
+   height: 0px;
+   subcontrol-position: bottom;
+   subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal:hover
+{
+   border-radius: 2.5px;
+   background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+   stop: 0  rgb(138,43,226), stop: 0.5 rgb(138,43,226),  stop:1 rgb(138,43,226));
+   height: 0 px;
+   subcontrol-position: top;
+   subcontrol-origin: margin;
+}
+
 QLabel
 {
     border: 1.2px;
