@@ -51,6 +51,8 @@ Freechat::Freechat(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QWidget::setWindowFlags(Qt::MSWindowsOwnDC);
+
     //new UI
     try
     {
@@ -127,6 +129,11 @@ Freechat::Freechat(QWidget *parent)
     scrollbarAtBottom  = (bar->QAbstractSlider::value() >= (bar->QAbstractSlider::maximum() - 4));
     scrollbarPrevValue = bar->QAbstractSlider::value();
 
+    QScrollBar *barList = Freechat::listWithNickName->QAbstractScrollArea::horizontalScrollBar();
+    barList->QAbstractSlider::setValue(bar->QScrollBar::maximum());
+    scrollbarAtBottom  = (barList->QAbstractSlider::value() >= (barList->QAbstractSlider::maximum() - 4));
+    scrollbarPrevValue = barList->QAbstractSlider::value();
+
     QObject::connect(Freechat::viewField, SIGNAL(textChanged()), this, SLOT(ScrollToEnd()));
 
     //Timer for Debug server (check server status)
@@ -137,7 +144,7 @@ Freechat::Freechat(QWidget *parent)
 
     //The timer saves all data every 500000 msec (5 min)
     QTimer *timerOfAutoDataSaving = new QTimer;
-    timerOfAutoDataSaving->QTimer::setInterval(10000);
+    timerOfAutoDataSaving->QTimer::setInterval(500000);
     timerOfAutoDataSaving->QTimer::start();
     QObject::connect(timerOfAutoDataSaving, SIGNAL(timeout()), datamanager, SLOT(SavingData()));
 
@@ -187,12 +194,12 @@ Freechat::Freechat(QWidget *parent)
     Freechat::writeWanIpOfPeer->QLineEdit::setPlaceholderText("Write here WAN IP of peer");
     Freechat::writeLanIpOfPeer->QLineEdit::setPlaceholderText("Write here LAN IP of peer");
 
-    Freechat::writeNickOfPeer->QLineEdit::setMaxLength(14);
+    Freechat::writeNickOfPeer->QLineEdit::setMaxLength(30);
     Freechat::writeWanIpOfPeer->QLineEdit::setMaxLength(15);
     Freechat::writeLanIpOfPeer->QLineEdit::setMaxLength(15);
     Freechat::lineForTypeText->QLineEdit::setMaxLength(1500);
 
-    Freechat::listWithNickName->QListWidget::setMaximumHeight(500);
+    Freechat::listWithNickName->QListWidget::setMaximumHeight(4028);
     Freechat::listWithNickName->QListWidget::setMaximumWidth(150);
     Freechat::listWithNickName->QListWidget::setFocusPolicy(ClickFocus);
     Freechat::writeNickOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
