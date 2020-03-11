@@ -32,6 +32,7 @@
  QString Freechat::lanIpOfPeer;
  QString Freechat::wanIpOfPeer;
  unsigned short int Freechat::value;
+ unsigned short int Freechat::setcon;
 
  //Bin
  QString Freechat::nickNameOfPeer;
@@ -214,6 +215,7 @@ Freechat::Freechat(QWidget *parent)
     //variables for pointer of function from ConnectionF2F
     Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
     Freechat::value = 0;
+    Freechat::setcon = 0;
 
     //Global variable
     Freechat::bufferOfMessages = "";
@@ -544,6 +546,20 @@ void Freechat::CommandLineInterface()
                 #endif
 
                 Freechat::stpeerout->QAbstractSocket::disconnectFromHost();
+
+                switch(Freechat::value)
+                {
+                    case 1:
+                    {
+                        Freechat::server->Peerin::DisconnectPeer();
+                    }
+                    break;
+                    case 0:
+                    {
+                        Freechat::stpeerout->Peerout::SlotDisconnectPeer();
+                    }
+                    break;
+                }
         }
         break;
         case 8:
@@ -646,6 +662,26 @@ void Freechat::CommandLineInterface()
                 QMessageBox::information(Freechat::commandLine, tr("About programm"),
                                tr("<h3>Hi. Just write command 'man' and let's start chat! Remember, your data in your hands.</h3>"), "ok");
 
+        }
+        break;
+        case 18:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "setcon max";
+                #endif
+
+                Freechat::setcon = 100;
+                Freechat::server->SetMaxConnection(Freechat::setcon);
+        }
+        break;
+        case 19:
+        {
+                #ifndef Q_DEBUG
+                qDebug() << "setcon 1";
+                #endif
+
+                Freechat::setcon = 1;
+                Freechat::server->SetMaxConnection(Freechat::setcon);
         }
         break;
         default:

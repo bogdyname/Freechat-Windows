@@ -45,7 +45,8 @@ private:
                                  "con -w",    "disconnect",   "save",
                                  "clear -n",   "save -n",    "hide -n",
                                  "show -n",     "hide -a",   "show -a",
-                                 "hide -i",     "show -i",    "about" };
+                                 "hide -i",     "show -i",    "about",
+                                 "setcon max",   "setcon 1" };
 
     //COMMANDS
     /* 1) clear
@@ -104,6 +105,7 @@ public:
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
     static unsigned short int value; //for network code (about server)
+    static unsigned short int setcon;
 
     //CLI
     static QString command;
