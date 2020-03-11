@@ -8,6 +8,7 @@
 
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QList>
 
 class Freechat;
 class QTcpSocket;
@@ -27,9 +28,13 @@ public:
     explicit Peerin(QObject *parent = nullptr);
     ~Peerin();
 
+public:
+    void SetMaxConnection(unsigned short int &value);
+
 public slots:
     virtual void SlotNewConnection();
     void SendResponseToClient();
+    void DisconnectPeer();
     void SlotReadClient();
     void clearValue();
 

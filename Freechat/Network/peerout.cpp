@@ -11,7 +11,7 @@ Peerout::Peerout()
 {
     try
     {
-        socket = new QTcpSocket(this);
+        Peerout::socket = new QTcpSocket(this);
     }
     catch(std::bad_alloc &exp)
     {
@@ -32,20 +32,20 @@ Peerout::Peerout()
     qDebug() << "A new socket created.";
     #endif
 
-    QObject::connect(socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
-    QObject::connect(socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
-    QObject::connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+    QObject::connect(Peerout::socket, SIGNAL(connected()), this, SLOT(SlotConnected()));
+    QObject::connect(Peerout::socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
+    QObject::connect(Peerout::socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(SlotError(QAbstractSocket::SocketError)));
 }
 
 Peerout::~Peerout()
 {
-    delete socket;
+    delete Peerout::socket;
 }
 
 void Peerout::SlotReadyRead()
 {
-    QDataStream stream(socket);
+    QDataStream stream(Peerout::socket);
     stream.QDataStream::setVersion(QDataStream::Qt_4_2);
     QTime time = QTime::currentTime();
     QColor color(0, 255, 255);
@@ -62,13 +62,13 @@ void Peerout::SlotReadyRead()
     {
         if(nextBlockSize == 0)
         {
-            if(socket->bytesAvailable() < sizeof(932838457459459))
+            if(Peerout::socket->bytesAvailable() < sizeof(932838457459459))
                 break;
 
             stream >> nextBlockSize;
         }
 
-        if(socket->bytesAvailable() < nextBlockSize)
+        if(Peerout::socket->bytesAvailable() < nextBlockSize)
             break;
 
         stream >> buffer;
@@ -119,8 +119,8 @@ void Peerout::SlotSendToServer()
 
     sendStream.QDataStream::device()->QIODevice::seek(0);
     sendStream << (qint64)(block.size() - sizeof(932838457459459));
-    socket->QIODevice::write(block);
-    socket->QAbstractSocket::flush();
+    Peerout::socket->QIODevice::write(block);
+    Peerout::socket->QAbstractSocket::flush();
 
     Freechat::bufferOfMessages.QString::clear();
 
@@ -134,9 +134,9 @@ void Peerout::SlotLanConnecting()
     #endif
 
     QHostAddress hostAddress(Freechat::lanIpOfPeer);
-    socket->QAbstractSocket::connectToHost(hostAddress, 6000);
+    Peerout::socket->QAbstractSocket::connectToHost(hostAddress, 6000);
 
-    if(socket->QAbstractSocket::waitForConnected(2000))
+    if(Peerout::socket->QAbstractSocket::waitForConnected(2000))
     {
         #ifndef Q_DEBUG
         qDebug() << "Connected.";
@@ -179,6 +179,18 @@ void Peerout::SlotConnected()
     #ifndef Q_DEBUG
     qDebug() << "Connected.";
     #endif
+
+    return;
+}
+
+void Peerout::SlotDisconnectPeer()
+{
+    Peerout::socket->QAbstractSocket::disconnectFromHost();
+
+    QColor color(255, 153, 0);
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+    Freechat::viewField->QTextEdit::insertPlainText("Disconnected from peerin\n");
 
     return;
 }

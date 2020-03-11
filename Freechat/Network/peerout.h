@@ -23,6 +23,7 @@ public:
     ~Peerout();
 
 public slots:
+    void SlotDisconnectPeer();
     void SlotReadyRead();
     void SlotConnected();
     void SlotLanConnecting();
