@@ -141,7 +141,7 @@ void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
     if (!pointerOnFile->QFile::open(QFile::ReadOnly))
     {
       #ifndef Q_DEBUG
-      qDebug() << "error opening output file";
+      qCritical() << "error opening output file";
       #endif
     }
     else
@@ -165,7 +165,7 @@ void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
         if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
         {
             #ifndef Q_DEBUG
-            qDebug() << "error decrypt nick file";
+            qCritical() << "error decrypt nick file";
             #endif
 
             return;
@@ -192,7 +192,7 @@ void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
       if (!pointerOnFile->QFile::open(QFile::ReadOnly))
       {
         #ifndef Q_DEBUG
-        qDebug() << "error opening output file";
+        qCritical() << "error opening output file";
         #endif
       }
       else
@@ -216,7 +216,7 @@ void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
           if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
           {
               #ifndef Q_DEBUG
-              qDebug() << "error decrypt ip file";
+              qCritical() << "error decrypt ip file";
               #endif
 
               return;
@@ -288,7 +288,7 @@ void Bin::SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile)
     if (!pointerOnFile->QFile::open(QFile::WriteOnly))
     {
         #ifndef Q_DEBUG
-        qDebug() << "error opening output file!";
+        qCritical() << "error opening output file!";
         #endif
     }
     else

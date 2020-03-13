@@ -16,14 +16,14 @@ Peerin::Peerin(QObject *parent)
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
+        qCritical() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
     catch(...)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Some exception caught";
+        qCritical() << "Some exception caught";
         #endif
         abort();
     }
@@ -40,7 +40,7 @@ Peerin::Peerin(QObject *parent)
     else
     {
         #ifndef Q_DEBUG
-        qDebug() << "Server not started: " << QTcpServer::errorString();
+        qCritical() << "Server not started: " << QTcpServer::errorString();
         #endif
 
         Peerin::server->QTcpServer::close();

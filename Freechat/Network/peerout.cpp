@@ -16,14 +16,14 @@ Peerout::Peerout()
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
+        qCritical() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
     catch(...)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Some exception caught";
+        qCritical() << "Some exception caught";
         #endif
         abort();
     }
@@ -145,7 +145,7 @@ void Peerout::SlotLanConnecting()
     else
     {
         #ifndef Q_DEBUG
-        qDebug() << "Error connection.";
+        qCritical() << "Error connection.";
         #endif
 
         // show error in view field

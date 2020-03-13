@@ -7,6 +7,7 @@
 #define PEERIN_H
 
 #include <QTcpServer>
+#include <QSslSocket>
 #include <QTcpSocket>
 #include <QList>
 

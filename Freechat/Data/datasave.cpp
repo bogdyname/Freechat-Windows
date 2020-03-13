@@ -43,7 +43,7 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
     if((Datasave::nameOfDatasaveFile == "") && (Datasave::nicknameForDatasave == ""))
     {
         #ifndef Q_DEBUG
-        qDebug() << "Can not save file";
+        qCritical() << "Can not save file";
         #endif
 
         return;
@@ -78,7 +78,7 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
     else
     {
         #ifndef Q_DEBUG
-        qDebug() << "error opening output file!";
+        qCritical() << "error opening output file!";
         #endif
     }
 
@@ -128,7 +128,7 @@ void Datasave::ReadDataFromFile()
     if (!Datasave::datasave->QFile::open(QFile::ReadOnly))
     {
       #ifndef Q_DEBUG
-      qDebug() << "error opening output file";
+      qCritical() << "error opening output file";
       #endif
     }
     else
@@ -141,7 +141,7 @@ void Datasave::ReadDataFromFile()
       if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
       {
           #ifndef Q_DEBUG
-          qDebug() << "error decrypt output file";
+          qCritical() << "error decrypt output file";
           #endif
 
           QColor color(156, 0, 0);
