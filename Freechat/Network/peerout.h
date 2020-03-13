@@ -8,6 +8,7 @@
 
 #include <QHostAddress>
 #include <QTcpSocket>
+#include <QSslSocket>
 
 class Freechat;
 class QTcpSocket;

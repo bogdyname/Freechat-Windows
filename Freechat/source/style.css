@@ -10,7 +10,7 @@ QDialog
     border: 1.2px;
     border-color: #00FFFF;
     border-style: outset;
-    border-radius: 2.5px;
+    border-radius: 0px;
     color: #FFD700;
 }
 
@@ -20,7 +20,7 @@ QDialog:hover
     border: 1.5px;
     border-color: #8A2BE2;
     border-style: outset;
-    border-radius: 2.5px;
+    border-radius: 0px;
     color: #FFD700;
 }
 

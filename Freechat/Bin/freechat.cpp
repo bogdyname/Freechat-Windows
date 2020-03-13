@@ -68,32 +68,32 @@ Freechat::Freechat(QWidget *parent)
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
+        qCritical() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
     catch(...)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Some exception caught";
+        qCritical() << "Some exception caught";
         #endif
         abort();
     }
 
     //first layer
-    ui->horizontalLayout_1->QBoxLayout::addWidget(Freechat::writeNickOfPeer);
-    //ui->horizontalLayout_2->QBoxLayout::addWidget(Freechat::writeWanIpOfPeer); //TTS cos network through NAT adn WAN IP not done
-    ui->horizontalLayout_3->QBoxLayout::addWidget(Freechat::writeLanIpOfPeer);
+    ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeNickOfPeer);
+    //ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeWanIpOfPeer); //TTS cos network through NAT adn WAN IP not done
+    ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeLanIpOfPeer);
 
     //second layer
-    ui->HLForButtons->QBoxLayout::addWidget(Freechat::commandLine);
+    ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::commandLine);
 
     //third layer
-    ui->horizontalLayout_5->QBoxLayout::addWidget(Freechat::listWithNickName);
-    ui->horizontalLayout_5->QBoxLayout::addWidget(Freechat::viewField);
+    ui->horizontalLayoutForTextEndNicks->QBoxLayout::addWidget(Freechat::listWithNickName);
+    ui->horizontalLayoutForTextEndNicks->QBoxLayout::addWidget(Freechat::viewField);
 
     //fourth layer
-    ui->horizontalLayout_6->QBoxLayout::addWidget(Freechat::lineForTypeText);
+    ui->horizontalLayoutForlbAndLineType->QBoxLayout::addWidget(Freechat::lineForTypeText);
 
     //Network data of peer (LAN data)
     try
@@ -107,14 +107,14 @@ Freechat::Freechat(QWidget *parent)
     catch(std::bad_alloc &exp)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Exception caught: " << exp.std::bad_alloc::what();
+        qCritical() << "Exception caught: " << exp.std::bad_alloc::what();
         #endif
         abort();
     }
     catch(...)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Some exception caught";
+        qCritical() << "Some exception caught";
         #endif
         abort();
     }
@@ -142,12 +142,6 @@ Freechat::Freechat(QWidget *parent)
     timerOfServer->QTimer::setInterval(10000);
     QObject::connect(timerOfServer, SIGNAL(timeout()), this, SLOT(ServerStillWorking()));
     timerOfServer->QTimer::start();
-
-    //The timer saves all data every 500000 msec (5 min)
-    QTimer *timerOfAutoDataSaving = new QTimer;
-    timerOfAutoDataSaving->QTimer::setInterval(500000);
-    timerOfAutoDataSaving->QTimer::start();
-    QObject::connect(timerOfAutoDataSaving, SIGNAL(timeout()), datamanager, SLOT(SavingData()));
 
     //Connecting UI widgets with bin code
     QTimer *timerOfBin = new QTimer;
@@ -273,7 +267,7 @@ Freechat::~Freechat()
 //check server
 void Freechat::ServerStillWorking()
 {
-    if(server != nullptr)
+    if(Freechat::server != nullptr)
     {
         #ifndef Q_DEBUG
         qDebug() << "Server still working";
@@ -282,7 +276,7 @@ void Freechat::ServerStillWorking()
     else
     {
         #ifndef Q_DEBUG
-        qDebug() << "Server stoped!" ;
+        qCritical() << "Server stoped!" ;
         #endif
     }
 
