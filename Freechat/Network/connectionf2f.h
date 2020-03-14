@@ -30,6 +30,6 @@ public:
 
 public:
     void LanNetwork(QString &ip, QString &mac, QString &netmask, QString &hostname);
-    static int CheckNetworkAccess();
+    static unsigned short int CheckNetworkAccess();
 };
 #endif

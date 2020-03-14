@@ -19,43 +19,13 @@ using namespace Qt;
 Bin::Bin(QObject *parent)
     : QObject(parent)
 {
+    Bin::ReadPeers();
 
     return;
 }
 
 Bin::~Bin()
 {
-
-    return;
-}
-
-void Bin::GetSelectedPeer()
-{
-    Freechat::nickNameOfPeer.QString::clear();
-    Freechat::lanIpOfPeer.QString::clear();
-    Freechat::wanIpOfPeer.QString::clear();
-
-    QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
-
-    foreach(QListWidgetItem *item, items)
-    {
-        unsigned short number = Freechat::listWithNickName->QListWidget::row(item);
-
-        Freechat::nickNameOfPeer += Bin::listWithNickName.QList::value(number);
-        Freechat::lanIpOfPeer += Bin::listWithLANIpAddress.QList::value(number);
-        Freechat::wanIpOfPeer += Bin::listWithWANIpAddress.QList::value(number);
-
-        #ifndef Q_DEBUG
-        qDebug() << "number from bin for auto past code: " << number << ": " << Freechat::nickNameOfPeer << ": " << Freechat::lanIpOfPeer;
-        #endif
-    }
-
-    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
-    {
-        #ifndef Q_DEBUG
-        qDebug() << "check list for auto past code: " << Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
-        #endif
-    }
 
     return;
 }
@@ -133,107 +103,6 @@ void Bin::DeleteAllPeer()
     return;
 }
 
-void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
-{
-    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
-    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
-
-    if (!pointerOnFile->QFile::open(QFile::ReadOnly))
-    {
-      #ifndef Q_DEBUG
-      qCritical() << "error opening output file";
-      #endif
-    }
-    else
-    {
-      QTextStream stream(pointerOnFile);
-
-      #ifndef Q_DEBUG
-      qDebug() << "Bin: file is opened";
-      #endif
-
-      while(!stream.QTextStream::atEnd())
-      {
-        QString cypherText = stream.QTextStream::readLine();
-        QString nick = cryptomanager.Cryptography::decryptToString(cypherText);
-
-        #ifndef Q_DEBUG
-        qDebug() << "TEXT: " << cypherText;
-        qDebug() << "nick: " << nick;
-        #endif
-
-        if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
-        {
-            #ifndef Q_DEBUG
-            qCritical() << "error decrypt nick file";
-            #endif
-
-            return;
-        }
-
-        Bin::listWithNickName += nick;
-
-        cypherText.QString::clear();
-        nick.QString::clear();
-      }
-    }
-
-    pointerOnFile->close();
-    Freechat::listWithNickName->QListWidget::addItems(Bin::listWithNickName);
-
-    return;
-}
-
-void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
-{
-    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
-    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
-
-      if (!pointerOnFile->QFile::open(QFile::ReadOnly))
-      {
-        #ifndef Q_DEBUG
-        qCritical() << "error opening output file";
-        #endif
-      }
-      else
-      {
-        QTextStream stream(pointerOnFile);
-
-        #ifndef Q_DEBUG
-        qDebug() << "Bin: file is opened";
-        #endif
-
-        while(!stream.QTextStream::atEnd())
-        {
-          QString cypherText = stream.QTextStream::readLine();
-          QString ip = cryptomanager.Cryptography::decryptToString(cypherText);
-
-          #ifndef Q_DEBUG
-          qDebug() << "TEXT: " << cypherText;
-          qDebug() << "ip: " << ip;
-          #endif
-
-          if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
-          {
-              #ifndef Q_DEBUG
-              qCritical() << "error decrypt ip file";
-              #endif
-
-              return;
-          }
-
-          list += ip;
-
-          cypherText.QString::clear();
-          ip.QString::clear();
-        }
-      }
-
-      pointerOnFile->QFileDevice::close();
-
-    return;
-}
-
 void Bin::DeleteSelectedPeer()
 {
     QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
@@ -280,7 +149,133 @@ void Bin::ReadPeers()
     return;
 }
 
-void Bin::SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile)
+void Bin::GetSelectedPeer()
+{
+    Freechat::nickNameOfPeer.QString::clear();
+    Freechat::lanIpOfPeer.QString::clear();
+    Freechat::wanIpOfPeer.QString::clear();
+
+    QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
+
+    foreach(QListWidgetItem *item, items)
+    {
+        unsigned short number = Freechat::listWithNickName->QListWidget::row(item);
+
+        Freechat::nickNameOfPeer += Bin::listWithNickName.QList::value(number);
+        Freechat::lanIpOfPeer += Bin::listWithLANIpAddress.QList::value(number);
+        Freechat::wanIpOfPeer += Bin::listWithWANIpAddress.QList::value(number);
+
+        #ifndef Q_DEBUG
+        qDebug() << "number from bin for auto past code: " << number << ": " << Freechat::nickNameOfPeer << ": " << Freechat::lanIpOfPeer;
+        #endif
+    }
+
+    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "check list for auto past code: " << Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData();
+        #endif
+    }
+
+    return;
+}
+
+void Bin::ReadDataAboutPeer(QFile *pointerOnFile)
+{
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
+    if (!pointerOnFile->QFile::open(QFile::ReadOnly))
+    {
+      #ifndef Q_DEBUG
+      qCritical() << "error opening output file";
+      #endif
+    }
+    else
+    {
+      QTextStream stream(pointerOnFile);
+
+      #ifndef Q_DEBUG
+      qDebug() << "Bin: file is opened";
+      #endif
+
+      while(!stream.QTextStream::atEnd())
+      {
+        const QString cypherText = stream.QTextStream::readLine();
+        const QString nick = cryptomanager.Cryptography::decryptToString(cypherText);
+
+        #ifndef Q_DEBUG
+        qDebug() << "TEXT: " << cypherText;
+        qDebug() << "nick: " << nick;
+        #endif
+
+        if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
+        {
+            #ifndef Q_DEBUG
+            qCritical() << "error decrypt nick file";
+            #endif
+
+            return;
+        }
+
+        Bin::listWithNickName += nick;
+      }
+    }
+
+    pointerOnFile->close();
+    Freechat::listWithNickName->QListWidget::addItems(Bin::listWithNickName);
+
+    return;
+}
+
+void Bin::ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile)
+{
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
+      if (!pointerOnFile->QFile::open(QFile::ReadOnly))
+      {
+        #ifndef Q_DEBUG
+        qCritical() << "error opening output file";
+        #endif
+      }
+      else
+      {
+        QTextStream stream(pointerOnFile);
+
+        #ifndef Q_DEBUG
+        qDebug() << "Bin: file is opened";
+        #endif
+
+        while(!stream.QTextStream::atEnd())
+        {
+          const QString cypherText = stream.QTextStream::readLine();
+          const QString ip = cryptomanager.Cryptography::decryptToString(cypherText);
+
+          #ifndef Q_DEBUG
+          qDebug() << "TEXT: " << cypherText;
+          qDebug() << "ip: " << ip;
+          #endif
+
+          if (!(cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError))
+          {
+              #ifndef Q_DEBUG
+              qCritical() << "error decrypt ip file";
+              #endif
+
+              return;
+          }
+
+          list += ip;
+        }
+      }
+
+      pointerOnFile->QFileDevice::close();
+
+    return;
+}
+
+void Bin::SavingDataAboutPeer(const QStringList &list, QFile *pointerOnFile)
 {
     cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
     cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
@@ -301,12 +296,9 @@ void Bin::SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile)
 
         for (unsigned short row = 0; row < list.QList::size(); ++row)
         {
-          QString nick = list.QList::at(row);
-          QString cypherText = cryptomanager.Cryptography::encryptToString(nick);
+          const QString nick = list.QList::at(row);
+          const QString cypherText = cryptomanager.Cryptography::encryptToString(nick);
           stream << cypherText << '\n';
-
-          cypherText.QString::clear();
-          nick.QString::clear();
         }
     }
 
@@ -322,7 +314,7 @@ Wcontainer Bin::WriteElementsInList(Wcontainer &list, const QString &element)
 }
 
 template <typename Gcontainer>
-Gcontainer Bin::GetElementsFromList(Gcontainer &list)
+Gcontainer Bin::GetElementsFromList(const Gcontainer &list)
 {
     QList<QString>::const_iterator it = list.constBegin();
 

@@ -25,11 +25,13 @@ public:
 
 public slots:
     void SlotDisconnectPeer();
-    void SlotReadyRead();
-    void SlotConnected();
     void SlotLanConnecting();
     void SlotWanConnecting();
     void SlotSendToServer();
+
+private slots:
+    void SlotReadyRead();
+    void SlotConnected();
     void SlotError(QAbstractSocket::SocketError);
 
 private:

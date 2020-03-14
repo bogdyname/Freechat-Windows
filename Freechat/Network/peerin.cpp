@@ -28,7 +28,7 @@ Peerin::Peerin(QObject *parent)
         abort();
     }
 
-    connect(Peerin::server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
+    QObject::connect(Peerin::server, SIGNAL(newConnection()), this, SLOT(SlotNewConnection()));
 
     if (Peerin::server->QTcpServer::listen(QHostAddress::Any, 6000))
     {
@@ -46,7 +46,7 @@ Peerin::Peerin(QObject *parent)
         Peerin::server->QTcpServer::close();
     }
 
-    Peerin::server->setMaxPendingConnections(100);
+    Peerin::server->setMaxPendingConnections(1);
 
     return;
 }
@@ -56,24 +56,25 @@ Peerin::~Peerin()
     delete Peerin::server;
 }
 
-void Peerin::SetMaxConnection(unsigned short int &value)
+void Peerin::DisconnectPeer()
 {
-    #ifndef Q_DEBUG
-    qDebug() << "Max pending connections: " << value;
-    #endif
+    Peerin::socket->QAbstractSocket::abort();
 
-    Peerin::server->setMaxPendingConnections(value);
+    const QColor color(255, 153, 0);
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+    Freechat::viewField->QTextEdit::insertPlainText("Peerout disconnected\n");
 
     return;
 }
 
-void Peerin::clearValue()
+void Peerin::SendMessages()
 {
-    #ifndef Q_DEBUG
-    qDebug() << "Value was cleared!";
-    #endif
+    Peerin::SendResponseToClient(Freechat::bufferOfMessages);
 
-    Freechat::value = 0;
+    #ifndef Q_DEBUG
+    qDebug() << "Sending data!";
+    #endif
 
     return;
 }
@@ -83,14 +84,14 @@ void Peerin::SlotNewConnection()
     Peerin::socket = Peerin::server->QTcpServer::nextPendingConnection();
     Freechat::value = 1;
 
-    QColor color(255, 153, 0);
+    const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
     Freechat::viewField->QTextEdit::insertPlainText("Peerout connected\n");
 
-    connect(Peerin::socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
-    connect(Peerin::socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
-    connect(Peerin::socket, SIGNAL(disconnected()), Peerin::socket, SLOT(deleteLater()));
+    QObject::connect(Peerin::socket, SIGNAL(disconnected()), this, SLOT(clearValue()));
+    QObject::connect(Peerin::socket, SIGNAL(readyRead()), this, SLOT(SlotReadClient()));
+    QObject::connect(Peerin::socket, SIGNAL(disconnected()), Peerin::socket, SLOT(deleteLater()));
 
     #ifndef Q_DEBUG
     qDebug() << "Value already: " << Freechat::value;
@@ -99,14 +100,23 @@ void Peerin::SlotNewConnection()
     return;
 }
 
-void Peerin::DisconnectPeer()
+void Peerin::SendResponseToClient(QString &message)
 {
-    Peerin::socket->QAbstractSocket::abort();
+    #ifndef Q_DEBUG
+    qDebug() << "Sending data to client from peerin.cpp: " << message;
+    #endif
 
-    QColor color(255, 153, 0);
-    Freechat::viewField->QTextEdit::setTextColor(color);
-    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
-    Freechat::viewField->QTextEdit::insertPlainText("Peerout disconnected\n");
+    QByteArray block;
+    QDataStream sendStream(&block, QIODevice::ReadWrite);
+    sendStream.QDataStream::setVersion(QDataStream::Qt_4_2);
+    sendStream << qint64(0) << message;
+
+    sendStream.QDataStream::device()->QIODevice::seek(0);
+    sendStream << (qint64)(block.size() - sizeof(932838457459459));
+    Peerin::socket->QIODevice::write(block);
+    Peerin::socket->QAbstractSocket::flush();
+
+    message.QString::clear();
 
     return;
 }
@@ -116,8 +126,8 @@ void Peerin::SlotReadClient()
     Peerin::socket = (QTcpSocket*)sender();
     QDataStream stream(Peerin::socket);
     stream.QDataStream::setVersion(QDataStream::Qt_4_2);
-    QTime time = QTime::currentTime();
-    QColor color(0, 255, 255); //234, 0, 217
+    const QTime time = QTime::currentTime();
+    const QColor color(0, 255, 255); //234, 0, 217
     QString buffer;
     nextBlockSize = 0;
 
@@ -156,23 +166,13 @@ void Peerin::SlotReadClient()
     return;
 }
 
-void Peerin::SendResponseToClient()
+void Peerin::clearValue()
 {
     #ifndef Q_DEBUG
-    qDebug() << "Sending data to client from peerin.cpp: " << Freechat::bufferOfMessages;
+    qDebug() << "Value was cleared!";
     #endif
 
-    QByteArray block;
-    QDataStream sendStream(&block, QIODevice::ReadWrite);
-    sendStream.QDataStream::setVersion(QDataStream::Qt_4_2);
-    sendStream << qint64(0) << Freechat::bufferOfMessages;
-
-    sendStream.QDataStream::device()->QIODevice::seek(0);
-    sendStream << (qint64)(block.size() - sizeof(932838457459459));
-    Peerin::socket->QIODevice::write(block);
-    Peerin::socket->QAbstractSocket::flush();
-
-    Freechat::bufferOfMessages.QString::clear();
+    Freechat::value = 0;
 
     return;
 }
