@@ -47,8 +47,8 @@ void Peerout::SlotReadyRead()
 {
     QDataStream stream(Peerout::socket);
     stream.QDataStream::setVersion(QDataStream::Qt_4_2);
-    QTime time = QTime::currentTime();
-    QColor color(0, 255, 255);
+    const QTime time = QTime::currentTime();
+    const QColor color(0, 255, 255);
     QString buffer;
 
     Freechat::viewField->QTextEdit::setTextColor(color);
@@ -98,7 +98,7 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->QIODevice::errorString() + "\n"));
 
     // show error in view field
-    QColor color(156, 0, 0);
+    const QColor color(156, 0, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
     Freechat::viewField->QTextEdit::insertPlainText(strError);
@@ -171,7 +171,7 @@ void Peerout::SlotWanConnecting()
 
 void Peerout::SlotConnected()
 {
-    QColor color(255, 153, 0);
+    const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
     Freechat::viewField->QTextEdit::insertPlainText("Connected to peerin\n");
@@ -187,7 +187,7 @@ void Peerout::SlotDisconnectPeer()
 {
     Peerout::socket->QAbstractSocket::disconnectFromHost();
 
-    QColor color(255, 153, 0);
+    const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
     Freechat::viewField->QTextEdit::insertPlainText("Disconnected from peerin\n");

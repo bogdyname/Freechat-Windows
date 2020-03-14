@@ -45,8 +45,7 @@ private:
                                  "con -w",    "disconnect",   "save",
                                  "clear -n",   "save -n",    "hide -n",
                                  "show -n",     "hide -a",   "show -a",
-                                 "hide -i",     "show -i",    "about",
-                                 "setcon max",   "setcon 1" };
+                                 "hide -i",     "show -i", };
 
     //COMMANDS
     /* 1) clear
@@ -83,29 +82,28 @@ private:
        -- hide interface
        17) show -i
        -- show interface
-       18) about
-       -- started
     */
 
-public:
+private:
     //Menagers
-    static QPointer<Peerin> server;
-    static QPointer<Peerout> stpeerout;
-    static QPointer<ConnectionF2F> netmanager;
-    static QPointer<Datasave> datamanager;
-    static QPointer<Bin> binmanager;
+    QPointer<Peerin> server;
+    QPointer<Peerout> stpeerout;
+    QPointer<ConnectionF2F> netmanager;
+    QPointer<Datasave> datamanager;
+    QPointer<Bin> binmanager;
 
     //Global buffer variables
-public:
     //Network
-    static QString yourLanIp;
-    static QString yourMAC;
-    static QString yourNetmask;
-    static QString localHostName;
+private:
+    QString yourLanIp;
+    QString yourMAC;
+    QString yourNetmask;
+    QString localHostName;
+
+public:
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
     static unsigned short int value; //for network code (about server)
-    static unsigned short int setcon;
 
     //CLI
     static QString command;
@@ -129,10 +127,10 @@ public:
     static QListWidget *listWithNickName;
 
 private:
-    int (*checkNetworkConnection)() = nullptr;
+    unsigned short int (*checkNetworkConnection)() = nullptr;
     bool (*checkConnection)() = nullptr;
-    static bool scrollbarAtBottom;
-    static int scrollbarPrevValue;
+    bool scrollbarAtBottom;
+    int scrollbarPrevValue;
 
 public:
     explicit Freechat(QWidget *parent = nullptr);

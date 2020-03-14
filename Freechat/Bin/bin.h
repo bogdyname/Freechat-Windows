@@ -46,7 +46,7 @@ public slots:
 private:
     void ReadDataAboutPeer(QFile *pointerOnFile);
     void ReadDataAboutPeer(QStringList &list, QFile *pointerOnFile);
-    void SavingDataAboutPeer(QStringList &list, QFile *pointerOnFile);
+    void SavingDataAboutPeer(const QStringList &list, QFile *pointerOnFile);
 
 //ALL DONE
 private:
@@ -54,7 +54,7 @@ private:
     Wcontainer WriteElementsInList(Wcontainer &list, const QString &element);
 
     template <typename Gcontainer>
-    Gcontainer GetElementsFromList(Gcontainer &list);
+    Gcontainer GetElementsFromList(const Gcontainer &list);
 
     template <typename Rcontainer>
     Rcontainer RemoveElementsFromList(Rcontainer &list);

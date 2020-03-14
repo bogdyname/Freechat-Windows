@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     int id = QFontDatabase::addApplicationFont(":/source/source/LetterGothicStd.otf");
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-    QFont monospace("LetterGothicStd", 12, QFont::Normal);
+    const QFont monospace("LetterGothicStd", 12, QFont::Normal);
     app.QApplication::setFont(monospace);
 
     // ui

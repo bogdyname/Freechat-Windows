@@ -21,25 +21,6 @@ ConnectionF2F::~ConnectionF2F()
     return;
 }
 
-int ConnectionF2F::CheckNetworkAccess()
-{
-    QEventLoop loop;
-    QNetworkAccessManager nam;
-    QNetworkRequest req(QUrl("http://www.google.com"));
-    QNetworkReply *reply = nam.QNetworkAccessManager::get(req);
-    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.QEventLoop::exec();
-
-    if(reply->bytesAvailable())
-    {
-        return 101;
-    }
-    else
-    {
-        return 404;
-    }
-}
-
 void ConnectionF2F::LanNetwork(QString &ip, QString &mac, QString &netmask, QString &hostname)
 {
        QString localhostIP;
@@ -81,4 +62,23 @@ void ConnectionF2F::LanNetwork(QString &ip, QString &mac, QString &netmask, QStr
        hostname += localhostname;
 
        return;
+}
+
+unsigned short int ConnectionF2F::CheckNetworkAccess()
+{
+    QEventLoop loop;
+    QNetworkAccessManager nam;
+    QNetworkRequest req(QUrl("http://www.google.com"));
+    QNetworkReply *reply = nam.QNetworkAccessManager::get(req);
+    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.QEventLoop::exec();
+
+    if(reply->bytesAvailable())
+    {
+        return 101;
+    }
+    else
+    {
+        return 404;
+    }
 }

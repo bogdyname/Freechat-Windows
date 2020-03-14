@@ -6,9 +6,6 @@
 #include "Data/datasave.h"
 #include "Bin/freechat.h"
 
- QString Datasave::nameOfDatasaveFile;
- QString Datasave::nicknameForDatasave;
-
  static Cryptography cryptomanager(Q_UINT64_C(0x0c2ad4a4acb9f023));
 
 Datasave::Datasave()
@@ -29,7 +26,6 @@ Datasave::~Datasave()
 void Datasave::SavingData()
 {
     Datasave::DataSavingIntoFile(Datasave::datasave);
-    Datasave::datasave = nullptr;
 
     #ifndef Q_DEBUG
     qDebug() << "Data had saved!";
@@ -38,59 +34,8 @@ void Datasave::SavingData()
     return;
 }
 
-void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
-{
-    if((Datasave::nameOfDatasaveFile == "") && (Datasave::nicknameForDatasave == ""))
-    {
-        #ifndef Q_DEBUG
-        qCritical() << "Can not save file";
-        #endif
-
-        return;
-    }
-
-    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
-    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
-
-    QString str = pointerOnFile->QFile::fileName();
-
-    QDateTime correntdate = QDateTime::currentDateTime();
-
-    QTextStream stream(pointerOnFile);
-
-    QColor color(255, 153, 0);
-    Freechat::viewField->QTextEdit::setTextColor(color);
-    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
-    Freechat::viewField->QTextEdit::insertPlainText(correntdate.QDateTime::toString("ddd MMMM d yy") + "\n");
-
-    if(pointerOnFile->QFile::open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        #ifndef Q_DEBUG
-        qDebug() << "Datasave: file is opened";
-        #endif
-
-        QString messages = Freechat::viewField->QTextEdit::toHtml() + '\n';
-        QString cypherText = cryptomanager.Cryptography::encryptToString(messages);
-
-        if (cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError)
-            stream << cypherText;
-    }
-    else
-    {
-        #ifndef Q_DEBUG
-        qCritical() << "error opening output file!";
-        #endif
-    }
-
-    Datasave::nameOfDatasaveFile.QString::clear();
-    Datasave::nicknameForDatasave.QString::clear();
-    pointerOnFile->QFileDevice::close();
-
-    return;
-}
-
 void Datasave::CheckoutFile()
-{   
+{
     Datasave::nameOfDatasaveFile.QString::clear();
     Datasave::nicknameForDatasave.QString::clear();
     QList<QListWidgetItem*> items = Freechat::listWithNickName->QListWidget::selectedItems();
@@ -144,7 +89,7 @@ void Datasave::ReadDataFromFile()
           qCritical() << "error decrypt output file";
           #endif
 
-          QColor color(156, 0, 0);
+          const QColor color(156, 0, 0);
           Freechat::viewField->QTextEdit::setTextColor(color);
           Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
           Freechat::viewField->QTextEdit::insertPlainText("error decrypt output file \n");
@@ -160,6 +105,55 @@ void Datasave::ReadDataFromFile()
     }
 
     Datasave::datasave->QFileDevice::close();
+
+    return;
+}
+
+void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
+{
+    if((Datasave::nameOfDatasaveFile == "") && (Datasave::nicknameForDatasave == ""))
+    {
+        #ifndef Q_DEBUG
+        qCritical() << "Can not save file";
+        #endif
+
+        return;
+    }
+
+    cryptomanager.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    cryptomanager.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+
+    QString str = pointerOnFile->QFile::fileName();
+
+    QDateTime correntdate = QDateTime::currentDateTime();
+
+    QTextStream stream(pointerOnFile);
+
+    const QColor color(255, 153, 0);
+    Freechat::viewField->QTextEdit::setTextColor(color);
+    Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
+    Freechat::viewField->QTextEdit::insertPlainText(correntdate.QDateTime::toString("ddd MMMM d yy") + "\n");
+
+    if(pointerOnFile->QFile::open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Datasave: file is opened";
+        #endif
+
+        QString messages = Freechat::viewField->QTextEdit::toHtml() + '\n';
+        QString cypherText = cryptomanager.Cryptography::encryptToString(messages);
+
+        if (cryptomanager.Cryptography::lastError() == Cryptography::ErrorNoError)
+            stream << cypherText;
+    }
+    else
+    {
+        #ifndef Q_DEBUG
+        qCritical() << "error opening output file!";
+        #endif
+    }
+
+    pointerOnFile->QFileDevice::close();
 
     return;
 }
