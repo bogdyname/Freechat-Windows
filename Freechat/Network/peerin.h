@@ -6,6 +6,7 @@
 #ifndef PEERIN_H
 #define PEERIN_H
 
+#include "Data/cryptography.h"
 #include <QTcpServer>
 #include <QSslSocket>
 #include <QTcpSocket>
@@ -14,6 +15,7 @@
 class Freechat;
 class QTcpSocket;
 class QTcpServer;
+class Cryptography;
 
 class Peerin : public QTcpServer
 {
@@ -24,6 +26,8 @@ private:
     QTcpServer *server = nullptr;
     qint64 nextBlockSize;
     QTcpSocket *socket = nullptr;
+    Cryptography cryptomanagerOfPeerout;
+    Cryptography cryptomanagerOfPeerin;
 
 public:
     explicit Peerin(QObject *parent = nullptr);
