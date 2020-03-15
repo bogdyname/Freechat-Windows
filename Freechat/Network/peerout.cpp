@@ -36,6 +36,16 @@ Peerout::Peerout()
     QObject::connect(Peerout::socket, SIGNAL(readyRead()), this, SLOT(SlotReadyRead()));
     QObject::connect(Peerout::socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(SlotError(QAbstractSocket::SocketError)));
+
+    const quint64 keyin = Q_UINT64_C(0x0c3ad5a4acb1f021);
+    const quint64 keyout = Q_UINT64_C(0x0c2ad2a2acb1f012);
+    Peerout::cryptomanagerOfPeerout.setKey(keyout);
+    Peerout::cryptomanagerOfPeerin.setKey(keyin);;
+
+    Peerout::cryptomanagerOfPeerin.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    Peerout::cryptomanagerOfPeerin.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
+    Peerout::cryptomanagerOfPeerout.Cryptography::setCompressionMode(Cryptography::CompressionAuto);
+    Peerout::cryptomanagerOfPeerout.Cryptography::setIntegrityProtectionMode(Cryptography::ProtectionHash);
 }
 
 Peerout::~Peerout()
@@ -50,6 +60,7 @@ void Peerout::SlotReadyRead()
     const QTime time = QTime::currentTime();
     const QColor color(0, 255, 255);
     QString buffer;
+    Peerout::nextBlockSize = 0;
 
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignRight);
@@ -60,15 +71,15 @@ void Peerout::SlotReadyRead()
 
     forever
     {
-        if(nextBlockSize == 0)
+        if(Peerout::nextBlockSize == 0)
         {
-            if(Peerout::socket->bytesAvailable() < sizeof(932838457459459))
+            if(Peerout::socket->QAbstractSocket::bytesAvailable() < sizeof(932838457459459))
                 break;
 
-            stream >> nextBlockSize;
+            stream >> Peerout::nextBlockSize;
         }
 
-        if(Peerout::socket->bytesAvailable() < nextBlockSize)
+        if(Peerout::socket->QAbstractSocket::bytesAvailable() < Peerout::nextBlockSize)
             break;
 
         stream >> buffer;
@@ -77,10 +88,21 @@ void Peerout::SlotReadyRead()
         qDebug() << "Data from server: " << buffer;
         #endif
 
-        if(!buffer.isEmpty())
-            Freechat::viewField->QTextEdit::insertPlainText(time.QTime::toString() + "\n" + "Peer:\n" + buffer + "\n");
+        const QString dechyphermessage = Peerout::cryptomanagerOfPeerin.Cryptography::decryptToString(buffer);
 
-        nextBlockSize = 0;
+        if (!(Peerout::cryptomanagerOfPeerin.Cryptography::lastError() == Cryptography::ErrorNoError))
+        {
+            #ifndef Q_DEBUG
+            qCritical() << "error decrypt message from peerin";
+            #endif
+
+            return;
+        }
+
+        if(!dechyphermessage.QString::isEmpty())
+            Freechat::viewField->QTextEdit::insertPlainText(time.QTime::toString() + "\n" + "Peer:\n" + dechyphermessage + "\n");
+
+        Peerout::nextBlockSize = 0;
     }
 
     return;
@@ -112,13 +134,14 @@ void Peerout::SlotSendToServer()
     qDebug() << "Sending data to server from peerout.cpp: " << Freechat::bufferOfMessages;
     #endif
 
+    const QString cryptmessage = Peerout::cryptomanagerOfPeerout.Cryptography::encryptToString(Freechat::bufferOfMessages);
     QByteArray block;
     QDataStream sendStream(&block, QIODevice::ReadWrite);
     sendStream.QDataStream::setVersion(QDataStream::Qt_4_2);
-    sendStream << qint64(0) << Freechat::bufferOfMessages;
+    sendStream << qint64(0) << cryptmessage;
 
     sendStream.QDataStream::device()->QIODevice::seek(0);
-    sendStream << (qint64)(block.size() - sizeof(932838457459459));
+    sendStream << (qint64)(block.QByteArray::size() - sizeof(932838457459459));
     Peerout::socket->QIODevice::write(block);
     Peerout::socket->QAbstractSocket::flush();
 

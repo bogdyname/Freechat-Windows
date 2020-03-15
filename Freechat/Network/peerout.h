@@ -6,12 +6,14 @@
 #ifndef PEEROUT
 #define PEEROUT
 
+#include "Data/cryptography.h"
 #include <QHostAddress>
 #include <QTcpSocket>
 #include <QSslSocket>
 
 class Freechat;
 class QTcpSocket;
+class Cryptography;
 class ConnectionF2F;
 
 class Peerout : public QTcpSocket
@@ -37,5 +39,7 @@ private slots:
 private:
     QTcpSocket *socket;
     qint64 nextBlockSize;
+    Cryptography cryptomanagerOfPeerout;
+    Cryptography cryptomanagerOfPeerin;
 };
 #endif
