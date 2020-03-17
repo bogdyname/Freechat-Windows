@@ -70,6 +70,15 @@ void Peerin::DisconnectPeer()
 {
     Peerin::socket->QAbstractSocket::abort();
 
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
+
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
@@ -93,6 +102,15 @@ void Peerin::SlotNewConnection()
 {
     Peerin::socket = Peerin::server->QTcpServer::nextPendingConnection();
     Freechat::value = 1;
+
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
 
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
@@ -141,6 +159,15 @@ void Peerin::SlotReadClient()
     const QColor color(0, 255, 255); //234, 0, 217
     QString buffer;
     Peerin::nextBlockSize = 0;
+
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
 
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignRight);

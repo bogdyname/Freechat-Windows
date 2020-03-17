@@ -129,6 +129,15 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
 
     QTextStream stream(pointerOnFile);
 
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
+
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);

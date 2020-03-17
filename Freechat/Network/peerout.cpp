@@ -62,6 +62,15 @@ void Peerout::SlotReadyRead()
     QString buffer;
     Peerout::nextBlockSize = 0;
 
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
+
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignRight);
 
@@ -120,6 +129,15 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->QIODevice::errorString() + "\n"));
 
     // show error in view field
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
+
     const QColor color(156, 0, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
@@ -172,6 +190,15 @@ void Peerout::SlotLanConnecting()
         #endif
 
         // show error in view field
+        QTextCursor tc = Freechat::viewField->textCursor();
+        bool visualNavigation = tc.visualNavigation();
+        tc.setVisualNavigation(true);
+        tc.movePosition(QTextCursor::End);
+        tc.setVisualNavigation(visualNavigation);
+
+        if(Freechat::viewField->textCursor() != tc)
+            Freechat::viewField->setTextCursor(tc);
+
         QColor color(156, 0, 0);
         Freechat::viewField->QTextEdit::setTextColor(color);
         Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
@@ -194,6 +221,15 @@ void Peerout::SlotWanConnecting()
 
 void Peerout::SlotConnected()
 {
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
+
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
@@ -209,6 +245,15 @@ void Peerout::SlotConnected()
 void Peerout::SlotDisconnectPeer()
 {
     Peerout::socket->QAbstractSocket::disconnectFromHost();
+
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
 
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);

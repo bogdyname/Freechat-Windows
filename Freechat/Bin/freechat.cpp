@@ -196,6 +196,13 @@ Freechat::Freechat(QWidget *parent)
     Freechat::viewField->QTextEdit::setFocusPolicy(NoFocus);
     Freechat::viewField->QTextEdit::setReadOnly(true);
 
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+    Freechat::viewField->setTextCursor(tc);
+
     //variables for pointer of function from ConnectionF2F
     Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
     Freechat::value = 0;
@@ -351,6 +358,15 @@ void Freechat::LineForTypeText_returnPressed()
 {
     if(Freechat::lineForTypeText->QLineEdit::text() == "")
         return;
+
+    QTextCursor tc = Freechat::viewField->textCursor();
+    bool visualNavigation = tc.visualNavigation();
+    tc.setVisualNavigation(true);
+    tc.movePosition(QTextCursor::End);
+    tc.setVisualNavigation(visualNavigation);
+
+    if(Freechat::viewField->textCursor() != tc)
+        Freechat::viewField->setTextCursor(tc);
 
     const QTime time = QTime::currentTime();
     const QColor color(255, 215, 0);
