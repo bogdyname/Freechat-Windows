@@ -73,7 +73,7 @@ unsigned short int ConnectionF2F::CheckNetworkAccess()
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.QEventLoop::exec();
 
-    if(reply->bytesAvailable())
+    if(reply->QIODevice::bytesAvailable())
     {
         return 101;
     }

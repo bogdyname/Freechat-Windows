@@ -130,13 +130,13 @@ void Datasave::DataSavingIntoFile(QFile *pointerOnFile)
     QTextStream stream(pointerOnFile);
 
     QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-    if(Freechat::viewField->textCursor() != tc)
-        Freechat::viewField->setTextCursor(tc);
+    if(Freechat::viewField->QTextEdit::textCursor() != tc)
+        Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);

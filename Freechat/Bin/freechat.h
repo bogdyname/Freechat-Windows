@@ -45,7 +45,7 @@ private:
                                  "con -w",    "disconnect",   "save",
                                  "clear -n",   "save -n",    "hide -n",
                                  "show -n",     "hide -a",   "show -a",
-                                 "hide -i",     "show -i", };
+                                 "hide -i",     "show -i" };
 
     //COMMANDS
     /* 1) clear
@@ -84,21 +84,15 @@ private:
        -- show interface
     */
 
-private:
-    //Menagers
-    QPointer<Peerin> server;
-    QPointer<Peerout> stpeerout;
-    QPointer<ConnectionF2F> netmanager;
-    QPointer<Datasave> datamanager;
-    QPointer<Bin> binmanager;
-
     //Global buffer variables
     //Network
-private:
+public:
     QString yourLanIp;
     QString yourMAC;
     QString yourNetmask;
     QString localHostName;
+    QString statusOfNetwork;
+    QString networkdata;
 
 public:
     static QString lanIpOfPeer;
@@ -119,12 +113,14 @@ public:
     //UI
 public:
     static QTextEdit *viewField;
+    static QListWidget *listWithNickName;
+
+private:
     static QLineEdit *commandLine;
     static QLineEdit *lineForTypeText;
     static QLineEdit *writeNickOfPeer;
     static QLineEdit *writeLanIpOfPeer;
     static QLineEdit *writeWanIpOfPeer;
-    static QListWidget *listWithNickName;
 
 private:
     unsigned short int (*checkNetworkConnection)() = nullptr;
@@ -136,23 +132,19 @@ public:
     explicit Freechat(QWidget *parent = nullptr);
     ~Freechat();
 
-private slots:
-    void LineForTypeText_returnPressed();
-    void WriteWanIpOfPeer_returnPressed();
-    void WriteLanIpOfPeer_returnPressed();
-    void WriteNickOfPeer_returnPressed();
-    void CommandLineInterface();
-    void ScrollToEnd();
-    void ServerStillWorking();//Debug code
-
 private:
     void NetworkLanIp();
     void NetworkFullInformation();
     void ConnectionToPeerInLan();
 
-private:
-    QString status;
-    QString networkdata;
+private slots:
+    void ScrollToEnd();
+    void ServerStillWorking();
+    void LineForTypeText_returnPressed();
+    void WriteWanIpOfPeer_returnPressed();
+    void WriteLanIpOfPeer_returnPressed();
+    void WriteNickOfPeer_returnPressed();
+    void CommandLineInterface();
 
 private:
     Ui::Freechat *ui;

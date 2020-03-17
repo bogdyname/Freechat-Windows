@@ -17,7 +17,7 @@ using namespace Qt;
  static Cryptography cryptomanager(Q_UINT64_C(0x0c2ad4a5acb9f012));
 
 Bin::Bin(QObject *parent)
-    : QObject(parent)
+    : QObject::QObject(parent)
 {
     Bin::ReadPeers();
 
@@ -133,18 +133,18 @@ void Bin::DeleteSelectedPeer()
 
 void Bin::SavingPeers()
 {
-    Bin::SavingDataAboutPeer(Bin::listWithNickName, fileForSavingNick);
-    Bin::SavingDataAboutPeer(Bin::listWithLANIpAddress, fileForSavingLANip);
-    Bin::SavingDataAboutPeer(Bin::listWithWANIpAddress, fileForSavingWANip);
+    Bin::SavingDataAboutPeer(Bin::listWithNickName, Bin::fileForSavingNick);
+    Bin::SavingDataAboutPeer(Bin::listWithLANIpAddress, Bin::fileForSavingLANip);
+    Bin::SavingDataAboutPeer(Bin::listWithWANIpAddress, Bin::fileForSavingWANip);
 
     return;
 }
 
 void Bin::ReadPeers()
 {
-    Bin::ReadDataAboutPeer(fileForSavingNick);
-    Bin::ReadDataAboutPeer(Bin::listWithLANIpAddress, fileForSavingLANip);
-    Bin::ReadDataAboutPeer(Bin::listWithWANIpAddress, fileForSavingWANip);
+    Bin::ReadDataAboutPeer(Bin::fileForSavingNick);
+    Bin::ReadDataAboutPeer(Bin::listWithLANIpAddress, Bin::fileForSavingLANip);
+    Bin::ReadDataAboutPeer(Bin::listWithWANIpAddress, Bin::fileForSavingWANip);
 
     return;
 }
