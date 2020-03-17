@@ -14,13 +14,6 @@
  QLineEdit *Freechat::lineForTypeText;
  QListWidget *Freechat::listWithNickName;
 
- //Managers
- static QPointer<Peerin> server;
- static QPointer<Peerout> stpeerout;
- static QPointer<ConnectionF2F> netmanager;
- static QPointer<Datasave> datamanager;
- static QPointer<Bin> binmanager;
-
  //Global variable
  QString Freechat::bufferOfMessages;
 
@@ -107,20 +100,20 @@ Freechat::Freechat(QWidget *parent)
     Freechat::ui->horizontalLayoutForlbAndLineType->QBoxLayout::addWidget(Freechat::lineForTypeText);
 
     //Menagers
-    server = nullptr;
-    stpeerout = nullptr;
-    netmanager = nullptr;
-    datamanager = nullptr;
-    binmanager = nullptr;
+    Freechat::server = nullptr;
+    Freechat::stpeerout = nullptr;
+    Freechat::netmanager = nullptr;
+    Freechat::datamanager = nullptr;
+    Freechat::binmanager = nullptr;
 
     //Network data of peer (LAN data)
     try
     {
-        netmanager = new ConnectionF2F();
-        server = new Peerin();
-        stpeerout = new Peerout();
-        datamanager = new Datasave();
-        binmanager = new Bin();
+        Freechat::netmanager = new ConnectionF2F();
+        Freechat::server = new Peerin();
+        Freechat::stpeerout = new Peerout();
+        Freechat::datamanager = new Datasave();
+        Freechat::binmanager = new Bin();
     }
     catch(std::bad_alloc &exp)
     {
@@ -137,7 +130,7 @@ Freechat::Freechat(QWidget *parent)
         abort();
     }
 
-    netmanager->ConnectionF2F::LanNetwork(
+    Freechat::netmanager->ConnectionF2F::LanNetwork(
                 Freechat::yourLanIp,
                 Freechat::yourMAC,
                 Freechat::yourNetmask,
@@ -262,11 +255,11 @@ Freechat::Freechat(QWidget *parent)
 Freechat::~Freechat()
 {
     delete Freechat::ui;
-    delete netmanager;
-    delete server;
-    delete stpeerout;
-    delete datamanager;
-    delete binmanager;
+    delete Freechat::netmanager;
+    delete Freechat::server;
+    delete Freechat::stpeerout;
+    delete Freechat::datamanager;
+    delete Freechat::binmanager;
 
     return;
 }
@@ -345,7 +338,7 @@ void Freechat::ScrollToEnd()
 
 void Freechat::ServerStillWorking()
 {
-    if(server != nullptr)
+    if(Freechat::server != nullptr)
     {
         #ifndef Q_DEBUG
         qDebug() << "Server still working";
@@ -509,7 +502,7 @@ void Freechat::CommandLineInterface()
                  #endif
 
                  Freechat::ConnectionToPeerInLan();
-                 stpeerout->Peerout::SlotLanConnecting();
+                 Freechat::stpeerout->Peerout::SlotLanConnecting();
         }
         break;
         case 5:
@@ -544,7 +537,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "con -w";
                 #endif
 
-                stpeerout->SlotWanConnecting();
+                Freechat::stpeerout->SlotWanConnecting();
         }
         break;
         case 7:
@@ -553,7 +546,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "disconnect";
                 #endif
 
-                stpeerout->QAbstractSocket::disconnectFromHost();
+                Freechat::stpeerout->QAbstractSocket::disconnectFromHost();
 
                 switch(Freechat::value)
                 {
@@ -564,7 +557,7 @@ void Freechat::CommandLineInterface()
                     break;
                     case 0:
                     {
-                        stpeerout->Peerout::SlotDisconnectPeer();
+                        Freechat::stpeerout->Peerout::SlotDisconnectPeer();
                     }
                     break;
                 }
@@ -576,7 +569,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "save";
                 #endif
 
-                datamanager->Datasave::SavingData();
+                Freechat::datamanager->Datasave::SavingData();
         }
         break;
         case 9:
@@ -585,7 +578,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "clear -n";
                 #endif
 
-                binmanager->Bin::DeleteAllPeer();
+                Freechat::binmanager->Bin::DeleteAllPeer();
         }
         break;
         case 10:
@@ -594,7 +587,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "save -n";
                 #endif
 
-                binmanager->Bin::SavingPeers();
+                Freechat::binmanager->Bin::SavingPeers();
         }
         break;
         case 11:

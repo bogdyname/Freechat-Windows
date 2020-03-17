@@ -86,13 +86,21 @@ private:
 
     //Global buffer variables
     //Network
-public:
+private:
     QString yourLanIp;
     QString yourMAC;
     QString yourNetmask;
     QString localHostName;
     QString statusOfNetwork;
     QString networkdata;
+
+    //Managers
+private:
+    QPointer<Peerin> server;
+    QPointer<Peerout> stpeerout;
+    QPointer<ConnectionF2F> netmanager;
+    QPointer<Datasave> datamanager;
+    QPointer<Bin> binmanager;
 
 public:
     static QString lanIpOfPeer;
