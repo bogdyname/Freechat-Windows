@@ -68,7 +68,12 @@ Peerin::~Peerin()
 
 void Peerin::DisconnectPeer()
 {
-    Peerin::socket->QAbstractSocket::abort();
+    Peerin::socket->QTcpSocket::disconnectFromHost();
+    Freechat::value = 3;
+
+    #ifndef Q_DEBUG
+    qDebug() << "Value already: " << Freechat::value;
+    #endif
 
     QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
     bool visualNavigation = tc.QTextCursor::visualNavigation();
@@ -220,7 +225,7 @@ void Peerin::clearValue()
     qDebug() << "Value was cleared!";
     #endif
 
-    Freechat::value = 0;
+    Freechat::value = 3;
 
     return;
 }
