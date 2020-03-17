@@ -6,7 +6,9 @@
 #include "Data/cryptography.h"
 
 Cryptography::Cryptography():
-    m_key(0), m_compressionMode(CompressionAuto), m_protectionMode(ProtectionChecksum), m_lastError(ErrorNoError)
+    m_key(0), m_compressionMode(Cryptography::CompressionAuto),
+    m_protectionMode(Cryptography::ProtectionChecksum),
+    m_lastError(Cryptography::ErrorNoError)
 {
     qsrand(uint(QDateTime::currentMSecsSinceEpoch() & 0xFFFF));
 
@@ -14,7 +16,9 @@ Cryptography::Cryptography():
 }
 
 Cryptography::Cryptography(quint64 key):
-    m_key(key), m_compressionMode(CompressionAuto), m_protectionMode(ProtectionChecksum), m_lastError(ErrorNoError)
+    m_key(key), m_compressionMode(Cryptography::CompressionAuto),
+    m_protectionMode(Cryptography::ProtectionChecksum),
+    m_lastError(Cryptography::ErrorNoError)
 {
     qsrand(uint(QDateTime::currentMSecsSinceEpoch() & 0xFFFF));
     Cryptography::splitKey();
@@ -67,40 +71,40 @@ QByteArray Cryptography::encryptToByteArray(QByteArray plaintext)
     if (Cryptography::m_keyParts.QVector::isEmpty())
     {
         qWarning() << "No key set.";
-        Cryptography::m_lastError = ErrorNoKeySet;
+        Cryptography::m_lastError = Cryptography::ErrorNoKeySet;
 
         return QByteArray();
     }
 
     QByteArray ba = plaintext;
 
-    CryptoFlags flags = CryptoFlagNone;
-    if (Cryptography::m_compressionMode == CompressionAlways)
+    CryptoFlags flags = Cryptography::CryptoFlagNone;
+    if (Cryptography::m_compressionMode == Cryptography::CompressionAlways)
     {
         ba = qCompress(ba, 9); //maximum compression
-        flags |= CryptoFlagCompression;
+        flags |= Cryptography::CryptoFlagCompression;
     }
-    else if (m_compressionMode == CompressionAuto)
+    else if (Cryptography::m_compressionMode == Cryptography::CompressionAuto)
     {
         QByteArray compressed = qCompress(ba, 9);
         if (compressed.QByteArray::count() < ba.QByteArray::count())
         {
             ba = compressed;
-            flags |= CryptoFlagCompression;
+            flags |= Cryptography::CryptoFlagCompression;
         }
     }
 
     QByteArray integrityProtection;
 
-    if (Cryptography::m_protectionMode == ProtectionChecksum)
+    if (Cryptography::m_protectionMode == Cryptography::ProtectionChecksum)
     {
-        flags |= CryptoFlagChecksum;
+        flags |= Cryptography::CryptoFlagChecksum;
         QDataStream stream(&integrityProtection, QIODevice::WriteOnly);
         stream << qChecksum(ba.QByteArray::constData(), ba.QByteArray::length());
     }
     else if (Cryptography::m_protectionMode == ProtectionHash)
     {
-        flags |= CryptoFlagHash;
+        flags |= Cryptography::CryptoFlagHash;
         QCryptographicHash hash(QCryptographicHash::Sha1);
         hash.QCryptographicHash::addData(ba);
 
@@ -128,7 +132,7 @@ QByteArray Cryptography::encryptToByteArray(QByteArray plaintext)
     resultArray.QByteArray::append(char(flags)); //encryption flags
     resultArray.QByteArray::append(ba);
 
-    m_lastError = ErrorNoError;
+    m_lastError = Cryptography::ErrorNoError;
 
     return resultArray;
 }
@@ -180,21 +184,21 @@ QByteArray Cryptography::decryptToByteArray(QByteArray cypher)
     if (Cryptography::m_keyParts.QVector::isEmpty())
     {
         qWarning() << "No key set.";
-        Cryptography::m_lastError = ErrorNoKeySet;
+        Cryptography::m_lastError = Cryptography::ErrorNoKeySet;
 
         return QByteArray();
     }
 
     QByteArray ba = cypher;
 
-    if(cypher.count() < 3)
+    if(cypher.QByteArray::count() < 3)
         return QByteArray();
 
     char version = ba.QByteArray::at(0);
 
     if (version != 3)
     {
-        Cryptography::m_lastError = ErrorUnknownVersion;
+        Cryptography::m_lastError = Cryptography::ErrorUnknownVersion;
         qWarning() << "Invalid version or not a cyphertext.";
 
         return QByteArray();
@@ -218,11 +222,11 @@ QByteArray Cryptography::decryptToByteArray(QByteArray cypher)
     ba = ba.QByteArray::mid(1); //chop off the random number at the start
 
     bool integrityOk(true);
-    if (flags.QFlags::testFlag(CryptoFlagChecksum))
+    if (flags.QFlags::testFlag(Cryptography::CryptoFlagChecksum))
     {
         if (ba.QByteArray::length() < 2)
         {
-            Cryptography::m_lastError = ErrorIntegrityFailed;
+            Cryptography::m_lastError = Cryptography::ErrorIntegrityFailed;
 
             return QByteArray();
         }
@@ -237,17 +241,17 @@ QByteArray Cryptography::decryptToByteArray(QByteArray cypher)
         quint16 checksum = qChecksum(ba.QByteArray::constData(), ba.QByteArray::length());
         integrityOk = (checksum == storedChecksum);
     }
-    else if (flags.QFlags::testFlag(CryptoFlagHash))
+    else if (flags.QFlags::testFlag(Cryptography::CryptoFlagHash))
     {
         if (ba.QByteArray::length() < 20)
         {
-            Cryptography::m_lastError = ErrorIntegrityFailed;
+            Cryptography::m_lastError = Cryptography::ErrorIntegrityFailed;
 
             return QByteArray();
         }
 
         QByteArray storedHash = ba.QByteArray::left(20);
-        ba = ba.mid(20);
+        ba = ba.QByteArray::mid(20);
         QCryptographicHash hash(QCryptographicHash::Sha1);
         hash.QCryptographicHash::addData(ba);
         integrityOk = (hash.QCryptographicHash::result() == storedHash);
@@ -255,15 +259,15 @@ QByteArray Cryptography::decryptToByteArray(QByteArray cypher)
 
     if (!integrityOk)
     {
-        Cryptography::m_lastError = ErrorIntegrityFailed;
+        Cryptography::m_lastError = Cryptography::ErrorIntegrityFailed;
 
         return QByteArray();
     }
 
-    if (flags.QFlags::testFlag(CryptoFlagCompression))
+    if (flags.QFlags::testFlag(Cryptography::CryptoFlagCompression))
         ba = qUncompress(ba);
 
-    Cryptography::m_lastError = ErrorNoError;
+    Cryptography::m_lastError = Cryptography::ErrorNoError;
 
     return ba;
 }

@@ -31,6 +31,9 @@ public slots:
     void SlotWanConnecting();
     void SlotSendToServer();
 
+private:
+    void SendToServer(const QString &message);
+
 private slots:
     void SlotReadyRead();
     void SlotConnected();

@@ -14,6 +14,13 @@
  QLineEdit *Freechat::lineForTypeText;
  QListWidget *Freechat::listWithNickName;
 
+ //Managers
+ static QPointer<Peerin> server;
+ static QPointer<Peerout> stpeerout;
+ static QPointer<ConnectionF2F> netmanager;
+ static QPointer<Datasave> datamanager;
+ static QPointer<Bin> binmanager;
+
  //Global variable
  QString Freechat::bufferOfMessages;
 
@@ -31,12 +38,32 @@
  QString Freechat::wanIpOfPeerBinmanager;
 
 Freechat::Freechat(QWidget *parent)
-    : QDialog(parent),
+    : QDialog::QDialog(parent),
       ui(new Ui::Freechat)
 {
-    ui->setupUi(this);
+    Freechat::ui->setupUi(this);
 
     QWidget::setWindowFlags(Qt::MSWindowsOwnDC);
+
+    //variables for pointer of function from ConnectionF2F
+    Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
+    Freechat::value = 0;
+
+    //Global variable
+    Freechat::bufferOfMessages = "";
+    //CLI
+    Freechat::command = "";
+    //Network
+    Freechat::yourLanIp = "";
+    Freechat::yourMAC = "";
+    Freechat::yourNetmask = "";
+    Freechat::localHostName = "";
+    Freechat::lanIpOfPeer = "";
+    Freechat::wanIpOfPeer = "";
+    //Bin
+    Freechat::nickNameOfPeer = "";
+    Freechat::lanIpOfPeerBinmanager = "";
+    Freechat::wanIpOfPeerBinmanager = "";
 
     //new UI
     try
@@ -65,35 +92,35 @@ Freechat::Freechat(QWidget *parent)
     }
 
     //first layer
-    ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeNickOfPeer);
+    Freechat::ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeNickOfPeer);
     //ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeWanIpOfPeer); //TTS cos network through NAT adn WAN IP not done
-    ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeLanIpOfPeer);
+    Freechat::ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::writeLanIpOfPeer);
 
     //second layer
-    ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::commandLine);
+    Freechat::ui->verticalLayoutForLineEdit->QBoxLayout::addWidget(Freechat::commandLine);
 
     //third layer
-    ui->horizontalLayoutForTextEndNicks->QBoxLayout::addWidget(Freechat::listWithNickName);
-    ui->horizontalLayoutForTextEndNicks->QBoxLayout::addWidget(Freechat::viewField);
+    Freechat::ui->horizontalLayoutForTextEndNicks->QBoxLayout::addWidget(Freechat::listWithNickName);
+    Freechat::ui->horizontalLayoutForTextEndNicks->QBoxLayout::addWidget(Freechat::viewField);
 
     //fourth layer
-    ui->horizontalLayoutForlbAndLineType->QBoxLayout::addWidget(Freechat::lineForTypeText);
+    Freechat::ui->horizontalLayoutForlbAndLineType->QBoxLayout::addWidget(Freechat::lineForTypeText);
 
     //Menagers
-    Freechat::server = nullptr;
-    Freechat::stpeerout = nullptr;
-    Freechat::netmanager = nullptr;
-    Freechat::datamanager = nullptr;
-    Freechat::binmanager = nullptr;
+    server = nullptr;
+    stpeerout = nullptr;
+    netmanager = nullptr;
+    datamanager = nullptr;
+    binmanager = nullptr;
 
     //Network data of peer (LAN data)
     try
     {
-        Freechat::netmanager = new ConnectionF2F();
-        Freechat::server = new Peerin();
-        Freechat::stpeerout = new Peerout();
-        Freechat::datamanager = new Datasave();
-        Freechat::binmanager = new Bin();
+        netmanager = new ConnectionF2F();
+        server = new Peerin();
+        stpeerout = new Peerout();
+        datamanager = new Datasave();
+        binmanager = new Bin();
     }
     catch(std::bad_alloc &exp)
     {
@@ -110,10 +137,11 @@ Freechat::Freechat(QWidget *parent)
         abort();
     }
 
-    Freechat::netmanager->LanNetwork(Freechat::yourLanIp,
-                           Freechat::yourMAC,
-                           Freechat::yourNetmask,
-                           Freechat::localHostName);
+    netmanager->ConnectionF2F::LanNetwork(
+                Freechat::yourLanIp,
+                Freechat::yourMAC,
+                Freechat::yourNetmask,
+                Freechat::localHostName);
 
     //For scrollbar
     Freechat::scrollbarAtBottom = true;
@@ -191,37 +219,17 @@ Freechat::Freechat(QWidget *parent)
     Freechat::writeWanIpOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
     Freechat::writeLanIpOfPeer->QLineEdit::setFocusPolicy(WheelFocus);
     Freechat::lineForTypeText->QLineEdit::setFocusPolicy(WheelFocus);
-    Freechat::viewField->setPlaceholderText("Use command 'man'");
-    Freechat::viewField->setAutoFormatting(QTextEdit::AutoAll);
+    Freechat::viewField->QTextEdit::setPlaceholderText("Use command 'man'");
+    Freechat::viewField->QTextEdit::setAutoFormatting(QTextEdit::AutoAll);
     Freechat::viewField->QTextEdit::setFocusPolicy(NoFocus);
     Freechat::viewField->QTextEdit::setReadOnly(true);
 
-    QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
-    Freechat::viewField->setTextCursor(tc);
-
-    //variables for pointer of function from ConnectionF2F
-    Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
-    Freechat::value = 0;
-
-    //Global variable
-    Freechat::bufferOfMessages = "";
-    //CLI
-    Freechat::command = "";
-    //Network
-    Freechat::yourLanIp = "";
-    Freechat::yourMAC = "";
-    Freechat::yourNetmask = "";
-    Freechat::localHostName = "";
-    Freechat::lanIpOfPeer = "";
-    Freechat::wanIpOfPeer = "";
-    //Bin
-    Freechat::nickNameOfPeer = "";
-    Freechat::lanIpOfPeerBinmanager = "";
-    Freechat::wanIpOfPeerBinmanager = "";
+    QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
+    Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     //close all QLineEdit if network shutdown
     switch((*Freechat::checkNetworkConnection)())
@@ -235,8 +243,8 @@ Freechat::Freechat(QWidget *parent)
         break;
         case 404:
         {
-            QMessageBox::critical(Freechat::commandLine, tr("Network is down"),
-                            tr("<h3>Check your network connection.</h3>"), "ok");
+            QMessageBox::critical(Freechat::commandLine, Freechat::tr("Network is down"),
+                            Freechat::tr("<h3>Check your network connection.</h3>"), "ok");
 
             //block all field without network access
             Freechat::writeNickOfPeer->QLineEdit::setReadOnly(true);
@@ -254,40 +262,11 @@ Freechat::Freechat(QWidget *parent)
 Freechat::~Freechat()
 {
     delete Freechat::ui;
-    delete Freechat::netmanager;
-    delete Freechat::server;
-    delete Freechat::stpeerout;
-    delete Freechat::datamanager;
-    delete Freechat::binmanager;
-
-    return;
-}
-
-//check server
-void Freechat::ServerStillWorking()
-{
-    if(Freechat::server != nullptr)
-    {
-        #ifndef Q_DEBUG
-        qDebug() << "Server still working";
-        #endif
-    }
-    else
-    {
-        #ifndef Q_DEBUG
-        qCritical() << "Server stoped!" ;
-        #endif
-    }
-
-    return;
-}
-
-void Freechat::ScrollToEnd()
-{
-    if(Freechat::scrollbarAtBottom)
-        Freechat::viewField->QTextEdit::ensureCursorVisible();
-    else
-        Freechat::viewField->QTextEdit::verticalScrollBar()->QAbstractSlider::setValue(Freechat::scrollbarPrevValue);
+    delete netmanager;
+    delete server;
+    delete stpeerout;
+    delete datamanager;
+    delete binmanager;
 
     return;
 }
@@ -298,15 +277,15 @@ void Freechat::NetworkLanIp()
     {
         case 101:
         {
-            Freechat::status = QString("<h3>Your LAN IP address: %1</h3>").QString::arg(Freechat::yourLanIp);
-            QMessageBox::information(Freechat::commandLine, tr("Network Info"),
-                             Freechat::status, "ok");
+            Freechat::statusOfNetwork = QString("<h3>Your LAN IP address: %1</h3>").QString::arg(Freechat::yourLanIp);
+            QMessageBox::information(Freechat::commandLine, Freechat::tr("Network Info"),
+                             Freechat::statusOfNetwork, "ok");
         }
         break;
         case 404:
         {
-            QMessageBox::critical(Freechat::commandLine, tr("Error"),
-                             tr("<h3>Check your network connection.</h3>"), "ok");
+            QMessageBox::critical(Freechat::commandLine, Freechat::tr("Error"),
+                             Freechat::tr("<h3>Check your network connection.</h3>"), "ok");
         }
         break;
     }
@@ -323,14 +302,14 @@ void Freechat::NetworkFullInformation()
             Freechat::networkdata = QString("<h3><p>IP = %1</p><p>MAC = %2</p><p>Netmask = %3</p><p>localhost = %4</p></h3>")
             .QString::arg(Freechat::yourLanIp).QString::arg(Freechat::yourMAC).QString::arg(Freechat::yourNetmask).QString::arg(Freechat::localHostName);
 
-            QMessageBox::information(Freechat::commandLine, tr("Network data"),
+            QMessageBox::information(Freechat::commandLine, Freechat::tr("Network data"),
                             Freechat::networkdata, "ok");
         }
         break;
         case 404:
         {
-            QMessageBox::critical(Freechat::commandLine, tr("Error"),
-                             tr("<h3><p>Check your network connection.</p></h3>"), "ok");
+            QMessageBox::critical(Freechat::commandLine, Freechat::tr("Error"),
+                             Freechat::tr("<h3><p>Check your network connection.</p></h3>"), "ok");
         }
         break;
     }
@@ -342,13 +321,41 @@ void Freechat::ConnectionToPeerInLan()
 {
     if(Freechat::lanIpOfPeer != "")
     {
-        QMessageBox::information(Freechat::commandLine, tr("Connecting"),
-                         tr("<h3><p>Connecting to peer.</h3>"), "ok");
+        QMessageBox::information(Freechat::commandLine, Freechat::tr("Connecting"),
+                         Freechat::tr("<h3><p>Connecting to peer.</h3>"), "ok");
     }
     else
     {
-        QMessageBox::critical(Freechat::commandLine, tr("Connecting error"),
-                         tr("<h3>Check IP of peer.</h3>"), "ok");
+        QMessageBox::critical(Freechat::commandLine, Freechat::tr("Connecting error"),
+                         Freechat::tr("<h3>Check IP of peer.</h3>"), "ok");
+    }
+
+    return;
+}
+
+void Freechat::ScrollToEnd()
+{
+    if(Freechat::scrollbarAtBottom)
+        Freechat::viewField->QTextEdit::ensureCursorVisible();
+    else
+        Freechat::viewField->QTextEdit::verticalScrollBar()->QAbstractSlider::setValue(Freechat::scrollbarPrevValue);
+
+    return;
+}
+
+void Freechat::ServerStillWorking()
+{
+    if(server != nullptr)
+    {
+        #ifndef Q_DEBUG
+        qDebug() << "Server still working";
+        #endif
+    }
+    else
+    {
+        #ifndef Q_DEBUG
+        qCritical() << "Server stoped!" ;
+        #endif
     }
 
     return;
@@ -359,14 +366,14 @@ void Freechat::LineForTypeText_returnPressed()
     if(Freechat::lineForTypeText->QLineEdit::text() == "")
         return;
 
-    QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
+    QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-    if(Freechat::viewField->textCursor() != tc)
-        Freechat::viewField->setTextCursor(tc);
+    if(Freechat::viewField->QTextEdit::textCursor() != tc)
+        Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     const QTime time = QTime::currentTime();
     const QColor color(255, 215, 0);
@@ -502,7 +509,7 @@ void Freechat::CommandLineInterface()
                  #endif
 
                  Freechat::ConnectionToPeerInLan();
-                 Freechat::stpeerout->Peerout::SlotLanConnecting();
+                 stpeerout->Peerout::SlotLanConnecting();
         }
         break;
         case 5:
@@ -511,7 +518,7 @@ void Freechat::CommandLineInterface()
                  qDebug() << "man";
                  #endif
 
-                 QMessageBox::information(Freechat::commandLine, tr("Connecting"),
+                 QMessageBox::information(Freechat::commandLine, Freechat::tr("Connecting"),
                  tr("<h6><p>ifconfig = show all your network data</p>"
                  "<p>clear = clear all data in view field</p>"
                  "<p>con -l = connecting via LAN network</p>"
@@ -537,7 +544,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "con -w";
                 #endif
 
-                /*write hear method for connecting via WAN network*/
+                stpeerout->SlotWanConnecting();
         }
         break;
         case 7:
@@ -546,18 +553,18 @@ void Freechat::CommandLineInterface()
                 qDebug() << "disconnect";
                 #endif
 
-                Freechat::stpeerout->QAbstractSocket::disconnectFromHost();
+                stpeerout->QAbstractSocket::disconnectFromHost();
 
                 switch(Freechat::value)
                 {
                     case 1:
                     {
-                        Freechat::server->Peerin::DisconnectPeer();
+                        server->Peerin::DisconnectPeer();
                     }
                     break;
                     case 0:
                     {
-                        Freechat::stpeerout->Peerout::SlotDisconnectPeer();
+                        stpeerout->Peerout::SlotDisconnectPeer();
                     }
                     break;
                 }
@@ -569,7 +576,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "save";
                 #endif
 
-                Freechat::datamanager->Datasave::SavingData();
+                datamanager->Datasave::SavingData();
         }
         break;
         case 9:
@@ -578,7 +585,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "clear -n";
                 #endif
 
-                Freechat::binmanager->Bin::DeleteAllPeer();
+                binmanager->Bin::DeleteAllPeer();
         }
         break;
         case 10:
@@ -587,7 +594,7 @@ void Freechat::CommandLineInterface()
                 qDebug() << "save -n";
                 #endif
 
-                Freechat::binmanager->Bin::SavingPeers();
+                binmanager->Bin::SavingPeers();
         }
         break;
         case 11:
@@ -656,8 +663,8 @@ void Freechat::CommandLineInterface()
         break;
         default:
         {
-                 QMessageBox::critical(Freechat::commandLine, tr("Command error"),
-                                tr("<h3>Command not found</h3>"), "ok");
+                 QMessageBox::critical(Freechat::commandLine, Freechat::tr("Command error"),
+                                Freechat::tr("<h3>Command not found</h3>"), "ok");
         }
         break;
     }

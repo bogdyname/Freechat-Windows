@@ -39,7 +39,7 @@ public slots:
 
 private slots:
     virtual void SlotNewConnection();
-    void SendResponseToClient(QString &message);
+    void SendResponseToClient(const QString &message);
     void SlotReadClient();
     void clearValue();
 

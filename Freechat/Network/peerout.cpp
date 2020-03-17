@@ -53,6 +53,18 @@ Peerout::~Peerout()
     delete Peerout::socket;
 }
 
+void Peerout::SlotSendToServer()
+{
+    Peerout::SendToServer(Freechat::bufferOfMessages);
+    Freechat::bufferOfMessages.QString::clear();
+
+    #ifndef Q_DEBUG
+    qDebug() << "Send data to server: " << Freechat::bufferOfMessages;
+    #endif
+
+    return;
+}
+
 void Peerout::SlotReadyRead()
 {
     QDataStream stream(Peerout::socket);
@@ -62,14 +74,14 @@ void Peerout::SlotReadyRead()
     QString buffer;
     Peerout::nextBlockSize = 0;
 
-    QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
+    QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-    if(Freechat::viewField->textCursor() != tc)
-        Freechat::viewField->setTextCursor(tc);
+    if(Freechat::viewField->QTextEdit::textCursor() != tc)
+        Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     Freechat::viewField->QTextEdit::setTextColor(color);
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignRight);
@@ -129,14 +141,14 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
                          QString(socket->QIODevice::errorString() + "\n"));
 
     // show error in view field
-    QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
+    QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-    if(Freechat::viewField->textCursor() != tc)
-        Freechat::viewField->setTextCursor(tc);
+    if(Freechat::viewField->QTextEdit::textCursor() != tc)
+        Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     const QColor color(156, 0, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
@@ -146,10 +158,10 @@ void Peerout::SlotError(QAbstractSocket::SocketError err)
     return;
 }
 
-void Peerout::SlotSendToServer()
+void Peerout::SendToServer(const QString &message)
 {
     #ifndef Q_DEBUG
-    qDebug() << "Sending data to server from peerout.cpp: " << Freechat::bufferOfMessages;
+    qDebug() << "Sending data to server from peerout.cpp: " << message;
     #endif
 
     const QString cryptmessage = Peerout::cryptomanagerOfPeerout.Cryptography::encryptToString(Freechat::bufferOfMessages);
@@ -162,8 +174,6 @@ void Peerout::SlotSendToServer()
     sendStream << (qint64)(block.QByteArray::size() - sizeof(932838457459459));
     Peerout::socket->QIODevice::write(block);
     Peerout::socket->QAbstractSocket::flush();
-
-    Freechat::bufferOfMessages.QString::clear();
 
     return;
 }
@@ -190,14 +200,14 @@ void Peerout::SlotLanConnecting()
         #endif
 
         // show error in view field
-        QTextCursor tc = Freechat::viewField->textCursor();
-        bool visualNavigation = tc.visualNavigation();
-        tc.setVisualNavigation(true);
-        tc.movePosition(QTextCursor::End);
-        tc.setVisualNavigation(visualNavigation);
+        QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+        bool visualNavigation = tc.QTextCursor::visualNavigation();
+        tc.QTextCursor::setVisualNavigation(true);
+        tc.QTextCursor::movePosition(QTextCursor::End);
+        tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-        if(Freechat::viewField->textCursor() != tc)
-            Freechat::viewField->setTextCursor(tc);
+        if(Freechat::viewField->QTextEdit::textCursor() != tc)
+            Freechat::viewField->QTextEdit::setTextCursor(tc);
 
         QColor color(156, 0, 0);
         Freechat::viewField->QTextEdit::setTextColor(color);
@@ -221,14 +231,14 @@ void Peerout::SlotWanConnecting()
 
 void Peerout::SlotConnected()
 {
-    QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
+    QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-    if(Freechat::viewField->textCursor() != tc)
-        Freechat::viewField->setTextCursor(tc);
+    if(Freechat::viewField->QTextEdit::textCursor() != tc)
+        Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
@@ -246,14 +256,14 @@ void Peerout::SlotDisconnectPeer()
 {
     Peerout::socket->QAbstractSocket::disconnectFromHost();
 
-    QTextCursor tc = Freechat::viewField->textCursor();
-    bool visualNavigation = tc.visualNavigation();
-    tc.setVisualNavigation(true);
-    tc.movePosition(QTextCursor::End);
-    tc.setVisualNavigation(visualNavigation);
+    QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
+    bool visualNavigation = tc.QTextCursor::visualNavigation();
+    tc.QTextCursor::setVisualNavigation(true);
+    tc.QTextCursor::movePosition(QTextCursor::End);
+    tc.QTextCursor::setVisualNavigation(visualNavigation);
 
-    if(Freechat::viewField->textCursor() != tc)
-        Freechat::viewField->setTextCursor(tc);
+    if(Freechat::viewField->QTextEdit::textCursor() != tc)
+        Freechat::viewField->QTextEdit::setTextCursor(tc);
 
     const QColor color(255, 153, 0);
     Freechat::viewField->QTextEdit::setTextColor(color);
