@@ -192,6 +192,12 @@ void Peerout::SlotLanConnecting()
         #ifndef Q_DEBUG
         qDebug() << "Connected.";
         #endif
+
+        Freechat::value = 0;
+
+        #ifndef Q_DEBUG
+        qDebug() << "Value already: " << Freechat::value;
+        #endif
     }
     else
     {
@@ -214,8 +220,6 @@ void Peerout::SlotLanConnecting()
         Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
         Freechat::viewField->QTextEdit::insertPlainText("Error: can not connecting to peer, check IP.\n");
     }
-
-    Freechat::lanIpOfPeer.QString::clear();
 
     return;
 }
@@ -245,6 +249,12 @@ void Peerout::SlotConnected()
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
     Freechat::viewField->QTextEdit::insertPlainText("Connected to peerin\n");
 
+    Freechat::value = 0;
+
+    #ifndef Q_DEBUG
+    qDebug() << "Value already: " << Freechat::value;
+    #endif
+
     #ifndef Q_DEBUG
     qDebug() << "Connected.";
     #endif
@@ -254,7 +264,12 @@ void Peerout::SlotConnected()
 
 void Peerout::SlotDisconnectPeer()
 {
-    Peerout::socket->QAbstractSocket::disconnectFromHost();
+    Peerout::socket->QTcpSocket::abort();
+    Freechat::value = 3;
+
+    #ifndef Q_DEBUG
+    qDebug() << "Value was cleared!";
+    #endif
 
     QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
     bool visualNavigation = tc.QTextCursor::visualNavigation();

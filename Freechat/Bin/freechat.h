@@ -105,7 +105,10 @@ private:
 public:
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
-    static unsigned short int value; //for network code (about server)
+    static unsigned short int value;
+    //3 = non
+    //1 = server is action
+    //2 = client is action
 
     //CLI
     static QString command;

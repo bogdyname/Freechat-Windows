@@ -40,7 +40,7 @@ Freechat::Freechat(QWidget *parent)
 
     //variables for pointer of function from ConnectionF2F
     Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
-    Freechat::value = 0;
+    Freechat::value = 3;
 
     //Global variable
     Freechat::bufferOfMessages = "";
@@ -379,7 +379,7 @@ void Freechat::LineForTypeText_returnPressed()
     {
         case 1:
         {
-            QObject::connect(Freechat::lineForTypeText, SIGNAL(editingFinished()), server, SLOT(SendMessages()));
+            Freechat::server->SendMessages();
 
             #ifndef Q_DEBUG
             qDebug() << "Send this data to client: " << Freechat::bufferOfMessages;
@@ -388,13 +388,14 @@ void Freechat::LineForTypeText_returnPressed()
         break;
         case 0:
         {
-            QObject::connect(Freechat::lineForTypeText, SIGNAL(editingFinished()), stpeerout, SLOT(SlotSendToServer()));
+            Freechat::stpeerout->SlotSendToServer();
 
             #ifndef Q_DEBUG
             qDebug() << "Send this data to server: " << Freechat::bufferOfMessages;
             #endif
         }
         break;
+        default: return;
     }
 
     return;
