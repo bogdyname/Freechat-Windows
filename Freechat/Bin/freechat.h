@@ -32,7 +32,7 @@ using namespace Qt;
 class Freechat : public QDialog, private Ui::Freechat
 {
     Q_OBJECT
-    Q_CLASSINFO("Version", "0.5")
+    Q_CLASSINFO("Version", "1.0")
 
     //COLORS
     //System out color  | Errors color    | Peerin data       | Peerout data

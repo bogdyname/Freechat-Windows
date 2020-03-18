@@ -22,7 +22,7 @@ class Peerin;
 class ConnectionF2F : public QTcpSocket
 {
     Q_OBJECT
-    Q_CLASSINFO("Version", "0.5")
+    Q_CLASSINFO("Version", "1.0")
 
 public:
     explicit ConnectionF2F(QObject *parent = nullptr);
