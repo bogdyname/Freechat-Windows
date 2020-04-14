@@ -438,6 +438,17 @@ void Freechat::WriteNickOfPeer_returnPressed()
 
     Freechat::nickNameOfPeer.QString::clear();
     Freechat::nickNameOfPeer += Freechat::writeNickOfPeer->QLineEdit::text();
+
+    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
+    {
+          if(Freechat::nickNameOfPeer == Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData())
+          {
+              QMessageBox::critical(Freechat::listWithNickName, Freechat::tr("Error"),
+                             Freechat::tr("<h3>Nick name is exists</h3>"), "ok");
+              return std::cout <<"\nERROR\n", void();
+          }
+    }
+
     Freechat::listWithNickName->QListWidget::addItem(Freechat::writeNickOfPeer->QLineEdit::text());
 
     #ifndef Q_DEBUG

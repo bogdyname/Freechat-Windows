@@ -71,6 +71,12 @@ void Bin::AddPeerNick()
     if(Freechat::nickNameOfPeer == "")
         return;
 
+    for (unsigned short row = 0; row < Bin::listWithNickName.QList::size(); ++row)
+    {
+          if(Freechat::nickNameOfPeer == Bin::listWithNickName.QList::at(row).QString::toLocal8Bit().QByteArray::constData())
+              return std::cout <<"\nERROR\n", void();
+    }
+
     Bin::WriteElementsInList(Bin::listWithNickName, Freechat::nickNameOfPeer);
     Freechat::nickNameOfPeer.QString::clear();
 
