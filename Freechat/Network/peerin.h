@@ -36,6 +36,8 @@ public:
 public slots:
     void DisconnectPeer();
     void SendMessages();
+    void CloseOwnServerSlot();
+    void ResumeServerSlot();
 
 private slots:
     virtual void SlotNewConnection();

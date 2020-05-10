@@ -4,6 +4,7 @@
 */
 
 #include "Bin/freechat.h"
+#include "Network/peerout.h"
 
  //UI
  QTextEdit *Freechat::viewField;
@@ -165,6 +166,10 @@ Freechat::Freechat(QWidget *parent)
     QTimer *timerOfBinsaving = new QTimer;
     timerOfBinsaving->QTimer::setInterval(30000);
     timerOfBinsaving->QTimer::start();
+
+    //Network
+    QObject::connect(Freechat::stpeerout, SIGNAL(CloseOwnServerSignal()), Freechat::server, SLOT(CloseOwnServerSlot()));
+    QObject::connect(Freechat::stpeerout, SIGNAL(ResumeServerSignal()), Freechat::server, SLOT(ResumeServerSlot()));
 
     //UI connection
     QObject::connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(LineForTypeText_returnPressed()));
