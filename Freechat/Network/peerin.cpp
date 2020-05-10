@@ -104,6 +104,28 @@ void Peerin::SendMessages()
     return;
 }
 
+void Peerin::CloseOwnServerSlot()
+{
+    Peerin::server->QTcpServer::close();
+
+    #ifndef Q_DEBUG
+    qDebug() << "Server is close!";
+    #endif
+
+    return;
+}
+
+void Peerin::ResumeServerSlot()
+{
+    Peerin::server->QTcpServer::resumeAccepting();
+
+    #ifndef Q_DEBUG
+    qDebug() << "Server is resume!";
+    #endif
+
+    return;
+}
+
 void Peerin::SlotNewConnection()
 {
     Peerin::socket = Peerin::server->QTcpServer::nextPendingConnection();

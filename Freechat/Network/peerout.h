@@ -25,6 +25,10 @@ public:
     explicit Peerout();
     ~Peerout();
 
+signals:
+    void CloseOwnServerSignal();
+    void ResumeServerSignal();
+
 public slots:
     void SlotDisconnectPeer();
     void SlotLanConnecting();

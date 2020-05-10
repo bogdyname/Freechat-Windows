@@ -194,6 +194,7 @@ void Peerout::SlotLanConnecting()
         #endif
 
         Freechat::value = 0;
+        emit Peerout::CloseOwnServerSignal();
 
         #ifndef Q_DEBUG
         qDebug() << "Value already: " << Freechat::value;
@@ -266,6 +267,7 @@ void Peerout::SlotDisconnectPeer()
 {
     Peerout::socket->QTcpSocket::abort();
     Freechat::value = 3;
+    emit Peerout::ResumeServerSignal();
 
     #ifndef Q_DEBUG
     qDebug() << "Value was cleared!";
