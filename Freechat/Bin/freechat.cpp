@@ -518,8 +518,22 @@ void Freechat::CommandLineInterface()
                  qDebug() << "con -l";
                  #endif
 
-                 Freechat::ConnectionToPeerInLan();
-                 Freechat::stpeerout->Peerout::SlotLanConnecting();
+                 switch(Freechat::value)
+                 {
+                     case 1:
+                     {
+                        QMessageBox::critical(Freechat::commandLine, Freechat::tr("Connection error"),
+                                        Freechat::tr("<h3>You can't connect while connection in progress</h3>"), "ok");
+                     }
+                     break;
+                     case 0:
+                     {
+                         Freechat::ConnectionToPeerInLan();
+                         Freechat::stpeerout->Peerout::SlotLanConnecting();
+                     }
+                     break;
+                     default: return;
+                 }
         }
         break;
         case 5:
