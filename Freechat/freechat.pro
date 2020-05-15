@@ -11,6 +11,8 @@ TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+RC_ICONS = icon.ico
+
 CONFIG += c++11
 CONFIG += c++14
 CONFIG += c++17

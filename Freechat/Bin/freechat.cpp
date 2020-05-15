@@ -41,7 +41,7 @@ Freechat::Freechat(QWidget *parent)
 
     //variables for pointer of function from ConnectionF2F
     Freechat::checkNetworkConnection = ConnectionF2F::CheckNetworkAccess;
-    Freechat::value = 3;
+    Freechat::value = 2; //client
 
     //Global variable
     Freechat::bufferOfMessages = "";
@@ -169,7 +169,6 @@ Freechat::Freechat(QWidget *parent)
 
     //Network
     QObject::connect(Freechat::stpeerout, SIGNAL(CloseOwnServerSignal()), Freechat::server, SLOT(CloseOwnServerSlot()));
-    QObject::connect(Freechat::stpeerout, SIGNAL(ResumeServerSignal()), Freechat::server, SLOT(ResumeServerSlot()));
 
     //UI connection
     QObject::connect(Freechat::lineForTypeText, SIGNAL(returnPressed()), this, SLOT(LineForTypeText_returnPressed()));
@@ -400,7 +399,7 @@ void Freechat::LineForTypeText_returnPressed()
             #endif
         }
         break;
-        default: return;
+        default: Freechat::bufferOfMessages.QString::clear();
     }
 
     return;
@@ -520,19 +519,23 @@ void Freechat::CommandLineInterface()
 
                  switch(Freechat::value)
                  {
-                     case 1:
+                     case 1: //1 = server is action
                      {
                         QMessageBox::critical(Freechat::commandLine, Freechat::tr("Connection error"),
                                         Freechat::tr("<h3>You can't connect while connection in progress</h3>"), "ok");
                      }
                      break;
-                     case 0:
+                     case 0: //0 = client is action
                      {
                          Freechat::ConnectionToPeerInLan();
                          Freechat::stpeerout->Peerout::SlotLanConnecting();
                      }
                      break;
-                     default: return;
+                     case 2: //2 = default
+                     {
+                        Freechat::ConnectionToPeerInLan();
+                        Freechat::stpeerout->Peerout::SlotLanConnecting();
+                     }
                  }
         }
         break;
@@ -577,18 +580,19 @@ void Freechat::CommandLineInterface()
                 qDebug() << "disconnect";
                 #endif
 
-                Freechat::stpeerout->QAbstractSocket::disconnectFromHost();
+                //Freechat::stpeerout->QAbstractSocket::disconnectFromHost();
 
                 switch(Freechat::value)
                 {
-                    case 1:
+                    case 1: //1 = server is action
                     {
-                        server->Peerin::DisconnectPeer();
+                        Freechat::server->Peerin::DisconnectPeer();
                     }
                     break;
-                    case 0:
+                    case 0: //0 = client is action
                     {
                         Freechat::stpeerout->Peerout::SlotDisconnectPeer();
+                        Freechat::server->Peerin::ResumeServerSlot();
                     }
                     break;
                 }
