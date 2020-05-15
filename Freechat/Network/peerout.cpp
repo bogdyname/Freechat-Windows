@@ -193,7 +193,7 @@ void Peerout::SlotLanConnecting()
         qDebug() << "Connected.";
         #endif
 
-        Freechat::value = 0;
+        Freechat::value = 0; //0 = client is action
         emit Peerout::CloseOwnServerSignal();
 
         #ifndef Q_DEBUG
@@ -250,7 +250,7 @@ void Peerout::SlotConnected()
     Freechat::viewField->QTextEdit::setAlignment(Qt::AlignCenter);
     Freechat::viewField->QTextEdit::insertPlainText("Connected to peerin\n");
 
-    Freechat::value = 0;
+    Freechat::value = 0; //0 = client is action
 
     #ifndef Q_DEBUG
     qDebug() << "Value already: " << Freechat::value;
@@ -265,12 +265,11 @@ void Peerout::SlotConnected()
 
 void Peerout::SlotDisconnectPeer()
 {
-    Peerout::socket->QTcpSocket::abort();
-    Freechat::value = 3;
-    emit Peerout::ResumeServerSignal();
+    Peerout::socket->QTcpSocket::disconnectFromHost();
+    Freechat::value = 2; //2 = default
 
     #ifndef Q_DEBUG
-    qDebug() << "Value was cleared!";
+    qDebug() << "Value was cleared! Peerout::SlotDisconnectPeer()";
     #endif
 
     QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();

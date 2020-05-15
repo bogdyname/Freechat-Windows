@@ -27,7 +27,6 @@ public:
 
 signals:
     void CloseOwnServerSignal();
-    void ResumeServerSignal();
 
 public slots:
     void SlotDisconnectPeer();

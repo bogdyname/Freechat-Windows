@@ -69,7 +69,7 @@ Peerin::~Peerin()
 void Peerin::DisconnectPeer()
 {
     Peerin::socket->QTcpSocket::disconnectFromHost();
-    Freechat::value = 3;
+    Freechat::value = 2; //2 = default
 
     #ifndef Q_DEBUG
     qDebug() << "Value already: " << Freechat::value;
@@ -117,7 +117,9 @@ void Peerin::CloseOwnServerSlot()
 
 void Peerin::ResumeServerSlot()
 {
-    Peerin::server->QTcpServer::resumeAccepting();
+    qDebug() << "1";
+
+    Peerin::server->QTcpServer::listen(QHostAddress::Any, 6000);
 
     #ifndef Q_DEBUG
     qDebug() << "Server is resume!";
@@ -129,7 +131,7 @@ void Peerin::ResumeServerSlot()
 void Peerin::SlotNewConnection()
 {
     Peerin::socket = Peerin::server->QTcpServer::nextPendingConnection();
-    Freechat::value = 1;
+    Freechat::value = 1; //1 = server is action
 
     QTextCursor tc = Freechat::viewField->QTextEdit::textCursor();
     bool visualNavigation = tc.QTextCursor::visualNavigation();
@@ -247,7 +249,7 @@ void Peerin::clearValue()
     qDebug() << "Value was cleared!";
     #endif
 
-    Freechat::value = 3;
+    Freechat::value = 2; //2 = default
 
     return;
 }

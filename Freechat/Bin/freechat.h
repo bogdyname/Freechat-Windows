@@ -106,9 +106,9 @@ public:
     static QString lanIpOfPeer;
     static QString wanIpOfPeer;
     static unsigned short int value;
-    //3 = non
     //1 = server is action
-    //2 = client is action
+    //0 = client is action
+    //2 = default
 
     //CLI
     static QString command;
