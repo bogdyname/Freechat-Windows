@@ -327,7 +327,7 @@ Gcontainer Bin::GetElementsFromList(const Gcontainer &list)
     for(; it != list.end(); ++it)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Element from list: " << *it << endl;
+        qDebug() << "Element from list: " << *it;
         #endif
     }
 
@@ -342,7 +342,7 @@ Rcontainer Bin::RemoveElementsFromList(Rcontainer &list)
     for(; it != list.end(); ++it)
     {
         #ifndef Q_DEBUG
-        qDebug() << "Deleted element from list: " << *it << endl;
+        qDebug() << "Deleted element from list: " << *it;
         #endif
 
         list.erase(it);

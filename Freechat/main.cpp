@@ -10,9 +10,10 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QFile *file = new QFile(":/source/source/style.css");
-    file->QIODevice::open(QFile::ReadOnly);
-    app.QApplication::setStyleSheet(file->QIODevice::readAll());
+    QFile file(":/source/source/style.css");
+    file.QFile::open(QFile::ReadOnly);
+    const QString style = QLatin1String(file.QFile::readAll());
+    app.QApplication::setStyleSheet(style);
 
     int id = QFontDatabase::addApplicationFont(":/source/source/LetterGothicStd.otf");
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);
